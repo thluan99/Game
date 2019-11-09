@@ -1,0 +1,69 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="debug.cpp" />
+    <ClCompile Include="Game.cpp" />
+    <ClCompile Include="GameObject.cpp" />
+    <ClCompile Include="Goomba.cpp" />
+    <ClCompile Include="Sprites.cpp" />
+    <ClCompile Include="Textures.cpp" />
+    <ClCompile Include="Brick.cpp">
+      <Filter>Map</Filter>
+    </ClCompile>
+    <ClCompile Include="Camera.cpp">
+      <Filter>Camera</Filter>
+    </ClCompile>
+    <ClCompile Include="main.cpp" />
+    <ClCompile Include="Aladin.cpp">
+      <Filter>Aladin</Filter>
+    </ClCompile>
+    <ClCompile Include="dxGraphics.cpp" />
+    <ClCompile Include="Grid.cpp" />
+    <ClCompile Include="TileMap.cpp">
+      <Filter>Map</Filter>
+    </ClCompile>
+    <ClCompile Include="GameScene.cpp">
+      <Filter>Map</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="debug.h" />
+    <ClInclude Include="Define.h" />
+    <ClInclude Include="Game.h" />
+    <ClInclude Include="GameObject.h" />
+    <ClInclude Include="Goomba.h" />
+    <ClInclude Include="Sprites.h" />
+    <ClInclude Include="Textures.h" />
+    <ClInclude Include="Brick.h">
+      <Filter>Map</Filter>
+    </ClInclude>
+    <ClInclude Include="Camera.h">
+      <Filter>Camera</Filter>
+    </ClInclude>
+    <ClInclude Include="Aladin.h">
+      <Filter>Aladin</Filter>
+    </ClInclude>
+    <ClInclude Include="dxGraphics.h" />
+    <ClInclude Include="Grid.h" />
+    <ClInclude Include="TileMap.h">
+      <Filter>Map</Filter>
+    </ClInclude>
+    <ClInclude Include="GameScene.h">
+      <Filter>Map</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Map">
+      <UniqueIdentifier>{078be438-2424-47aa-919b-b461d3c2bea1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Aladin">
+      <UniqueIdentifier>{22126a68-5897-4b2e-8116-3f7da13e0f36}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Camera">
+      <UniqueIdentifier>{cddc6dc2-5cab-4fbb-94f8-9f73f827d68a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Grid">
+      <UniqueIdentifier>{e4d95180-10c9-464f-b7e4-8ed23ea0d060}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>
