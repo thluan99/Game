@@ -42,6 +42,15 @@ void Camera::Update()
 		this->following->GetPosition(cameraX, cameraY);
 	}
 
+	if (cameraX < SCREEN_WIDTH / 2)
+		cameraX = SCREEN_WIDTH / 2;
+	if (cameraY < SCREEN_HEIGHT / 2)
+		cameraY = SCREEN_HEIGHT / 2;
+	if (cameraX > MAP_LIMIT_RIGHT - SCREEN_WIDTH / 2)
+		cameraX = MAP_LIMIT_RIGHT - SCREEN_WIDTH / 2;
+	if (cameraY > MAP_LIMIT_BOT - SCREEN_HEIGHT / 2)
+		cameraY = MAP_LIMIT_BOT - SCREEN_HEIGHT / 2;
+
 	//doan nay khong can thiet 
 	this->viewMatrix = D3DXMATRIX(
 		1, 0 , 0, 0,
@@ -58,7 +67,7 @@ void Camera::Update()
 
 void Camera::SetTransform(dxGraphics *dx_Graphics) const
 {
-	
+	Camera *camera;
 	dxGraphics::GetInstance()->d3ddv->SetTransform(D3DTS_PROJECTION, &orthographicMatrix);
 	//dxGraphics::GetInstance()->d3ddv->SetTransform(D3DTS_WORLD, &identityMatrix);
 	//dxGraphics::GetInstance()->d3ddv->SetTransform(D3DTS_VIEW, &viewMatrix);

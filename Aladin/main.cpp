@@ -38,8 +38,6 @@
 #define WINDOW_CLASS_NAME L"SampleWindow"
 #define MAIN_WINDOW_TITLE L"Aladin X Mario"
 
-#define BACKGROUND_COLOR D3DCOLOR_XRGB(52, 32, 43)
-
 #define MAX_FRAME_RATE 120
 
 #define ID_TEX_ALADIN 0

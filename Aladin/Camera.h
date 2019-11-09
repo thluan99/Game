@@ -21,6 +21,13 @@ public:
 	void SetTransform(dxGraphics* ) const;
 	float cameraX;
 	float cameraY;
+	float GetXCam() { return cameraX; }
+	float GetYCam() { return cameraY; }
+	void SetXCam(float camx) { this->cameraX = camx; }
+	void SetYCam(float camy) { this->cameraY = camy; }
+
+	int GetHeight() { return height; }
+	int GetWidth() { return width; }
 
 private:
 	static Camera * __instance;
