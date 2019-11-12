@@ -1,5 +1,6 @@
 #pragma once
 #include "GameObject.h"
+#include "Define.h"
 
 #define GOOMBA_WALKING_SPEED 0.05f;
 
@@ -21,5 +22,6 @@ class CGoomba : public CGameObject
 
 
 public: 	
+	CGoomba() { id = eType::GOOMBA; }
 	virtual void SetState(int state);
 };

@@ -28,10 +28,7 @@
 class CAladin : public CGameObject
 {
 public: 
-	CAladin() : CGameObject()
-	{
-	
-	}
+	CAladin() { id = eType::ALADIN; };
 	virtual void Update(DWORD dt, vector<LPGAMEOBJECT> *colliable_objects = NULL);
 	virtual void Render();
 	void SetState(int state);

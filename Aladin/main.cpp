@@ -34,6 +34,7 @@
 #include "Aladin.h"
 #include "Brick.h"
 #include "Goomba.h"
+#include "Grid.h"
 
 #define WINDOW_CLASS_NAME L"SampleWindow"
 #define MAIN_WINDOW_TITLE L"Aladin X Mario"
@@ -50,6 +51,8 @@ CGame *game;
 CAladin *aladin;
 CGoomba *goomba;
 Camera *camera;
+Grid *grid;
+
 dxGraphics *dx_graphics;
 vector<LPGAMEOBJECT> objects;
 TileMap *tileMap;
@@ -69,12 +72,22 @@ void CSampleKeyHander::OnKeyDown(int KeyCode)
 	switch (KeyCode)
 	{
 	case DIK_X:
-			aladin->SetState(ALADIN_STATE_JUMP);
+		aladin->SetState(ALADIN_STATE_JUMP);
 		break;
 	case DIK_A: // reset
 		aladin->SetState(ALADIN_STATE_IDLE);
 		aladin->SetPosition(50.0f,0.0f);
 		aladin->SetSpeed(0, 0);
+		break;
+	case DIK_9:
+		grid->InitWriteGrid(objects);
+		DebugOut(L"[INFO] : Rewrite file gridWrite.txt\n");
+		break;
+	case DIK_0:
+		ofstream ofs;
+		ofs.open("textures\\gridWrite.txt", ofstream::out | ofstream::trunc);
+		ofs.close();
+		DebugOut(L"[INFO] : Clear file gridWrite.txt\n");
 		break;
 	}
 }
@@ -292,7 +305,6 @@ void LoadResources()
 		goomba->SetState(GOOMBA_STATE_WALKING);
 		objects.push_back(goomba);
 	}
-
 }
 
 /*
@@ -451,6 +463,8 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	game->Init(hWnd);
 
 	LoadResources();
+
+	grid = new Grid(32 * 60, 32 * 20, 32 * 10, objects);
 
 	keyHandler = new CSampleKeyHander();
 	game->InitKeyboard(keyHandler);
