@@ -13,5 +13,6 @@ enum eType
 {
 	ALADIN = 01,
 	BRICK = 10,
+	BRICK2 = 11,
 	GOOMBA = 20
 };

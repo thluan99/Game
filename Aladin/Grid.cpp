@@ -33,35 +33,35 @@ void Grid::InitWriteGrid(vector<LPGAMEOBJECT> objects)
 			//add cell vao cells 
 
 			//lay thong so 
-			posX = j * cell_Size;
-			posY = i * cell_Size;
+			posX = j;
+			posY = i;
 
 			for (int k = 0; k < objects.size(); k++)
 			{
 				float left, top, right, bot;
 				objects[k]->GetBoundingBox(left, top, right, bot);
-				int objX = objects[k]->x;
-				int objY = objects[k]->y;
+				float objX = objects[k]->x;
+				float objY = objects[k]->y;
 
-				if ((int)((objX / cell_Size) == posX) && (int)((objY / cell_Size) == posY))
+				if ((int)objX / cell_Size == posX && (int)objY / cell_Size == posY)
 				{
 					listGameObject.push_back(objects[k]);
 					WriteFile(count, posX, posY, objects[k]->id, objX, objY);
 					DebugOut(L"[]");
 				}
-				else if ((int)(objX + (right - left)) / cell_Size == posX && (int)((objY / cell_Size) == posY))
+				else if ((int)(objX + (right - left)) / cell_Size == posX && (int)objY / cell_Size == posY)
 				{
 					listGameObject.push_back(objects[k]);
 					WriteFile(count, posX, posY, objects[k]->id, objX, objY);
 					DebugOut(L"[]");
 				}
-				else if (((int)(objY / cell_Size) == posY) && (int)(((objX + (right - left)) / cell_Size) == posX))
+				else if ((int)objY / cell_Size == posY && (int)(objX + (right - left)) / cell_Size == posX)
 				{
 					listGameObject.push_back(objects[k]);
 					WriteFile(count, posX, posY, objects[k]->id, objX, objY);
 					DebugOut(L"[]");
 				}
-				else if (((int)((objY + (bot - top)) / cell_Size) == posY) && (int)(((objX + (right - left)) / cell_Size) == posX))
+				else if ((int)(objY + (bot - top)) / cell_Size == posY && (int)(objX + (right - left)) / cell_Size == posX)
 				{
 					listGameObject.push_back(objects[k]);
 					WriteFile(count, posX, posY, objects[k]->id, objX, objY);

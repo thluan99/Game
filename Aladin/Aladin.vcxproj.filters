@@ -18,12 +18,14 @@
       <Filter>Aladin</Filter>
     </ClCompile>
     <ClCompile Include="dxGraphics.cpp" />
-    <ClCompile Include="Grid.cpp" />
     <ClCompile Include="TileMap.cpp">
       <Filter>Map</Filter>
     </ClCompile>
     <ClCompile Include="GameScene.cpp">
       <Filter>Map</Filter>
+    </ClCompile>
+    <ClCompile Include="Grid.cpp">
+      <Filter>Grid</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -44,12 +46,14 @@
       <Filter>Aladin</Filter>
     </ClInclude>
     <ClInclude Include="dxGraphics.h" />
-    <ClInclude Include="Grid.h" />
     <ClInclude Include="TileMap.h">
       <Filter>Map</Filter>
     </ClInclude>
     <ClInclude Include="GameScene.h">
       <Filter>Map</Filter>
+    </ClInclude>
+    <ClInclude Include="Grid.h">
+      <Filter>Grid</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

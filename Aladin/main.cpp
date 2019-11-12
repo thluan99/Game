@@ -297,6 +297,7 @@ void LoadResources()
 	for (int i = 0; i < 25; i++)
 	{
 		CBrick *brick = new CBrick();
+		brick->id = eType::BRICK;
 		brick->AddAnimation(601);
 		brick->SetPosition(34 + i*34, 150);
 		objects.push_back(brick);
@@ -305,6 +306,7 @@ void LoadResources()
 	for (int i = 0; i < 54; i++)
 	{
 		CBrick *brick = new CBrick();
+		brick->id = eType::BRICK;
 		brick->AddAnimation(601);
 		brick->SetPosition(34 + i * 34, 500);
 		objects.push_back(brick);
@@ -313,6 +315,7 @@ void LoadResources()
 	for (int  i = 1; i < 19; i++) // brick 2
 	{
 		CBrick *brick = new CBrick();
+		brick->id = eType::BRICK2;
 		brick->AddAnimation(602);
 		brick->SetPosition(0, i * 32);
 		objects.push_back(brick);
@@ -321,6 +324,7 @@ void LoadResources()
 	for (int i = 1; i < 19; i++) // brick 2
 	{
 		CBrick *brick = new CBrick();
+		brick->id = eType::BRICK2;
 		brick->AddAnimation(602);
 		brick->SetPosition(32 * 59, i * 32);
 		objects.push_back(brick);
