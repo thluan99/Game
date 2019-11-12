@@ -39,13 +39,14 @@
 #define WINDOW_CLASS_NAME L"SampleWindow"
 #define MAIN_WINDOW_TITLE L"Aladin X Mario"
 
-#define MAX_FRAME_RATE 120
+#define MAX_FRAME_RATE			120
 
-#define ID_TEX_ALADIN 0
-#define ID_TEX_ALADIN_F 01
-#define ID_TEX_ENEMY 10
-#define ID_TEX_MISC 20
-#define ID_TEX_MAP 30
+#define ID_TEX_ALADIN			0
+#define ID_TEX_ALADIN_F			01
+#define ID_TEX_ENEMY			10
+#define ID_TEX_MISC				20
+#define ID_TEX_MAP				30
+#define ID_TEX_BRICK_2			40
 
 CGame *game;
 CAladin *aladin;
@@ -141,7 +142,7 @@ void LoadResources()
 	textures->Add(ID_TEX_ENEMY, L"textures\\enemies.png", D3DCOLOR_XRGB(3, 26, 110));
 	textures->Add(ID_TEX_MAP, L"textures\\map_tex.png", D3DCOLOR_XRGB(163, 73, 164));
 	textures->Add(ID_TEX_BBOX, L"textures\\bbox.png", D3DCOLOR_XRGB(255, 255, 255));
-
+	textures->Add(ID_TEX_BRICK_2, L"textures\\tileset.png",(BACKGROUND_COLOR));
 
 	CSprites * sprites = CSprites::GetInstance();
 	CAnimations * animations = CAnimations::GetInstance();
@@ -201,6 +202,12 @@ void LoadResources()
 
 	LPDIRECT3DTEXTURE9 texBrick = textures->Get(ID_TEX_MAP);
 	sprites->Add(40001, 73, 1770, 73 + 34, 1770 + 17, texBrick);
+	// BRICK VER 2
+	LPDIRECT3DTEXTURE9 texBrick2 = textures->Get(ID_TEX_BRICK_2);
+	sprites->Add(40002, 96, 0, 96 + 32, 0 + 32, texBrick2);
+	LPDIRECT3DTEXTURE9 texBrick3 = textures->Get(ID_TEX_BRICK_2);
+	sprites->Add(40003, 512, 0, 512 + 32, 0 + 32, texBrick3);
+
 	//ANIMATION////////////////////////////////
 	LPANIMATION ani;
 	ani = new CAnimation(100);	// idle big right
@@ -260,6 +267,14 @@ void LoadResources()
 	ani->Add(40001);
 	animations->Add(601, ani);
 
+	ani = new CAnimation(100);		// brick 2
+	ani->Add(40002);
+	animations->Add(602, ani);
+
+	ani = new CAnimation(100);		// brick 3
+	ani->Add(40003);
+	animations->Add(603, ani);
+
 	ani = new CAnimation(300);		// Goomba walk
 	ani->Add(30001);
 	ani->Add(30002);
@@ -279,19 +294,35 @@ void LoadResources()
 	aladin->SetPosition(50.0f, 0);
 	objects.push_back(aladin);
 
-	for (int i = 0; i < 30; i++)
+	for (int i = 0; i < 25; i++)
 	{
 		CBrick *brick = new CBrick();
 		brick->AddAnimation(601);
-		brick->SetPosition(0 + i*34, 150);
+		brick->SetPosition(34 + i*34, 150);
 		objects.push_back(brick);
 	}
 
-	for (int i = 0; i < 55; i++)
+	for (int i = 0; i < 54; i++)
 	{
 		CBrick *brick = new CBrick();
 		brick->AddAnimation(601);
-		brick->SetPosition(0 + i * 34, 500);
+		brick->SetPosition(34 + i * 34, 500);
+		objects.push_back(brick);
+	}
+
+	for (int  i = 1; i < 19; i++) // brick 2
+	{
+		CBrick *brick = new CBrick();
+		brick->AddAnimation(602);
+		brick->SetPosition(0, i * 32);
+		objects.push_back(brick);
+	}
+
+	for (int i = 1; i < 19; i++) // brick 2
+	{
+		CBrick *brick = new CBrick();
+		brick->AddAnimation(602);
+		brick->SetPosition(32 * 59, i * 32);
 		objects.push_back(brick);
 	}
 
@@ -301,7 +332,7 @@ void LoadResources()
 		goomba = new CGoomba();
 		goomba->AddAnimation(701);
 		goomba->AddAnimation(702);
-		goomba->SetPosition(200 + i*60, 135);
+		goomba->SetPosition(300 + i*60, 135);
 		goomba->SetState(GOOMBA_STATE_WALKING);
 		objects.push_back(goomba);
 	}
