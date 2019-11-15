@@ -25,6 +25,10 @@ void Grid::Add(int ID, int x, int y, list<CGameObject*> l_gameObject)
 void Grid::InitWriteGrid(vector<LPGAMEOBJECT> objects)
 {
 	int count = 1;
+	SetFile("textures\\gridWrite.txt");
+	//mở file, ghi map xuống grid
+	ofstream outF(gridPathWrite, ios::out | ios::trunc);
+
 	for (int i = 0; i < rows; i++)
 		for (int j = 0; j < collums; j++)
 		{
@@ -36,6 +40,8 @@ void Grid::InitWriteGrid(vector<LPGAMEOBJECT> objects)
 			posX = j;
 			posY = i;
 
+
+
 			for (int k = 0; k < objects.size(); k++)
 			{
 				float left, top, right, bot;
@@ -46,41 +52,41 @@ void Grid::InitWriteGrid(vector<LPGAMEOBJECT> objects)
 				if ((int)objX / cell_Size == posX && (int)objY / cell_Size == posY)
 				{
 					listGameObject.push_back(objects[k]);
-					WriteFile(count, posX, posY, objects[k]->id, objX, objY);
+					WriteFile(outF, count, posX, posY, objects[k]->id, objX, objY);
 					DebugOut(L"[]");
 				}
 				else if ((int)(objX + (right - left)) / cell_Size == posX && (int)objY / cell_Size == posY)
 				{
 					listGameObject.push_back(objects[k]);
-					WriteFile(count, posX, posY, objects[k]->id, objX, objY);
+					WriteFile(outF, count, posX, posY, objects[k]->id, objX, objY);
 					DebugOut(L"[]");
 				}
 				else if ((int)objY / cell_Size == posY && (int)(objX + (right - left)) / cell_Size == posX)
 				{
 					listGameObject.push_back(objects[k]);
-					WriteFile(count, posX, posY, objects[k]->id, objX, objY);
+					WriteFile(outF, count, posX, posY, objects[k]->id, objX, objY);
 					DebugOut(L"[]");
 				}
 				else if ((int)(objY + (bot - top)) / cell_Size == posY && (int)(objX + (right - left)) / cell_Size == posX)
 				{
 					listGameObject.push_back(objects[k]);
-					WriteFile(count, posX, posY, objects[k]->id, objX, objY);
+					WriteFile(outF, count, posX, posY, objects[k]->id, objX, objY);
 					DebugOut(L"[]");
 				}
 			}
+
 			Add(count, posX, posY, listGameObject);
 			DebugOut(L"\n[INFO] : Cell thu %d, %d, %d \n", count, posX, posY);
 			count++;
 		}
+	outF.close();//đóng file
 }
 
-void Grid::WriteFile(int ID, int x, int y, int ObjID, int objx, int objy)
+void Grid::WriteFile(ofstream &outF, int ID, int x, int y, int ObjID, int objx, int objy)
 {
-	SetFile("textures\\gridWrite.txt");
-	ofstream outF(gridPathWrite, ios::out|ios::app);
+	
 	if (outF.is_open())
 		outF << ID << " "<< x << " " << y << " " << ObjID << " " << objx << " " << objy << endl;
-	outF.close();
 }
 
 Cell* Grid::Get(int ID)

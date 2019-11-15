@@ -41,7 +41,7 @@ public:
 
 	void ClearGrid();
 	void SetFile(char *str);
-	void WriteFile(int ID, int x, int y, int ObjID, int objx, int objy);
+	void WriteFile(ofstream& ,int ID, int x, int y, int ObjID, int objx, int objy);
 
 };
 #endif // !_GRID_H
