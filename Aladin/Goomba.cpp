@@ -43,6 +43,36 @@ void CGoomba::Render()
 	//RenderBoundingBox();
 }
 
+void CGoomba::LoadResources(int ID)
+{
+	textures = CTextures::GetInstance();
+	textures->Add(ID_TEX_ENEMY, L"textures\\enemies.png", D3DCOLOR_XRGB(3, 26, 110));
+
+	sprites = CSprites::GetInstance();
+	CAnimations * animations = CAnimations::GetInstance();
+
+	LPDIRECT3DTEXTURE9 texEnemy = textures->Get(ID_TEX_ENEMY);
+	sprites->Add(30001, 5, 14, 21, 29, texEnemy);
+	sprites->Add(30002, 25, 14, 41, 29, texEnemy);
+	sprites->Add(30003, 45, 21, 61, 29, texEnemy); // die sprite
+
+	LPANIMATION ani;
+
+	ani = new CAnimation(300);		// Goomba walk
+	ani->Add(30001);
+	ani->Add(30002);
+	animations->Add(701, ani);
+
+	ani = new CAnimation(1000);		// Goomba dead
+	ani->Add(30003);
+	animations->Add(702, ani);
+
+
+	this->AddAnimation(701);
+	this->AddAnimation(702);
+	this->SetState(GOOMBA_STATE_WALKING);
+}
+
 void CGoomba::SetState(int state)
 {
 	CGameObject::SetState(state);

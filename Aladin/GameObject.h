@@ -5,6 +5,7 @@
 #include <vector>
 #include "Define.h"
 #include "Sprites.h"
+#include "Textures.h"
 
 
 using namespace std;
@@ -39,9 +40,10 @@ public:
 	int direction;	// hướng -1 : trái, 1: phải
 	eType type; // Loại Object
 
-
 	float x; 
 	float y;
+	float w; // width
+	float h; // height
 
 	float dx;	// dx = vx*dt
 	float dy;	// dy = vy*dt
@@ -54,7 +56,8 @@ public:
 	int state;
 
 	DWORD dt; 
-
+	CTextures * textures;
+	CSprites * sprites;
 	vector<LPANIMATION> animations;
 
 public: 
@@ -70,7 +73,10 @@ public:
 	int GetDirection();
 	void SetId(int ID);
 	int GetId();
-
+	float GetX() { return x; }
+	void SetX(float x) { this->x = x; }
+	void SetY(float y) { this->y = y; }
+	float GetY() { return y; }
 
 	int GetState() { return this->state; }
 
@@ -94,6 +100,7 @@ public:
 	virtual void Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects = NULL);
 	virtual void Render() = 0;
 	virtual void SetState(int state) { this->state = state; }
+	virtual void LoadResources(int ID) = 0;
 
 
 	~CGameObject();
