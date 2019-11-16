@@ -40,8 +40,6 @@ void Grid::InitWriteGrid(vector<LPGAMEOBJECT> objects)
 			posX = j;
 			posY = i;
 
-
-
 			for (int k = 0; k < objects.size(); k++)
 			{
 				float left, top, right, bot;
