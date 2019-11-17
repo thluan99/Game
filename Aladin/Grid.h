@@ -9,6 +9,7 @@
 #include "Goomba.h"
 #include "Define.h"
 #include "Aladin.h"
+#include "Camera.h"
 #include <fstream>
 #include <iostream>
 
@@ -46,7 +47,8 @@ public:
 
 	void ClearGrid();
 	void SetFile(char *str);
-	void WriteFile(int ID, int x, int y, int ObjID, int objx, int objy);
+	void WriteFile(ofstream &outF, int ID, int x, int y, int ObjID, int objx, int objy);
+	void RenderObject(Camera *&camera, vector<LPGAMEOBJECT> &objects);
 	void LoadResourses(vector<LPGAMEOBJECT> &objects);
 
 };

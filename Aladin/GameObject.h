@@ -36,6 +36,7 @@ class CGameObject
 public:
 	int Health;
 	int id;
+	int gridID;
 
 	int direction;	// hướng -1 : trái, 1: phải
 	eType type; // Loại Object

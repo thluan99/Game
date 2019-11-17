@@ -104,6 +104,34 @@ CGameObject * GetNewObject(int ID)
 	return NULL;
 }
 
+void Grid::RenderObject(Camera * &camera, vector<LPGAMEOBJECT> &objects)
+{
+	int left = (camera->cameraX - SCREEN_WIDTH / 2) / cell_Size;
+	int top = (camera->cameraY - SCREEN_HEIGHT / 2) / cell_Size;
+	int right = (camera->cameraX + SCREEN_WIDTH / 2) / cell_Size;
+	int bot = (camera->cameraY + SCREEN_HEIGHT / 2) / cell_Size;
+	int countID;
+	int setLeftCount = left + 1;
+
+	for (int i = top; i <= bot; i++)
+	{
+		countID = setLeftCount;
+		for (int j = left; j <= right; j++)
+		{
+			for (int k = 0; k < objects.size(); k++)
+			{
+				if (objects[k]->gridID == countID)
+				{
+					objects[k]->Render();
+					//DebugOut(L"\n[INFO] : Render Object");
+				}
+			}
+			countID++;
+		}
+		setLeftCount = setLeftCount + MAP_LIMIT_RIGHT / cell_Size;
+	}
+}
+
 void Grid::LoadResourses(vector<LPGAMEOBJECT> &objects)
 {
 	int ID, objID;
@@ -119,6 +147,7 @@ void Grid::LoadResourses(vector<LPGAMEOBJECT> &objects)
 		{
 			inFile >> ID >> x >> y >> objID >> objX >> objY;
 			CGameObject * object = GetNewObject(objID);
+			object->gridID = ID;
 			object->LoadResources(objID);
 			object->SetPosition(objX, objY);
 	
