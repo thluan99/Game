@@ -123,6 +123,7 @@ void Grid::LoadResourses(vector<LPGAMEOBJECT> &objects)
 		}
 		cout << endl;
 	}
+	inFile.close();
 }
 
 Cell* Grid::Get(int ID)

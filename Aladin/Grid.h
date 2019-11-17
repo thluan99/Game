@@ -27,7 +27,7 @@ typedef struct StructCell
 class Grid
 {
 private:
-	int cell_Size;
+
 	int rows, collums;
 	char * gridPathWrite;
 
@@ -35,7 +35,7 @@ private:
 	unordered_map<int, Cell *> cells;
 
 public:
-	
+	int cell_Size;
 
 	void Add(int ID, int x, int y, list<CGameObject*>);
 	void InitWriteGrid(vector<LPGAMEOBJECT> objects);
