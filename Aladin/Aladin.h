@@ -25,6 +25,9 @@
 #define ALADIN_BIG_BBOX_WIDTH  43
 #define ALADIN_BIG_BBOX_HEIGHT 51
 
+#define ID_TEX_ALADIN			0
+#define ID_TEX_ALADIN_F			01
+
 class CAladin : public CGameObject
 {
 public: 
@@ -32,6 +35,6 @@ public:
 	virtual void Update(DWORD dt, vector<LPGAMEOBJECT> *colliable_objects = NULL);
 	virtual void Render();
 	void SetState(int state);
-
+	virtual void LoadResources(int ID);
 	virtual void GetBoundingBox(float &left, float &top, float &right, float &bottom);
 };

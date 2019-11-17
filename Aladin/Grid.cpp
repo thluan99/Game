@@ -1,6 +1,8 @@
 ﻿#include "Grid.h"
 #include"debug.h"
 
+using namespace std;
+
 Grid::Grid(int width, int height, int cell_Size, vector<LPGAMEOBJECT> objects)
 {
 	this->cell_Size = cell_Size;
@@ -8,7 +10,7 @@ Grid::Grid(int width, int height, int cell_Size, vector<LPGAMEOBJECT> objects)
 	this->collums = width / this->cell_Size;
 
 	//Giữ lấy object 
-	InitWriteGrid(objects);
+	//InitWriteGrid(objects);
 }
 
 void Grid::Add(int ID, int x, int y, list<CGameObject*> l_gameObject)
@@ -18,7 +20,6 @@ void Grid::Add(int ID, int x, int y, list<CGameObject*> l_gameObject)
 	cell->x = x;
 	cell->y = y;
 	cell->listGameObject = l_gameObject;
-
 	cells[ID] = cell;
 }
 
@@ -85,6 +86,48 @@ void Grid::WriteFile(ofstream &outF, int ID, int x, int y, int ObjID, int objx, 
 	
 	if (outF.is_open())
 		outF << ID << " "<< x << " " << y << " " << ObjID << " " << objx << " " << objy << endl;
+}
+
+CGameObject * GetNewObject(int ID)
+{
+	switch (ID)
+	{
+	case eType::BRICK:
+		return new CBrick();
+
+	case eType::BRICK2:
+		return new CBrick();
+
+	case eType::GOOMBA:
+		return new CGoomba();
+	}
+	return NULL;
+}
+
+void Grid::LoadResourses(vector<LPGAMEOBJECT> &objects)
+{
+	int ID, objID;
+	float x, y, objX, objY;
+	ifstream inFile;
+	//SetFile("textures\\gridWrite.txt");
+
+	inFile.open("textures\\gridWrite.txt", ios::in);
+
+	if (inFile.is_open())
+	{
+		while (!inFile.eof())
+		{
+			inFile >> ID >> x >> y >> objID >> objX >> objY;
+			CGameObject * object = GetNewObject(objID);
+			object->LoadResources(objID);
+			object->SetPosition(objX, objY);
+	
+			objects.push_back(object);
+			DebugOut(L"[INFO] : doc file");
+		}
+		cout << endl;
+	}
+	inFile.close();
 }
 
 Cell* Grid::Get(int ID)
