@@ -37,4 +37,5 @@ public:
 	void SetState(int state);
 	virtual void LoadResources(int ID);
 	virtual void GetBoundingBox(float &left, float &top, float &right, float &bottom);
+	virtual void ReLoad();
 };

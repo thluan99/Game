@@ -240,3 +240,7 @@ void CAladin::GetBoundingBox(float &left, float &top, float &right, float &botto
 	bottom = y + ALADIN_BIG_BBOX_HEIGHT;
 }
 
+void CAladin::ReLoad()
+{
+}
+

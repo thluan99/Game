@@ -88,3 +88,9 @@ void CGoomba::SetState(int state)
 	}
 
 }
+
+void CGoomba::ReLoad()
+{
+	this->SetState(GOOMBA_STATE_WALKING);
+	this->SetPosition(firstPosX, firstPosY);
+}

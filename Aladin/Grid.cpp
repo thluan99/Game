@@ -130,6 +130,14 @@ void Grid::RenderObject(Camera * &camera, vector<LPGAMEOBJECT> &objects)
 		}
 		setLeftCount = setLeftCount + MAP_LIMIT_RIGHT / cell_Size;
 	}
+
+	for (int i = 0; i < objects.size(); i++)
+	{
+		if (objects[i]->x < left*cell_Size || objects[i]->y < top*cell_Size || objects[i]->x > right*cell_Size + cell_Size || objects[i]->y > bot*cell_Size + cell_Size)
+		{
+			objects[i]->ReLoad();
+		}
+	}
 }
 
 void Grid::LoadResourses(vector<LPGAMEOBJECT> &objects)
@@ -148,6 +156,8 @@ void Grid::LoadResourses(vector<LPGAMEOBJECT> &objects)
 			inFile >> ID >> x >> y >> objID >> objX >> objY;
 			CGameObject * object = GetNewObject(objID);
 			object->gridID = ID;
+			object->firstPosX = objX;
+			object->firstPosY = objY;
 			object->LoadResources(objID);
 			object->SetPosition(objX, objY);
 	

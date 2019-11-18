@@ -43,6 +43,8 @@ public:
 
 	float x; 
 	float y;
+	float firstPosX;
+	float firstPosY;
 	float w; // width
 	float h; // height
 
@@ -102,6 +104,7 @@ public:
 	virtual void Render() = 0;
 	virtual void SetState(int state) { this->state = state; }
 	virtual void LoadResources(int ID) = 0;
+	virtual void ReLoad() = 0;
 
 
 	~CGameObject();
