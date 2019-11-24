@@ -37,48 +37,51 @@ void Grid::InitWriteGrid(vector<LPGAMEOBJECT> objects)
 			list<CGameObject *> listGameObject;
 			//add cell vao cells 
 
-			//lay thong so 
+			//lay thong so toa do cua cell
 			posX = j;
 			posY = i;
 
 			for (int k = 0; k < objects.size(); k++)
 			{
-				float left, top, right, bot;
-				objects[k]->GetBoundingBox(left, top, right, bot);
-				float objX = objects[k]->x;
-				float objY = objects[k]->y;
-
-				if ((int)objX / cell_Size == posX && (int)objY / cell_Size == posY)
+				//nếu nằm trong cell thì thêm vào list
+				if (isInCell(objects[k], posX, posY))
 				{
 					listGameObject.push_back(objects[k]);
-					WriteFile(outF, count, posX, posY, objects[k]->id, objX, objY);
-					DebugOut(L"[]");
-				}
-				else if ((int)(objX + (right - left)) / cell_Size == posX && (int)objY / cell_Size == posY)
-				{
-					listGameObject.push_back(objects[k]);
-					WriteFile(outF, count, posX, posY, objects[k]->id, objX, objY);
-					DebugOut(L"[]");
-				}
-				else if ((int)objY / cell_Size == posY && (int)(objX + (right - left)) / cell_Size == posX)
-				{
-					listGameObject.push_back(objects[k]);
-					WriteFile(outF, count, posX, posY, objects[k]->id, objX, objY);
-					DebugOut(L"[]");
-				}
-				else if ((int)(objY + (bot - top)) / cell_Size == posY && (int)(objX + (right - left)) / cell_Size == posX)
-				{
-					listGameObject.push_back(objects[k]);
-					WriteFile(outF, count, posX, posY, objects[k]->id, objX, objY);
+					WriteFile(outF, count, posX, posY, objects[k]->id, objects[k]->x, objects[k]->y);
 					DebugOut(L"[]");
 				}
 			}
 
+			//thêm list gameobject vào cell
 			Add(count, posX, posY, listGameObject);
 			DebugOut(L"\n[INFO] : Cell thu %d, %d, %d \n", count, posX, posY);
 			count++;
 		}
 	outF.close();//đóng file
+}
+
+//hàm xét object có trong 1 cell nào hay không
+bool Grid::isInCell(LPGAMEOBJECT gameObject, int cellPosX, int cellPosY)
+{
+	float left, top, right, bottom;
+	gameObject->GetBoundingBox(left, top, right, bottom);
+	float objX = gameObject->x;
+	float objY = gameObject->y;
+	//objX objY toa độ của x, y của object
+	//cellPosX cellPosY cột và hàng của object trong Grid
+
+	if (
+		//góc  trên bên trái
+		((int)objX / cell_Size == cellPosX && (int)objY / cell_Size == cellPosY) ||
+		//góc trên bên phải
+		((int)(objX + (right - left)) / cell_Size == cellPosX && (int)objY / cell_Size == cellPosY) ||
+		//góc dưới bên trái
+		((int)(objY + (bottom - top)) / cell_Size == cellPosY && (int)objX / cell_Size == cellPosX) ||
+		//góc dưới bên phải
+		((int)(objY + (bottom - top)) / cell_Size == cellPosY && (int)(objX + (right - left)) / cell_Size == cellPosX)
+		)
+		return true;
+	return false;
 }
 
 void Grid::WriteFile(ofstream &outF, int ID, int x, int y, int ObjID, int objx, int objy)
@@ -115,14 +118,17 @@ void Grid::LoadResourses(vector<LPGAMEOBJECT> &objects)
 
 	if (inFile.is_open())
 	{
+		CGameObject* object;
+
 		while (!inFile.eof())
 		{
 			inFile >> ID >> x >> y >> objID >> objX >> objY;
-			CGameObject * object = GetNewObject(objID);
+			object = GetNewObject(objID);
 			object->LoadResources(objID);
 			object->SetPosition(objX, objY);
 	
 			objects.push_back(object);
+
 			DebugOut(L"[INFO] : doc file");
 		}
 		cout << endl;
@@ -150,3 +156,5 @@ void Grid::SetFile(char * str)
 {
 	gridPathWrite = str;
 }
+
+

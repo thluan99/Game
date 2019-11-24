@@ -46,7 +46,8 @@ public:
 
 	void ClearGrid();
 	void SetFile(char *str);
-	void WriteFile(int ID, int x, int y, int ObjID, int objx, int objy);
+	bool isInCell(LPGAMEOBJECT, int cellPosX, int cellPosY);
+	void WriteFile(ofstream &outF, int ID, int x, int y, int ObjID, int objx, int objy);
 	void LoadResourses(vector<LPGAMEOBJECT> &objects);
 
 };
