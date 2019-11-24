@@ -169,7 +169,6 @@ void Update(DWORD dt)
 	camera->Update();
 }
 
-
 /*
 	Render a frame 
 */
@@ -193,8 +192,10 @@ void Render()
 
 		tileMap->DrawMap(camera);
 
-		for (int i = 0; i < objects.size(); i++)
-			objects[i]->Render();
+		/*for (int i = 0; i < objects.size(); i++)
+			objects[i]->Render();*/
+		grid->RenderObject(camera, objects);
+		aladin->Render();
 
 		spriteHandler->End();
 		d3ddv->EndScene();
@@ -279,9 +280,8 @@ int Run()
 			frameStart = now;
 
 			game->ProcessKeyboard();
-			
-			Update(dt);
 			Render();
+			Update(dt);
 		}
 		else
 			Sleep(tickPerFrame - dt);	

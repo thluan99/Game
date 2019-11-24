@@ -36,12 +36,15 @@ class CGameObject
 public:
 	int Health;
 	int id;
+	int gridID;
 
 	int direction;	// hướng -1 : trái, 1: phải
 	eType type; // Loại Object
 
 	float x; 
 	float y;
+	float firstPosX;
+	float firstPosY;
 	float w; // width
 	float h; // height
 
@@ -101,6 +104,7 @@ public:
 	virtual void Render() = 0;
 	virtual void SetState(int state) { this->state = state; }
 	virtual void LoadResources(int ID) = 0;
+	virtual void ReLoad() = 0;
 
 
 	~CGameObject();

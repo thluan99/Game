@@ -26,4 +26,5 @@ public:
 	virtual void LoadResources(int ID);
 	CGoomba() { id = eType::GOOMBA; }
 	virtual void SetState(int state);
+	virtual void ReLoad();
 };

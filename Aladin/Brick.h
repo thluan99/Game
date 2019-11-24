@@ -15,4 +15,5 @@ public:
 	virtual void LoadResources(int ID);
 	CBrick() { w = 34; h = 17;};
 	virtual void GetBoundingBox(float &l, float &t, float &r, float &b);
+	virtual void ReLoad();
 };

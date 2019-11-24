@@ -173,7 +173,6 @@ int CGameObject::GetId()
 	return id;
 }
 
-
 CGameObject::~CGameObject()
 {
 
