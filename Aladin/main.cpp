@@ -57,15 +57,17 @@ Grid *grid;
 dxGraphics *dx_graphics;
 vector<LPGAMEOBJECT> objects;
 TileMap *tileMap;
+//---------------KeyBoard -------------------------
+#pragma region KeyBoard
 
-class CSampleKeyHander: public CKeyEventHandler
+class CSampleKeyHander : public CKeyEventHandler
 {
 	virtual void KeyState(BYTE *states);
 	virtual void OnKeyDown(int KeyCode);
 	virtual void OnKeyUp(int KeyCode);
 };
 
-CSampleKeyHander * keyHandler; 
+CSampleKeyHander * keyHandler;
 
 void CSampleKeyHander::OnKeyDown(int KeyCode)
 {
@@ -77,16 +79,16 @@ void CSampleKeyHander::OnKeyDown(int KeyCode)
 		break;
 	case DIK_A: // reset
 		aladin->SetState(ALADIN_STATE_IDLE);
-		aladin->SetPosition(50.0f,0.0f);
+		aladin->SetPosition(50.0f, 0.0f);
 		aladin->SetSpeed(0, 0);
 		break;
 	case DIK_9:
-		grid->InitWriteGrid(objects);
+		grid->WriteGrid(objects);
 		DebugOut(L"[INFO] : Rewrite file gridWrite.txt\n");
 		break;
 	case DIK_0:
 		ofstream ofs;
-		ofs.open("textures\\gridWrite.txt", ofstream::out | ofstream::trunc);
+		ofs.open("textures\\gridWrite1.txt", ofstream::out | ofstream::trunc);
 		ofs.close();
 		DebugOut(L"[INFO] : Clear file gridWrite.txt\n");
 		break;
@@ -110,6 +112,9 @@ void CSampleKeyHander::KeyState(BYTE *states)
 		aladin->SetState(ALADIN_STATE_IDLE);
 }
 
+#pragma endregion
+//----------------EndKeyBoard----------------------
+
 LRESULT CALLBACK WinProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
 	switch (message) {
@@ -129,6 +134,69 @@ LRESULT CALLBACK WinProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 
 	TO-DO: Improve this function by loading texture,sprite,animation,object from file
 */
+
+CGameObject * GetNewObjectEx(int ID)
+{
+	switch (ID)
+	{
+	case eType::BRICK:
+		return new CBrick();
+
+	case eType::BRICK2:
+		return new CBrick();
+
+	case eType::GOOMBA:
+		return new CGoomba();
+	}
+	return NULL;
+}
+
+
+void CreateGrid(vector <CGameObject *> &objects, Grid *&grid)
+{
+	int numCells, cells_size, columns, rows, width, height;
+	int cellID, numObjTypeCell, numObjForType, typeObj;
+	ifstream inFile;
+	inFile.open("textures\\gridWrite1.txt", ios::in);
+	if (inFile.is_open())
+	{
+		inFile >> numCells >> cells_size >> columns >> rows >> width >> height;
+		grid = new Grid(width, height, cells_size);
+
+		for (int n = 0; n < numCells; n++)
+		{
+				inFile >> cellID >> numObjTypeCell;
+				vector <CGameObject *> l_gameObject;
+				grid->AddCell(cellID, l_gameObject);
+
+				if (numObjTypeCell == 0)
+				{
+					DebugOut(L"Nothing\n");
+					continue;
+				}
+				for (int i = 0; i < numObjTypeCell; i++)
+				{
+					inFile >> typeObj >> numObjForType;
+					for (int j = 0; j < numObjForType; j++)
+					{
+						float objX, objY;
+						inFile >> objX >> objY;
+						CGameObject * gameObject = GetNewObjectEx(typeObj);
+						gameObject->gridID = cellID;
+						gameObject->firstPosX = objX;
+						gameObject->firstPosY = objY;
+						gameObject->LoadResources(typeObj);
+						gameObject->SetPosition(objX, objY);
+
+						objects.push_back(gameObject);
+						grid->cells[cellID]->listGameObject.push_back(gameObject);
+					}
+					DebugOut(L"-----------[Doc file]\n");
+			}
+		}
+	}
+}
+
 void LoadResources()
 {
 	tileMap = new TileMap();
@@ -139,8 +207,7 @@ void LoadResources()
 	aladin->LoadResources(eType::ALADIN);
 	aladin->SetPosition(50.f, 0.0f);
 	objects.push_back(aladin);
-
-	grid->LoadResourses(objects);
+	//grid->LoadResourses(objects, aladin);
 }
 
 /*
@@ -162,7 +229,7 @@ void Update(DWORD dt)
 	{
 		objects[i]->Update(dt,&coObjects);
 	}
-
+	//grid->UpdateCollision(dt, aladin);
 
 	// Update camera to follow aladin
 	camera->Follow(aladin);
@@ -194,7 +261,7 @@ void Render()
 
 		/*for (int i = 0; i < objects.size(); i++)
 			objects[i]->Render();*/
-		grid->RenderObject(camera, objects);
+		grid->RenderObjectEx(camera, objects);
 		aladin->Render();
 
 		spriteHandler->End();
@@ -299,7 +366,9 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	game = CGame::GetInstance();
 	game->Init(hWnd);
 
-	grid = new Grid(32 * 60, 32 * 20, 32 * 10, objects);
+	//grid = new Grid(MAP_LIMIT_RIGHT, MAP_LIMIT_BOT, 32 * 10);
+
+	CreateGrid(objects, grid);
 
 	LoadResources();
 
@@ -307,8 +376,6 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	game->InitKeyboard(keyHandler);
 
 	camera = Camera::GetInstance();
-
-	
 
 	SetWindowPos(hWnd, 0, 0, 0, SCREEN_WIDTH * 1.5f, SCREEN_HEIGHT * 1.5f, SWP_NOMOVE | SWP_NOOWNERZORDER | SWP_NOZORDER);
 

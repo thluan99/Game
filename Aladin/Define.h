@@ -11,6 +11,8 @@ using namespace std;
 // ID object
 enum eType
 {
+	UNKNOWN_VALUE = -1,
+
 	ALADIN = 01,
 	BRICK = 10,
 	BRICK2 = 11,

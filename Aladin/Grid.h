@@ -20,7 +20,8 @@ typedef struct StructCell
 	int ID;
 	int x, y;
 
-	list<CGameObject *> listGameObject;
+	vector<CGameObject *> listGameObject;
+	vector<CGameObject *> listGameObjectTemp;
 
 }Cell;
 
@@ -31,26 +32,33 @@ private:
 
 	int rows, collums;
 	char * gridPathWrite;
-
+public:
 	//Lưu các đối tượng vào mảng
 	unordered_map<int, Cell *> cells;
 
 public:
 	int cell_Size;
 
-	void Add(int ID, int x, int y, list<CGameObject*>);
+	void Add(int ID, int x, int y, vector<CGameObject*>);
+	void AddCell(int ID, vector<CGameObject*> l_gameObject);
 	void InitWriteGrid(vector<LPGAMEOBJECT> objects);
+	void WriteGrid(vector<CGameObject*> objects);
 	Cell* Get(int ID);
 
-	Grid(int width, int height, int size_Cell, vector<LPGAMEOBJECT> objects);
+	Grid(int width, int height, int size_Cell);
 	~Grid();
 
 	void ClearGrid();
 	void SetFile(char *str);
 	bool isInCell(LPGAMEOBJECT, int cellPosX, int cellPosY);
+	bool isInCellMin(LPGAMEOBJECT gameObject, int cellPosX, int cellPosY);
 	void WriteFile(ofstream &outF, int ID, int x, int y, int ObjID, int objx, int objy);
 	void RenderObject(Camera *&camera, vector<LPGAMEOBJECT> &objects);
-	void LoadResourses(vector<LPGAMEOBJECT> &objects);
+	void RenderObjectEx(Camera * camera, vector<LPGAMEOBJECT>& objects);
+	bool isCellInCamera(Camera * camera, Cell * cell);
+	void LoadResourses(vector<LPGAMEOBJECT> &objects, CAladin * aladin);
+
+	void UpdateCollision(DWORD dt, CAladin *&aladin);
 
 };
 #endif // !_GRID_H

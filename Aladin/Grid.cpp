@@ -3,7 +3,7 @@
 
 using namespace std;
 
-Grid::Grid(int width, int height, int cell_Size, vector<LPGAMEOBJECT> objects)
+Grid::Grid(int width, int height, int cell_Size)
 {
 	this->cell_Size = cell_Size;
 	this->rows = height / this->cell_Size;
@@ -12,8 +12,8 @@ Grid::Grid(int width, int height, int cell_Size, vector<LPGAMEOBJECT> objects)
 	//Giữ lấy object 
 	//InitWriteGrid(objects);
 }
-
-void Grid::Add(int ID, int x, int y, list<CGameObject*> l_gameObject)
+#pragma region Old AddCell
+void Grid::Add(int ID, int x, int y, vector<CGameObject*> l_gameObject)
 {
 	Cell *cell = new Cell();
 	cell->ID = ID;
@@ -21,6 +21,14 @@ void Grid::Add(int ID, int x, int y, list<CGameObject*> l_gameObject)
 	cell->y = y;
 	cell->listGameObject = l_gameObject;
 	cells[ID] = cell;
+}
+#pragma endregion
+
+#pragma region Old WriteFile
+void Grid::WriteFile(ofstream &outF, int ID, int x, int y, int ObjID, int objx, int objy)
+{
+	if (outF.is_open())
+		outF << ID << " " << x << " " << y << " " << ObjID << " " << objx << " " << objy << endl;
 }
 
 void Grid::InitWriteGrid(vector<LPGAMEOBJECT> objects)
@@ -34,7 +42,7 @@ void Grid::InitWriteGrid(vector<LPGAMEOBJECT> objects)
 		for (int j = 0; j < collums; j++)
 		{
 			int posX, posY;
-			list<CGameObject *> listGameObject;
+			vector<CGameObject *> listGameObject;
 			//add cell vao cells 
 
 			//lay thong so toa do cua cell
@@ -59,8 +67,71 @@ void Grid::InitWriteGrid(vector<LPGAMEOBJECT> objects)
 		}
 	outF.close();//đóng file
 }
+#pragma endregion
+
+#pragma region Old LoadResources
+CGameObject * GetNewObject(int ID)
+{
+	switch (ID)
+	{
+	case eType::BRICK:
+		return new CBrick();
+
+	case eType::BRICK2:
+		return new CBrick();
+
+	case eType::GOOMBA:
+		return new CGoomba();
+	}
+	return NULL;
+}
+
+void Grid::LoadResourses(vector<LPGAMEOBJECT> &objects, CAladin * aladin)
+{
+	int ID, objID;
+	float x, y, objX, objY;
+	ifstream inFile;
+	//SetFile("textures\\gridWrite.txt");
+	int flagEx = 0;
+
+	inFile.open("textures\\gridWrite.txt", ios::in);
+
+	if (inFile.is_open())
+	{
+		CGameObject* object;
+
+		while (!inFile.eof())
+		{
+			inFile >> ID >> x >> y >> objID >> objX >> objY;
+			while (ID > flagEx)
+			{
+				vector<CGameObject*> listGameObj;
+				flagEx = flagEx + 1;
+				Add(flagEx, x, y, listGameObj);
+			}
+
+			CGameObject * object = GetNewObject(objID);
+			object->gridID = ID;
+			object->firstPosX = objX;
+			object->firstPosY = objY;
+
+			object->LoadResources(objID);
+			object->SetPosition(objX, objY);
+
+			objects.push_back(object);
+
+			cells[ID]->listGameObject.push_back(object);
+			DebugOut(L"[INFO] : doc file");
+		}
+		cout << endl;
+	}
+	inFile.close();
+}
+
+#pragma endregion
 
 //hàm xét object có trong 1 cell nào hay không
+#pragma region IsInCell
 bool Grid::isInCell(LPGAMEOBJECT gameObject, int cellPosX, int cellPosY)
 {
 	float left, top, right, bottom;
@@ -84,27 +155,85 @@ bool Grid::isInCell(LPGAMEOBJECT gameObject, int cellPosX, int cellPosY)
 	return false;
 }
 
-void Grid::WriteFile(ofstream &outF, int ID, int x, int y, int ObjID, int objx, int objy)
+bool Grid::isInCellMin(LPGAMEOBJECT gameObject, int cellPosX, int cellPosY)
 {
-	
-	if (outF.is_open())
-		outF << ID << " "<< x << " " << y << " " << ObjID << " " << objx << " " << objy << endl;
+	float left, top, right, bot;
+	gameObject->GetBoundingBox(left, top, right, bot);
+	float objX = gameObject->x;
+	float objY = gameObject->y;
+	if ((int)objX / cell_Size == cellPosX && (int)objY / cell_Size == cellPosY)
+		return true;
+	return false;
 }
 
-CGameObject * GetNewObject(int ID)
+#pragma endregion
+
+void Grid::AddCell(int ID, vector<CGameObject*> l_gameObject)
 {
-	switch (ID)
+	Cell *cell = new Cell();
+	cell->ID = ID;
+	cell->x = (ID - 1) - collums*(int)((ID - 1)/collums);
+	cell->y = (ID - 1) / collums;
+	cell->listGameObject = l_gameObject;
+	cells[ID] = cell;
+}
+
+void Grid::WriteGrid(vector<CGameObject *> objects)
+{
+	int countIDCell = 1;
+	ofstream outF("textures\\gridWrite1.txt", ios::out | ios::trunc);
+
+	int numCells = (MAP_LIMIT_RIGHT / cell_Size) * (MAP_LIMIT_BOT / cell_Size);
+
+	if (outF.is_open())
 	{
-	case eType::BRICK:
-		return new CBrick();
+		// số ô << kích thước ô << số cột << số hàng
+		outF << numCells << " " << cell_Size << " " << collums << " " << rows << " " << MAP_LIMIT_RIGHT << " " << MAP_LIMIT_BOT << endl;
 
-	case eType::BRICK2:
-		return new CBrick();
+		for (int i = 1; i <= cells.size(); i++)
+		{
+			int flagObjID = -1;		// cờ đổi loại obj
+			int flagObjIDCount = 0;	// cờ đếm số loại obj trong 1 cell
+			outF << countIDCell;															// Ghi so thu tu ô
+			for (int j = 0; j < cells[i]->listGameObject.size(); j++)
+			{
+				if (flagObjID != cells[i]->listGameObject[j]->id)
+				{
+					flagObjIDCount++;
+					flagObjID = cells[i]->listGameObject[j]->id;
+				}
+			}
+			outF << " " << flagObjIDCount;
 
-	case eType::GOOMBA:
-		return new CGoomba();
+			flagObjID = -1;
+
+			for (int j = 0; j < cells[i]->listGameObject.size(); j++)
+			{
+				if (flagObjID != cells[i]->listGameObject[j]->id)					// Mỗi ô được ghi thành 1 hàng
+				{
+					int countObjType = 0;											// Biến đếm số lg obj của 1 đối tượng
+					vector <CGameObject *> listObjType;								// list chứa obj giống nhau		
+
+					flagObjID = cells[i]->listGameObject[j]->id;
+					for (int k = 0; k < cells[i]->listGameObject.size(); k++)
+					{
+						if (flagObjID == cells[i]->listGameObject[k]->id)
+						{
+							listObjType.push_back(cells[i]->listGameObject[k]);
+							countObjType++;
+						}
+					}
+					outF << " " << flagObjID << " " << countObjType;
+					int objx, objy;
+					for (int k = 0; k < listObjType.size(); k++)
+						outF << " " << listObjType[k]->x << " " << listObjType[k]->y;
+				}
+			}
+			outF << endl;
+
+			countIDCell++;
+		}
 	}
-	return NULL;
 }
 
 void Grid::RenderObject(Camera * &camera, vector<LPGAMEOBJECT> &objects)
@@ -143,36 +272,68 @@ void Grid::RenderObject(Camera * &camera, vector<LPGAMEOBJECT> &objects)
 	}
 }
 
-void Grid::LoadResourses(vector<LPGAMEOBJECT> &objects)
+void Grid::RenderObjectEx(Camera *camera, vector<LPGAMEOBJECT> &objects)
 {
-	int ID, objID;
-	float x, y, objX, objY;
-	ifstream inFile;
-	//SetFile("textures\\gridWrite.txt");
-
-	inFile.open("textures\\gridWrite.txt", ios::in);
-
-	if (inFile.is_open())
-	{
-		CGameObject* object;
-
-		while (!inFile.eof())
-		{
-			inFile >> ID >> x >> y >> objID >> objX >> objY;
-			CGameObject * object = GetNewObject(objID);
-			object->gridID = ID;
-			object->firstPosX = objX;
-			object->firstPosY = objY;
-			object->LoadResources(objID);
-			object->SetPosition(objX, objY);
+	int left = (camera->cameraX - SCREEN_WIDTH / 2) / cell_Size;
+	int top = (camera->cameraY - SCREEN_HEIGHT / 2) / cell_Size;
+	int right = (camera->cameraX + SCREEN_WIDTH / 2) / cell_Size;
+	int bot = (camera->cameraY + SCREEN_HEIGHT / 2) / cell_Size;
 	
-			objects.push_back(object);
-
-			DebugOut(L"[INFO] : doc file");
+	for (int n = 1; n <= cells.size(); n++)
+	{
+		if (isCellInCamera(camera, cells[n]) == true)
+		{
+			if (!cells[n]->listGameObjectTemp.empty())
+				for (int j = 0; j < cells[n]->listGameObjectTemp.size(); j++)
+					cells[n]->listGameObject.push_back(cells[n]->listGameObjectTemp[j]);
+			if (!cells[n]->listGameObject.empty())
+				for (int i = 0; i < cells[n]->listGameObject.size(); i++)
+					cells[n]->listGameObject[i]->Render();
+			cells[n]->listGameObjectTemp.clear();
+			//(L"[INFO] : clear temp list");
 		}
-		cout << endl;
+		else
+		{	
+			if (!cells[n]->listGameObject.empty())
+				for (int i = 0; i < cells[n]->listGameObject.size(); i++)
+					cells[n]->listGameObjectTemp.push_back(cells[n]->listGameObject[i]);
+			cells[n]->listGameObject.clear();
+			//DebugOut(L"[INFO] : clear list");
+		}
 	}
-	inFile.close();
+}
+
+bool Grid::isCellInCamera(Camera *camera, Cell *cell)
+{
+	int left = (camera->cameraX - SCREEN_WIDTH / 2) / cell_Size;
+	int top = (camera->cameraY - SCREEN_HEIGHT / 2) / cell_Size;
+	int right = (camera->cameraX + SCREEN_WIDTH / 2) / cell_Size;
+	int bot = (camera->cameraY + SCREEN_HEIGHT / 2) / cell_Size;
+
+	if (cell->x >= left && cell->x <= right && cell->y >= top && cell->y <= bot)
+		return true;
+	return false;
+}
+
+void Grid::UpdateCollision(DWORD dt, CAladin *&aladin)
+{
+	int numColumns = MAP_LIMIT_RIGHT / cell_Size;
+	vector<LPGAMEOBJECT> coObject;
+
+	for (int i = 1; i < cells.size(); i++)
+	{
+		cells[i]->listGameObject.push_back(aladin);
+		for (int j = 0; j < cells[i]->listGameObject.size() - 1; j++)
+			coObject.push_back(cells[i]->listGameObject[j]);
+	}
+	for (int i = 1; i < cells.size(); i++)
+	{
+		for (int j = 0; j < cells[i]->listGameObject.size(); j++)
+		{
+			cells[i]->listGameObject[j]->Update(dt, &coObject);
+		}
+		cells[i]->listGameObject.pop_back();
+	}
 }
 
 Cell* Grid::Get(int ID)
@@ -195,5 +356,3 @@ void Grid::SetFile(char * str)
 {
 	gridPathWrite = str;
 }
-
-
