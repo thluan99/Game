@@ -5,8 +5,8 @@ using namespace std;
 #define SCREEN_WIDTH 600
 #define SCREEN_HEIGHT 400
 #define BACKGROUND_COLOR D3DCOLOR_XRGB(52, 32, 43)
-#define MAP_LIMIT_RIGHT 32*60
-#define MAP_LIMIT_BOT 32*20
+#define MAP_LIMIT_RIGHT 32*71
+#define MAP_LIMIT_BOT 32*36
 
 // ID object
 enum eType

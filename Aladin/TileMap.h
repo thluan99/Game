@@ -4,7 +4,7 @@
 #define TILE_SIZE 32
 #define ID_TEX_TILE_MAP 99
 #define ID_TEX_TILE_SET 98
-#define FILE_PATH L"textures\\tileset.png"
+#define FILE_PATH L"textures\\tile_map.png"
 //Tile co ID dac biet 
 #include <fstream>
 

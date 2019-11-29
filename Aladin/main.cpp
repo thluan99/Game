@@ -201,7 +201,7 @@ void LoadResources()
 {
 	tileMap = new TileMap();
 	tileMap->LoadResource();
-	tileMap->ReadMapFile("textures/tileset.txt");
+	tileMap->ReadMapFile("textures/tile_map.txt");
 
 	aladin = new CAladin();
 	aladin->LoadResources(eType::ALADIN);

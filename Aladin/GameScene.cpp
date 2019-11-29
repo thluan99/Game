@@ -3,7 +3,7 @@
 void GameScene::LoadTileMap(int rows, int colums, int sizeCell)
 {
 	CTextures *textures = CTextures::GetInstance();
-	textures->Add(ID_TEX_TILE_MAP, L"texture\\tileset.png", D3DCOLOR_XRGB(0, 0, 0));
+	textures->Add(ID_TEX_TILE_MAP, L"texture\\tile_map.png", D3DCOLOR_XRGB(0, 0, 0));
 	
 	Tiles *tiles = Tiles::GetInstance();
 
