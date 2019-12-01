@@ -156,8 +156,9 @@ void CreateGrid(vector <CGameObject *> &objects, Grid *&grid)
 	int numCells, cells_size, columns, rows, width, height;
 	int cellID, numObjTypeCell, numObjForType, typeObj;
 	ifstream inFile;
-	inFile.open("textures\\gridWrite1.txt", ios::in);
 
+	inFile.open("textures\\gridWrite1.txt", ios::in);
+  
 	CTextures* textures;
 	textures = CTextures::GetInstance();
 
