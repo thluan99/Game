@@ -41,6 +41,7 @@ public:
 
 	void Add(int ID, int x, int y, vector<CGameObject*>);
 	void AddCell(int ID, vector<CGameObject*> l_gameObject);
+	void TestObjInWhatCell(CGameObject * obj);
 	void InitWriteGrid(vector<LPGAMEOBJECT> objects);
 	void WriteGrid(vector<CGameObject*> objects);
 	Cell* Get(int ID);
