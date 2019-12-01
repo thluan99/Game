@@ -14,6 +14,13 @@ void CAladin::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 	// Simple fall down
 	vy += ALADIN_GRAVITY*dt;
 
+	if (this->y > MAP_LIMIT_BOT - 100)
+		this->y = MAP_LIMIT_BOT - 100;
+	if (this->x > MAP_LIMIT_RIGHT - 50)
+		this->x = MAP_LIMIT_RIGHT - 50;
+	if (this->y < -50) this->y = -50;
+	if (this->x < 0) this->x = 0;
+
 	vector<LPCOLLISIONEVENT> coEvents;
 	vector<LPCOLLISIONEVENT> coEventsResult;
 

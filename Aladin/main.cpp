@@ -151,19 +151,25 @@ CGameObject * GetNewObjectEx(int ID)
 	return NULL;
 }
 
-
 void CreateGrid(vector <CGameObject *> &objects, Grid *&grid)
 {
 	int numCells, cells_size, columns, rows, width, height;
 	int cellID, numObjTypeCell, numObjForType, typeObj;
 	ifstream inFile;
 	inFile.open("textures\\gridWrite1.txt", ios::in);
+
+	CTextures* textures;
+	textures = CTextures::GetInstance();
+
+	textures->Add(ID_TEX_MAP, L"textures\\map_tex.png", D3DCOLOR_XRGB(163, 73, 164));
+	textures->Add(ID_TEX_BRICK_2, L"textures\\tileset.png", (BACKGROUND_COLOR));
+
 	if (inFile.is_open())
 	{
 		inFile >> numCells >> cells_size >> columns >> rows >> width >> height;
 		grid = new Grid(width, height, cells_size);
 
-		for (int n = 0; n < numCells; n++)
+		for (int n = 1; n <= numCells; n++)
 		{
 				inFile >> cellID >> numObjTypeCell;
 				vector <CGameObject *> l_gameObject;
@@ -189,6 +195,8 @@ void CreateGrid(vector <CGameObject *> &objects, Grid *&grid)
 						gameObject->SetPosition(objX, objY);
 
 						objects.push_back(gameObject);
+						
+						//grid->TestObjInWhatCell(gameObject);
 						grid->cells[cellID]->listGameObject.push_back(gameObject);
 					}
 					DebugOut(L"-----------[Doc file]\n");
@@ -229,6 +237,7 @@ void Update(DWORD dt)
 	{
 		objects[i]->Update(dt,&coObjects);
 	}
+
 	//grid->UpdateCollision(dt, aladin);
 
 	// Update camera to follow aladin

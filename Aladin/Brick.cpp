@@ -18,8 +18,6 @@ void CBrick::LoadResources(int ID)
 
 	if (this->id == eType::BRICK)
 	{
-		textures->Add(ID_TEX_MAP, L"textures\\map_tex.png", D3DCOLOR_XRGB(163, 73, 164));
-
 		LPDIRECT3DTEXTURE9 texBrick = textures->Get(ID_TEX_MAP);
 		sprites->Add(40001, 73, 1770, 73 + 34, 1770 + 17, texBrick);
 
@@ -31,7 +29,6 @@ void CBrick::LoadResources(int ID)
 	}
 	else if (this->id == eType::BRICK2)
 	{
-		textures->Add(ID_TEX_BRICK_2, L"textures\\tileset.png", (BACKGROUND_COLOR));
 		// BRICK VER 2
 		LPDIRECT3DTEXTURE9 texBrick2 = textures->Get(ID_TEX_BRICK_2);
 		sprites->Add(40002, 96, 0, 96 + 32, 0 + 32, texBrick2);

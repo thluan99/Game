@@ -6,8 +6,8 @@ using namespace std;
 Grid::Grid(int width, int height, int cell_Size)
 {
 	this->cell_Size = cell_Size;
-	this->rows = height / this->cell_Size;
-	this->collums = width / this->cell_Size;
+	this->rows = (height - 1) / this->cell_Size + 1;
+	this->collums = (width - 1) / this->cell_Size + 1;
 
 	//Giữ lấy object 
 	//InitWriteGrid(objects);
@@ -178,20 +178,33 @@ void Grid::AddCell(int ID, vector<CGameObject*> l_gameObject)
 	cells[ID] = cell;
 }
 
+void Grid::TestObjInWhatCell(CGameObject * obj)
+{
+	for (int i = 1; i <= cells.size(); i++)
+		if (isInCell(obj, cells[i]->x, cells[i]->y) == true)
+			cells[i]->listGameObject.push_back(obj);
+}
+
 void Grid::WriteGrid(vector<CGameObject *> objects)
 {
 	int countIDCell = 1;
 	ofstream outF("textures\\gridWrite1.txt", ios::out | ios::trunc);
 
-	int numCells = (MAP_LIMIT_RIGHT / cell_Size) * (MAP_LIMIT_BOT / cell_Size);
+	collums = (MAP_LIMIT_RIGHT - 1)/ cell_Size + 1;
+	rows = (MAP_LIMIT_BOT - 1) / cell_Size + 1;
+	int numCells = collums*rows;
 
 	if (outF.is_open())
-	{
+	{		
 		// số ô << kích thước ô << số cột << số hàng
 		outF << numCells << " " << cell_Size << " " << collums << " " << rows << " " << MAP_LIMIT_RIGHT << " " << MAP_LIMIT_BOT << endl;
 
-		for (int i = 1; i <= cells.size(); i++)
+		for (int i = 1; i <= numCells; i++)
 		{
+			vector<CGameObject*> listO;
+			if (cells[i] == NULL)
+				AddCell(i, listO);
+
 			int flagObjID = -1;		// cờ đổi loại obj
 			int flagObjIDCount = 0;	// cờ đếm số loại obj trong 1 cell
 			outF << countIDCell;															// Ghi so thu tu ô
@@ -236,6 +249,7 @@ void Grid::WriteGrid(vector<CGameObject *> objects)
 	}
 }
 
+#pragma region OldRender
 void Grid::RenderObject(Camera * &camera, vector<LPGAMEOBJECT> &objects)
 {
 	int left = (camera->cameraX - SCREEN_WIDTH / 2) / cell_Size;
@@ -260,7 +274,7 @@ void Grid::RenderObject(Camera * &camera, vector<LPGAMEOBJECT> &objects)
 			}
 			countID++;
 		}
-		setLeftCount = setLeftCount + MAP_LIMIT_RIGHT / cell_Size;
+		setLeftCount = setLeftCount + collums;
 	}
 
 	for (int i = 0; i < objects.size(); i++)
@@ -271,6 +285,8 @@ void Grid::RenderObject(Camera * &camera, vector<LPGAMEOBJECT> &objects)
 		}
 	}
 }
+
+#pragma endregion
 
 void Grid::RenderObjectEx(Camera *camera, vector<LPGAMEOBJECT> &objects)
 {
@@ -317,22 +333,17 @@ bool Grid::isCellInCamera(Camera *camera, Cell *cell)
 
 void Grid::UpdateCollision(DWORD dt, CAladin *&aladin)
 {
-	int numColumns = MAP_LIMIT_RIGHT / cell_Size;
-	vector<LPGAMEOBJECT> coObject;
-
-	for (int i = 1; i < cells.size(); i++)
+	for (int i = 1; i <= cells.size(); i++)
 	{
-		cells[i]->listGameObject.push_back(aladin);
-		for (int j = 0; j < cells[i]->listGameObject.size() - 1; j++)
-			coObject.push_back(cells[i]->listGameObject[j]);
-	}
-	for (int i = 1; i < cells.size(); i++)
-	{
-		for (int j = 0; j < cells[i]->listGameObject.size(); j++)
+		if (isInCell(aladin, cells[i]->x, cells[i]->y));
 		{
-			cells[i]->listGameObject[j]->Update(dt, &coObject);
+			vector <LPGAMEOBJECT> coObject;
+			for (int j = 0; j < cells[i]->listGameObject.size(); j++)
+				coObject.push_back(cells[i]->listGameObject[j]);
+			aladin->Update(dt, &coObject);
+			for (int j = 0; j < cells[i]->listGameObject.size(); j++)
+				cells[i]->listGameObject[j]->Update(dt, &coObject);
 		}
-		cells[i]->listGameObject.pop_back();
 	}
 }
 
@@ -340,7 +351,6 @@ Cell* Grid::Get(int ID)
 {
 	return cells[ID];
 }
-
 
 Grid::~Grid()
 {
