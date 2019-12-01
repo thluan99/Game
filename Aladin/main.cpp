@@ -157,7 +157,14 @@ void CreateGrid(vector <CGameObject *> &objects, Grid *&grid)
 	int numCells, cells_size, columns, rows, width, height;
 	int cellID, numObjTypeCell, numObjForType, typeObj;
 	ifstream inFile;
+
 	inFile.open("textures\\gridWrite1.txt", ios::in);
+	CTextures* textures;
+	textures = CTextures::GetInstance();
+
+	textures->Add(ID_TEX_MAP, L"textures\\map_tex.png", D3DCOLOR_XRGB(163, 73, 164));
+	textures->Add(ID_TEX_BRICK_2, L"textures\\tileset.png", (BACKGROUND_COLOR));
+
 	if (inFile.is_open())
 	{
 		inFile >> numCells >> cells_size >> columns >> rows >> width >> height;
