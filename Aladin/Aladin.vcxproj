@@ -143,6 +143,7 @@
     <ClInclude Include="Goomba.h" />
     <ClInclude Include="Aladin.h" />
     <ClInclude Include="Grid.h" />
+    <ClInclude Include="Bat.h" />
     <ClInclude Include="Sprites.h" />
     <ClInclude Include="Textures.h" />
     <ClInclude Include="TileMap.h" />
@@ -161,6 +162,7 @@
     <ClCompile Include="Grid.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Aladin.cpp" />
+    <ClCompile Include="Bat.cpp" />
     <ClCompile Include="Sprites.cpp" />
     <ClCompile Include="Textures.cpp" />
     <ClCompile Include="TileMap.cpp" />

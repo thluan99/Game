@@ -36,6 +36,7 @@
 #include "Goomba.h"
 #include "Enemy1.h"
 #include "Enemy2.h"
+#include "Bat.h"
 #include "Grid.h"
 
 #define WINDOW_CLASS_NAME L"SampleWindow"
@@ -236,6 +237,8 @@ CGameObject * GetNewObjectEx(int ID)
 	case eType::ENEMY2:
 		return new Enemy2();
 
+	case eType::BAT:
+		return new Bat();
 	}
 	return NULL;
 }
