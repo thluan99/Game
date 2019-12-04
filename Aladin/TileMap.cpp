@@ -68,13 +68,28 @@ void TileMap::DrawMap(Camera *camera)
 	{
 		for (int j = 0; j < columns_Tile; j++)
 		{
-			if (tile_Map[i][j] != 0)
+			if (tile_Map[i][j] != 0 && isInCamera(j,i,camera)) // kiểm tra cell nào trong cam thì render ra
 			{
 				//Vì j là columns nên nó sẽ gắn liền với giá trị tọa độ x, i là y
 				tiles->Get(tile_Map[i][j])->Draw(j*TILE_SIZE, i*TILE_SIZE);
 			}			
 		}
 	}
+}
+
+//====================================
+//kiểm tra cell có trong grid
+//====================================
+bool TileMap::isInCamera(int x, int y, Camera* camera)
+{
+	if ((x * TILE_SIZE >= camera->GetXCam() - camera->GetWidth() / 2 - TILE_SIZE ||
+		x * TILE_SIZE <= camera->GetXCam() + camera->GetWidth() / 2) &&
+		(y * TILE_SIZE >= camera->GetYCam() - camera->GetHeight() / 2 - TILE_SIZE ||
+			y * TILE_SIZE <= camera->GetYCam() + camera->GetHeight() / 2))
+		return true;
+	else
+		return false;
+
 }
 
 

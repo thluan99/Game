@@ -50,5 +50,6 @@ public:
 	void LoadResource();
 	void ReadMapFile(char* filename);
 	void DrawMap(Camera*);
+	bool isInCamera(int, int, Camera*);
 };
 #pragma once

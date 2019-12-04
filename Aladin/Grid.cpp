@@ -290,11 +290,6 @@ void Grid::RenderObject(Camera * &camera, vector<LPGAMEOBJECT> &objects)
 
 void Grid::RenderObjectEx(Camera *camera, vector<LPGAMEOBJECT> &objects)
 {
-	int left = (camera->cameraX - SCREEN_WIDTH / 2) / cell_Size;
-	int top = (camera->cameraY - SCREEN_HEIGHT / 2) / cell_Size;
-	int right = (camera->cameraX + SCREEN_WIDTH / 2) / cell_Size;
-	int bot = (camera->cameraY + SCREEN_HEIGHT / 2) / cell_Size;
-	
 	for (int n = 1; n <= cells.size(); n++)
 	{
 		if (isCellInCamera(camera, cells[n]) == true)
@@ -335,15 +330,13 @@ void Grid::UpdateCollision(DWORD dt, CAladin *&aladin)
 {
 	for (int i = 1; i <= cells.size(); i++)
 	{
-		if (isInCell(aladin, cells[i]->x, cells[i]->y));
-		{
-			vector <LPGAMEOBJECT> coObject;
-			for (int j = 0; j < cells[i]->listGameObject.size(); j++)
-				coObject.push_back(cells[i]->listGameObject[j]);
-			aladin->Update(dt, &coObject);
-			for (int j = 0; j < cells[i]->listGameObject.size(); j++)
-				cells[i]->listGameObject[j]->Update(dt, &coObject);
-		}
+		vector <CGameObject*> coObjects;
+		for (int j = 0; j < cells[i]->listGameObject.size(); j++)
+			coObjects.push_back(cells[i]->listGameObject[j]);
+		if (isInCellMin(aladin, cells[i]->x, cells[i]->y))
+			aladin->Update(dt, &coObjects);
+		for (int j = 0; j < cells[i]->listGameObject.size(); j++)
+			cells[i]->listGameObject[j]->Update(dt, &coObjects);
 	}
 }
 

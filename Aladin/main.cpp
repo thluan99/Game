@@ -39,7 +39,7 @@
 #define WINDOW_CLASS_NAME L"SampleWindow"
 #define MAIN_WINDOW_TITLE L"Aladin X Mario"
 
-#define MAX_FRAME_RATE			120
+#define MAX_FRAME_RATE			180
 
 #define ID_TEX_ALADIN			0
 #define ID_TEX_ALADIN_F			01
@@ -75,10 +75,18 @@ void CSampleKeyHander::OnKeyDown(int KeyCode)
 	switch (KeyCode)
 	{
 	case DIK_X:
-		aladin->SetState(ALADIN_STATE_JUMP);
+		if (!aladin->getNhay() )
+			aladin->setNhay(true);
+		break;
+	case DIK_C:
+		if (!aladin->getChem())
+			aladin->setChem(true);
+		break;
+	case DIK_RIGHT:
+		aladin->SetState(ALADIN_STATE_WALKING_RIGHT);
 		break;
 	case DIK_A: // reset
-		aladin->SetState(ALADIN_STATE_IDLE);
+		aladin->SetState(ALADIN_STATE_IDLE_RIGHT);
 		aladin->SetPosition(50.0f, 0.0f);
 		aladin->SetSpeed(0, 0);
 		break;
@@ -86,12 +94,18 @@ void CSampleKeyHander::OnKeyDown(int KeyCode)
 		grid->WriteGrid(objects);
 		DebugOut(L"[INFO] : Rewrite file gridWrite.txt\n");
 		break;
+	case DIK_DOWN:
+		if (aladin->GetDirection() == 1)
+			aladin->SetState(ALADIN_STATE_SIT_RIGHT);
+		else aladin->SetState(ALADIN_STATE_SIT_LEFT);
+		break;
 	case DIK_0:
 		ofstream ofs;
 		ofs.open("textures\\gridWrite1.txt", ofstream::out | ofstream::trunc);
 		ofs.close();
 		DebugOut(L"[INFO] : Clear file gridWrite.txt\n");
 		break;
+
 	}
 }
 
@@ -99,17 +113,48 @@ void CSampleKeyHander::OnKeyUp(int KeyCode)
 {
 	DebugOut(L"[INFO] KeyUp: %d\n", KeyCode);
 }
-
-void CSampleKeyHander::KeyState(BYTE *states)
+void CSampleKeyHander::KeyState(BYTE* states)
 {
 	// disable control key when Aladin die 
 	if (aladin->GetState() == ALADIN_STATE_DIE) return;
-	if (game->IsKeyDown(DIK_RIGHT))
-		aladin->SetState(ALADIN_STATE_WALKING_RIGHT);
-	else if (game->IsKeyDown(DIK_LEFT))
-		aladin->SetState(ALADIN_STATE_WALKING_LEFT);
+	if (game->IsKeyDown(DIK_RIGHT)) {
+		if (aladin->GetState() != ALADIN_STATE_JUMP_RIGHT)
+		{
+			aladin->SetDirection(1);
+			aladin->SetState(ALADIN_STATE_WALKING_RIGHT);
+		}
+
+	}
+	/*else if (game->IsKeyDown(DIK_X))
+		aladin->SetState(ALADIN_STATE_JUMP);*/
 	else
-		aladin->SetState(ALADIN_STATE_IDLE);
+		if (game->IsKeyDown(DIK_LEFT)) {
+			aladin->SetState(ALADIN_STATE_WALKING_LEFT);
+			aladin->SetDirection(-1);
+		}
+	/*if(game->IsKeyDown(DIK_X))
+   {
+	   if (aladin->GetState() == ALADIN_STATE_WALKING_RIGHT)
+		   aladin->SetState(ALADIN_STATE_JUMP_RIGHT);
+	   else
+		   aladin->SetState(ALADIN_STATE_JUMP);
+   }*/
+   /*else if (game->IsKeyDown(DIK_X)) {
+	   if(aladin->GetState() != ALADIN_STATE_JUMP)
+	   aladin->SetState(ALADIN_STATE_JUMP);
+   }*/
+		else //if(aladin->GetState()== ALADIN_STATE_WALKING_LEFT || aladin->GetState() == ALADIN_STATE_WALKING_RIGHT){
+			if (game->IsKeyDown(DIK_DOWN))
+			{
+				if (aladin->GetDirection() == 1)
+					aladin->SetState(ALADIN_STATE_SIT_RIGHT);
+				else aladin->SetState(ALADIN_STATE_SIT_LEFT);
+			}
+			else {
+				if (aladin->GetDirection() == 1)
+					aladin->SetState(ALADIN_STATE_IDLE_RIGHT);
+				else aladin->SetState(ALADIN_STATE_IDLE_LEFT);
+			}
 }
 
 #pragma endregion
@@ -228,7 +273,7 @@ void Update(DWORD dt)
 	// We know that Aladin is the first object in the list hence we won't add him into the colliable object list
 	// TO-DO: This is a "dirty" way, need a more organized way 
 
-	vector<LPGAMEOBJECT> coObjects;
+	/*vector<LPGAMEOBJECT> coObjects;
 	for (int i = 1; i < objects.size(); i++)
 	{
 		coObjects.push_back(objects[i]);
@@ -237,9 +282,9 @@ void Update(DWORD dt)
 	for (int i = 0; i < objects.size(); i++)
 	{
 		objects[i]->Update(dt,&coObjects);
-	}
+	}*/
 
-	//grid->UpdateCollision(dt, aladin);
+	grid->UpdateCollision(dt, aladin);
 
 	// Update camera to follow aladin
 	camera->Follow(aladin);
