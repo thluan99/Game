@@ -448,10 +448,20 @@ void CAladin::LoadResources(int ID)
 
 void CAladin::GetBoundingBox(float &left, float &top, float &right, float &bottom)
 {
-	left = x- ALADIN_BIG_BBOX_WIDTH/2;
-	top = y; 
-	right = x + ALADIN_BIG_BBOX_WIDTH;
-	bottom = y + ALADIN_BIG_BBOX_HEIGHT;
+	if (direction == 1)
+	{
+		left = x;
+		top = y;
+		right = x + ALADIN_BIG_BBOX_WIDTH;
+		bottom = y + ALADIN_BIG_BBOX_HEIGHT;
+	}
+	else
+	{
+		left = x;
+		top = y;
+		right = x + ALADIN_BIG_BBOX_WIDTH;
+		bottom = y + ALADIN_BIG_BBOX_HEIGHT;
+	}
 }
 
 void CAladin::ReLoad()

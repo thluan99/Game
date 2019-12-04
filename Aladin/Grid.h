@@ -10,6 +10,8 @@
 #include "Define.h"
 #include "Aladin.h"
 #include "Camera.h"
+#include "Enemy1.h"
+#include "Enemy2.h"
 #include <fstream>
 #include <iostream>
 

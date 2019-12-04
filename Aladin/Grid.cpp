@@ -82,6 +82,13 @@ CGameObject * GetNewObject(int ID)
 
 	case eType::GOOMBA:
 		return new CGoomba();
+
+	case eType::ENEMY1:
+		return new Enemy1();
+
+	case eType::ENEMY2:
+		return new Enemy2();
+
 	}
 	return NULL;
 }

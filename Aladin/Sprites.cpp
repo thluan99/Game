@@ -90,10 +90,8 @@ void CAnimation::RenderAladin(float x, float y, int direct, int alpha)
 	}
 	int hei = frames[currentFrame]->GetSprite()->GetHeight();
 	int w = frames[currentFrame]->GetSprite()->GetWidth();
-	if (direct == 1)
-		frames[currentFrame]->GetSprite()->Draw(x, y - hei, alpha);
-	else if (direct == -1)
-		frames[currentFrame]->GetSprite()->Draw(x - w / 2, y - hei, alpha);
+
+	frames[currentFrame]->GetSprite()->Draw(x, y - hei, alpha);
 }
 void CAnimation::RenderAladin(int &stt,float x, float y, int direct, int alpha)
 {

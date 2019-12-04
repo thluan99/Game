@@ -34,6 +34,8 @@
 #include "Aladin.h"
 #include "Brick.h"
 #include "Goomba.h"
+#include "Enemy1.h"
+#include "Enemy2.h"
 #include "Grid.h"
 
 #define WINDOW_CLASS_NAME L"SampleWindow"
@@ -72,6 +74,41 @@ CSampleKeyHander * keyHandler;
 void CSampleKeyHander::OnKeyDown(int KeyCode)
 {
 	DebugOut(L"[INFO] KeyDown: %d\n", KeyCode);
+
+	switch (KeyCode)
+	{
+	case DIK_5:
+		for (int i = 1; i < grid->cells.size(); i++)
+			for (int j = 0; j < grid->cells[i]->listGameObject.size(); j++)
+				if (grid->cells[i]->listGameObject[j]->id == eType::ENEMY1)
+					grid->cells[i]->listGameObject[j]->SetState(ENEMY1_STATE_ATTACK_LEFT);
+		break;
+	case DIK_1:
+		for (int i = 1; i < grid->cells.size(); i++)
+			for (int j = 0; j < grid->cells[i]->listGameObject.size(); j++)
+				if (grid->cells[i]->listGameObject[j]->id == eType::ENEMY1)
+					grid->cells[i]->listGameObject[j]->SetState(ENEMY1_STATE_ATTACK_RIGHT_MID);
+		break;
+	case DIK_2:
+		for (int i = 1; i < grid->cells.size(); i++)
+			for (int j = 0; j < grid->cells[i]->listGameObject.size(); j++)
+				if (grid->cells[i]->listGameObject[j]->id == eType::ENEMY1)
+					grid->cells[i]->listGameObject[j]->SetState(ENEMY1_STATE_HIT_LEFT);
+		break;
+	case DIK_3:
+		for (int i = 1; i < grid->cells.size(); i++)
+			for (int j = 0; j < grid->cells[i]->listGameObject.size(); j++)
+				if (grid->cells[i]->listGameObject[j]->id == eType::ENEMY1)
+					grid->cells[i]->listGameObject[j]->SetState(ENEMY1_STATE_IDLE_RIGHT);
+		break;
+	case DIK_4:
+		for (int i = 1; i < grid->cells.size(); i++)
+			for (int j = 0; j < grid->cells[i]->listGameObject.size(); j++)
+				if (grid->cells[i]->listGameObject[j]->id == eType::ENEMY1)
+					grid->cells[i]->listGameObject[j]->SetState(ENEMY1_STATE_RUN_LEFT);
+		break;
+	}
+
 	switch (KeyCode)
 	{
 	case DIK_X:
@@ -192,6 +229,13 @@ CGameObject * GetNewObjectEx(int ID)
 
 	case eType::GOOMBA:
 		return new CGoomba();
+
+	case eType::ENEMY1:
+		return new Enemy1();
+
+	case eType::ENEMY2:
+		return new Enemy2();
+
 	}
 	return NULL;
 }

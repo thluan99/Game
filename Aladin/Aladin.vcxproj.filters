@@ -27,6 +27,12 @@
     <ClCompile Include="Grid.cpp">
       <Filter>Grid</Filter>
     </ClCompile>
+    <ClCompile Include="Enemy1.cpp">
+      <Filter>Enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="Enemy2.cpp">
+      <Filter>Enemy</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="debug.h" />
@@ -55,6 +61,12 @@
     <ClInclude Include="Grid.h">
       <Filter>Grid</Filter>
     </ClInclude>
+    <ClInclude Include="Enemy1.h">
+      <Filter>Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="Enemy2.h">
+      <Filter>Enemy</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Map">
@@ -68,6 +80,9 @@
     </Filter>
     <Filter Include="Grid">
       <UniqueIdentifier>{e4d95180-10c9-464f-b7e4-8ed23ea0d060}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Enemy">
+      <UniqueIdentifier>{72d57aed-2bfc-46f1-b6d7-26b576702b19}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>
