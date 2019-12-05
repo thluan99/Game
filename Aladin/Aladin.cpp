@@ -33,8 +33,10 @@ void CAladin::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 	// No collision occured, proceed normally
 	if (coEvents.size()==0)
 	{
+		
 		x += dx;
 		y += dy;
+		
 	}
 	else
 	{
@@ -73,18 +75,73 @@ void CAladin::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 void CAladin::Render()
 {
 	int ani;
-	if (state == ALADIN_STATE_DI_PHAI)
-		ani = ALADIN_ANI_DI_PHAI;
-	else if (state == ALADIN_STATE_DI_TRAI)
-		ani = ALADIN_ANI_DI_TRAI;
-	else if (state == ALADIN_STATE_IDLE_TRAI)
-		ani = ALADIN_ANI_IDLE_TRAI;
-	else if (state == ALADIN_STATE_IDLE_PHAI)
+	switch (state)
+	{
+	case ALADIN_STATE_IDLE:
 		ani = ALADIN_ANI_IDLE_PHAI;
-	else if (state == ALADIN_STATE_NGOI_PHAI)
-		ani = ALADIN_ANI_NGOI_PHAI;
-	else if (state == ALADIN_STATE_NGOI_TRAI)
-		ani = ALADIN_ANI_NGOI_TRAI;
+		break;
+	case ALADIN_STATE_DI:
+		if (direction==1)
+		{
+			ani = ALADIN_ANI_DI_PHAI;
+		}
+		else
+		{
+			ani = ALADIN_ANI_DI_TRAI;
+		}
+		break;
+	case ALADIN_STATE_NGOI:
+		if (direction==1)
+		{
+			ani = ALADIN_ANI_NGOI_PHAI;
+		}
+		else
+		{
+			ani = ALADIN_ANI_NGOI_TRAI;
+		}
+		break;
+	case ALADIN_STATE_NGUOC_LEN:
+		if (direction == 1)
+		{
+			ani = ALADIN_ANI_NGUOC_LEN_PHAI;
+		}
+		else
+		{
+			ani = ALADIN_ANI_NGUOC_LEN_TRAI;
+		}
+		break;
+	case ALADIN_STATE_CHEM:
+		if (direction == 1)
+		{
+			ani = ALADIN_ANI_CHEM_PHAI;
+		}
+		else
+		{
+			ani = ALADIN_ANI_CHEM_TRAI;
+		}
+		break;
+	case ALADIN_STATE_NGOI_CHEM:
+		if (direction == 1)
+		{
+			ani = ALADIN_ANI_NGOI_CHEM_PHAI;
+		}
+		else
+		{
+			ani = ALADIN_ANI_NGOI_CHEM_TRAI;
+		}
+		break;
+	case ALADIN_STATE_NHAY:
+		
+			ani = ALADIN_ANI_NHAY;
+		
+		break;
+	case ALADIN_STATE_ROT:
+		
+			ani = ALADIN_ANI_ROT;
+		
+		break;
+	}
+
 
 	int alpha = 255;
 	/*if (stateNhay == true)
@@ -113,7 +170,27 @@ void CAladin::Render()
 				stateChem = false;
 		}
 		else*/
-			animations[ani]->RenderAladin(x, y+ALADIN_BIG_BBOX_HEIGHT, this->direction, alpha);
+	
+	int stt = 0;
+	
+	switch (state)
+	{
+	case ALADIN_STATE_CHEM:
+	case ALADIN_STATE_NGOI_CHEM:
+	case ALADIN_STATE_NHAY:
+		animations[ani]->RenderAladin(stt, x, y + ALADIN_BIG_BBOX_HEIGHT, this->direction, alpha);
+		if (stt == 0)
+			enableKey = false;
+		else { enableKey = true; 
+		state = ALADIN_STATE_IDLE;
+		}
+	default:
+		animations[ani]->RenderAladin(x, y + ALADIN_BIG_BBOX_HEIGHT, this->direction, alpha);
+	}	
+		
+	
+	
+	
 
 	
 
@@ -126,39 +203,39 @@ void CAladin::SetState(int state)
 
 	switch (state)
 	{
-	case ALADIN_STATE_DI_PHAI:
-		vx = ALADIN_WALKING_SPEED;
-		nx = ALADIN_STATE_DI_PHAI;
+	case ALADIN_STATE_DI:
+		if (direction == 1)
+		{
+			vx = ALADIN_WALKING_SPEED;
+		}
+		else
+		{
+			vx = -ALADIN_WALKING_SPEED;
+		}
+		
+		
 		break;
-
-	case ALADIN_STATE_DI_TRAI:
-		vx = -ALADIN_WALKING_SPEED;
-		nx = ALADIN_STATE_DI_TRAI;
+	case ALADIN_STATE_NGUOC_LEN:
+		vy = 0;
 		break;
-
 	case ALADIN_STATE_NHAY:
 		vy = -ALADIN_JUMP_SPEED_Y;// -ALADIN_JUMP_SPEED_Y;
 		nx = ALADIN_STATE_NHAY;
 		break;
 
-	case ALADIN_STATE_NHAY_PHAI:
-		vy = -ALADIN_JUMP_SPEED_Y;
-		nx = ALADIN_STATE_NHAY_PHAI;
+	
+	case ALADIN_STATE_IDLE:
+		vx = 0;
+		nx = ALADIN_STATE_IDLE;
 		break;
 
-	case ALADIN_STATE_IDLE_TRAI:
+	case ALADIN_STATE_NGOI:
 		vx = 0;
-		nx = ALADIN_STATE_IDLE_TRAI;
+		nx = ALADIN_STATE_NGOI;
 		break;
-
-	case ALADIN_STATE_IDLE_PHAI:
+	case ALADIN_STATE_CHEM:
 		vx = 0;
-		nx = ALADIN_STATE_IDLE_PHAI;
-		break;
-
-	case ALADIN_STATE_NGOI_PHAI:
-		vx = 0;
-		nx = ALADIN_STATE_NGOI_PHAI;
+		nx = ALADIN_STATE_CHEM;
 		break;
 
 	case ALADIN_STATE_NGOI_TRAI:
@@ -221,38 +298,34 @@ void CAladin::LoadResources(int ID)
 	ani->Add(20012);
 	animations->Add(401, ani);
 
-	//----ngoi phải----
+	//----ngồi phải----
 	sprites->Add(20015, 9, 640, 9 + 47, 640 + 33, texAladin);
 
 	ani = new CAnimation(100);	// ngoi phải
 	ani->Add(20015);
 	animations->Add(402, ani);
-	//----ngoi trái----
+	//----ngồi trái----
 	sprites->Add(20016, 1065, 640, 1065 + 47, 640 + 33, texAladin_f);
 
 	ani = new CAnimation(100);	// ngoi trái
 	ani->Add(20016);
 	animations->Add(403, ani);
 	//---- ngước lên phải----
-	sprites->Add(20020, 11, 496, 11 + 39, 496 + 53, texAladin);
-	sprites->Add(20021, 59, 490, 59 + 45, 59 + 490, texAladin);
+	
 	sprites->Add(20022, 111, 491, 111 + 49, 58 + 491, texAladin);
 	ani = new CAnimation(100);
-	ani->Add(20020);
-	ani->Add(20021);
+	
 	ani->Add(20022);
 	animations->Add(404, ani);
 	//---- ngước lên trái----
-	sprites->Add(20025, 1071, 496, 1071 + 39, 496 + 53, texAladin);
-	sprites->Add(20026, 1017, 490, 1017 + 45, 59 + 490, texAladin);
-	sprites->Add(20027, 961, 491, 961 + 49, 58 + 491, texAladin);
+	
+	sprites->Add(20027, 961, 491, 961 + 49, 58 + 491, texAladin_f);
 	ani = new CAnimation(100);
-	ani->Add(20025);
-	ani->Add(20026);
+	
 	ani->Add(20027);
 	animations->Add(405, ani);
 
-	//----walk right--------
+	//----đi right--------
 	sprites->Add(10002, 66, 1222, 66 + 43, 1222 + 51, texAladin);
 	sprites->Add(10003, 120, 1220, 120 + 41, 1220 + 53, texAladin);
 	sprites->Add(10004, 171, 1216, 171 + 41, 1216 + 57, texAladin);
@@ -278,7 +351,7 @@ void CAladin::LoadResources(int ID)
 	ani->Add(10012);
 	ani->Add(10013);
 	animations->Add(500, ani);
-	//----walk left-------
+	//----đi left-------
 	sprites->Add(10051, 1012, 1222, 1012 + 43, 1222 + 51, texAladin_f);
 	sprites->Add(10052, 960, 1220, 960 + 41, 1220 + 53, texAladin_f);
 	sprites->Add(10053, 909, 1216, 909 + 41, 1216 + 57, texAladin_f);
@@ -308,7 +381,7 @@ void CAladin::LoadResources(int ID)
 	ani->Add(10062);
 
 	animations->Add(501, ani);
-	//-------- jump up--------
+	//-------- nhảy up--------
 	sprites->Add(10100, 8, 846, 8 + 59, 846 + 43, texAladin);
 	sprites->Add(10101, 75, 828, 75 + 52, 828 + 62, texAladin);
 	sprites->Add(10102, 137, 829, 137 + 54, 829 + 61, texAladin);
@@ -334,8 +407,8 @@ void CAladin::LoadResources(int ID)
 	ani->Add(10106);
 	ani->Add(10107);
 	ani->Add(10108);
-	animations->Add(513, ani);
-	// --------jump right--------
+	animations->Add(514, ani);
+	// --------nhảy right--------
 	sprites->Add(10110, 10, 705, 10 + 41, 705 + 42, texAladin);
 	sprites->Add(10111, 66, 683, 66 + 45, 683 + 76, texAladin);
 	sprites->Add(10112, 124, 686, 124 + 57, 686 + 57, texAladin);
@@ -357,14 +430,14 @@ void CAladin::LoadResources(int ID)
 	ani->Add(10117);
 	ani->Add(10118);
 	animations->Add(503, ani);
-	// --------chem phải--------
+	// --------chém phải--------
 	sprites->Add(10200, 5, 337, 5 + 45, 51 + 337, texAladin);
 	sprites->Add(10201, 54, 326, 54 + 51, 326 + 62, texAladin);
 	sprites->Add(10202, 115, 314, 115 + 45, 314 + 74, texAladin);
 	sprites->Add(10203, 171, 324, 171 + 82, 324 + 64, texAladin);
 	sprites->Add(10204, 260, 335, 260 + 51, 53 + 335, texAladin);
 
-	ani = new CAnimation(100);	// chem phải
+	ani = new CAnimation(100);	// chém phải
 	ani->Add(10200);
 	ani->Add(10201);
 	ani->Add(10202);
@@ -566,7 +639,7 @@ void CAladin::LoadResources(int ID)
 	this->AddAnimation(500);		 // 2 đi phải
 	this->AddAnimation(501);		 // 3 đi trái
 	this->AddAnimation(502);		// 4 nhảy
-	this->AddAnimation(513);		 // 5 rớt xuống
+	this->AddAnimation(514);		 // 5 rớt xuống
 	this->AddAnimation(503);		 // 6 nhảy phải
 	this->AddAnimation(507);		// 7 nhảy trái
 	this->AddAnimation(504);		// 8 chém phải
