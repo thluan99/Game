@@ -314,6 +314,14 @@ void CAladin::LoadResources(int ID)
 	sprites->Add(10102, 137, 829, 137 + 54, 829 + 61, texAladin);
 	sprites->Add(10103, 203, 824, 203 + 54, 824 + 69, texAladin);
 	sprites->Add(10104, 269, 820, 269 + 51, 820 + 74, texAladin);
+	ani = new CAnimation(100);	// jupm up
+	ani->Add(10100);
+	ani->Add(10101);
+	ani->Add(10102);
+	ani->Add(10103);
+	ani->Add(10104);
+	animations->Add(502, ani);
+	//--- rớt xuống 
 	sprites->Add(10105, 336, 829, 336 + 38, 829 + 66, texAladin);
 	sprites->Add(10106, 390, 818, 390 + 35, 818 + 79, texAladin);
 	sprites->Add(10107, 448, 808, 448 + 34, 808 + 93, texAladin);
@@ -321,17 +329,12 @@ void CAladin::LoadResources(int ID)
 	sprites->Add(10109, 564, 812, 564 + 34, 812 + 93, texAladin);
 
 
-	ani = new CAnimation(100);	// jupm up
-	ani->Add(10100);
-	ani->Add(10101);
-	ani->Add(10102);
-	ani->Add(10103);
-	ani->Add(10104);
+	ani = new CAnimation(100);
 	ani->Add(10105);
 	ani->Add(10106);
 	ani->Add(10107);
 	ani->Add(10108);
-	animations->Add(502, ani);
+	animations->Add(513, ani);
 	// --------jump right--------
 	sprites->Add(10110, 10, 705, 10 + 41, 705 + 42, texAladin);
 	sprites->Add(10111, 66, 683, 66 + 45, 683 + 76, texAladin);
@@ -563,22 +566,23 @@ void CAladin::LoadResources(int ID)
 	this->AddAnimation(500);		 // 2 đi phải
 	this->AddAnimation(501);		 // 3 đi trái
 	this->AddAnimation(502);		// 4 nhảy
-	this->AddAnimation(503);		 // 5 nhảy phải
-	this->AddAnimation(507);		// 6 nhảy trái
-	this->AddAnimation(504);		// 7 chém phải
-	this->AddAnimation(506);		 // 8 chém trái
-	this->AddAnimation(508);		 // 9 ngồi chém phải
-	this->AddAnimation(509);		// 10 ngồi chém trái
-	this->AddAnimation(402);		// 11 ngoi phải-
-	this->AddAnimation(403);		// 12 ngoi trái-
-	this->AddAnimation(404);		// 13 ngước lên phải-
-	this->AddAnimation(405);		// 14 ngước lên trái-
-	this->AddAnimation(505);		// 15 day tuong phải-
-	this->AddAnimation(513);		// 16 đẩy tường trái
-	this->AddAnimation(510);		// 17 dừng phải-
-	this->AddAnimation(511);		// 18 dừng trái-
-	this->AddAnimation(512);		// 19 trèo lên
-
+	this->AddAnimation(513);		 // 5 rớt xuống
+	this->AddAnimation(503);		 // 6 nhảy phải
+	this->AddAnimation(507);		// 7 nhảy trái
+	this->AddAnimation(504);		// 8 chém phải
+	this->AddAnimation(506);		 // 9 chém trái
+	this->AddAnimation(508);		 // 10 ngồi chém phải
+	this->AddAnimation(509);		// 11 ngồi chém trái
+	this->AddAnimation(402);		// 12 ngoi phải-
+	this->AddAnimation(403);		// 13 ngoi trái-
+	this->AddAnimation(404);		// 14 ngước lên phải-
+	this->AddAnimation(405);		// 15 ngước lên trái-
+	this->AddAnimation(505);		// 16 day tuong phải-
+	this->AddAnimation(513);		// 17 đẩy tường trái
+	this->AddAnimation(510);		// 18 dừng phải-
+	this->AddAnimation(511);		// 19 dừng trái-
+	this->AddAnimation(512);		// 20 trèo lên
+	
 
 
 

@@ -13,21 +13,22 @@
 #define ALADIN_STATE_DI_PHAI				2		//đi
 #define ALADIN_STATE_DI_TRAI				3
 #define ALADIN_STATE_NHAY					4		//nhảy
-#define ALADIN_STATE_NHAY_PHAI				5
-#define ALADIN_STATE_NHAY_TRAI				6
-#define ALADIN_STATE_CHEM_PHAI				7		//chém
-#define ALADIN_STATE_CHEM_TRAI				8
-#define ALADIN_STATE_NGOI_CHEM_PHAI			9
-#define ALADIN_STATE_NGOI_CHEM_TRAI			10
-#define ALADIN_STATE_NGOI_PHAI				11		//ngồi
-#define ALADIN_STATE_NGOI_TRAI				12
-#define ALADIN_STATE_NGUOC_LEN_PHAI			13		//ngước lên
-#define ALADIN_STATE_NGUOC_LEN_TRAI			14
-#define ALADIN_STATE_DAY_PHAI				15		//đẩy
-#define ALADIN_STATE_DAY_TRAI				16
-#define ALADIN_STATE_DUNG_CHAY_PHAI			17		//dừng
-#define ALADIN_STATE_DUNG_CHAY_TRAI			18
-#define ADADIN_STATE_TREO					19
+#define ALADIN_STATE_ROT					5
+#define ALADIN_STATE_NHAY_PHAI				6
+#define ALADIN_STATE_NHAY_TRAI				7
+#define ALADIN_STATE_CHEM_PHAI				8		//chém
+#define ALADIN_STATE_CHEM_TRAI				9
+#define ALADIN_STATE_NGOI_CHEM_PHAI			10
+#define ALADIN_STATE_NGOI_CHEM_TRAI			11
+#define ALADIN_STATE_NGOI_PHAI				12		//ngồi
+#define ALADIN_STATE_NGOI_TRAI				13
+#define ALADIN_STATE_NGUOC_LEN_PHAI			14		//ngước lên
+#define ALADIN_STATE_NGUOC_LEN_TRAI			15
+#define ALADIN_STATE_DAY_PHAI				16		//đẩy
+#define ALADIN_STATE_DAY_TRAI				17
+#define ALADIN_STATE_DUNG_CHAY_PHAI			18		//dừng
+#define ALADIN_STATE_DUNG_CHAY_TRAI			19
+#define ADADIN_STATE_TREO					20
 #define ALADIN_STATE_DIE                    100
 
 
@@ -36,21 +37,22 @@
 #define ALADIN_ANI_DI_PHAI					2		//đi
 #define ALADIN_ANI_DI_TRAI					3
 #define ALADIN_ANI_NHAY						4		//nhảy
-#define ALADIN_ANI_NHAY_PHAI				5
-#define ALADIN_ANI_NHAY_TRAI				6
-#define ALADIN_ANI_CHEM_PHAI				7		//chém
-#define ALADIN_ANI_CHEM_TRAI				8
-#define ALADIN_ANI_NGOI_CHEM_PHAI			9
-#define ALADIN_ANI_NGOI_CHEM_TRAI			10
-#define ALADIN_ANI_NGOI_PHAI				11		//ngồi
-#define ALADIN_ANI_NGOI_TRAI				12
-#define ALADIN_ANI_NGUOC_LEN_PHAI			13		//ngước lên
-#define ALADIN_ANI_NGUOC_LEN_TRAI			14
-#define ALADIN_ANI_DAY_PHAI					15		//đẩy
-#define ALADIN_ANI_DAY_TRAI					16
-#define ALADIN_ANI_DUNG_CHAY_PHAI			17		//dừng
-#define ALADIN_ANI_DUNG_CHAY_TRAI			18
-#define ADADIN_ANI_TREO						19
+#define ALADIN_ANI_ROT						5
+#define ALADIN_ANI_NHAY_PHAI				6
+#define ALADIN_ANI_NHAY_TRAI				7
+#define ALADIN_ANI_CHEM_PHAI				8		//chém
+#define ALADIN_ANI_CHEM_TRAI				9
+#define ALADIN_ANI_NGOI_CHEM_PHAI			10
+#define ALADIN_ANI_NGOI_CHEM_TRAI			11
+#define ALADIN_ANI_NGOI_PHAI				12		//ngồi
+#define ALADIN_ANI_NGOI_TRAI				13
+#define ALADIN_ANI_NGUOC_LEN_PHAI			14		//ngước lên
+#define ALADIN_ANI_NGUOC_LEN_TRAI			15
+#define ALADIN_ANI_DAY_PHAI					16		//đẩy
+#define ALADIN_ANI_DAY_TRAI					17
+#define ALADIN_ANI_DUNG_CHAY_PHAI			18		//dừng
+#define ALADIN_ANI_DUNG_CHAY_TRAI			19
+#define ADADIN_ANI_TREO						20
 #define ALADIN_ANI_DIE					    100
 
 
