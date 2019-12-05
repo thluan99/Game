@@ -121,10 +121,15 @@ void CSampleKeyHander::OnKeyDown(int KeyCode)
 			aladin->setChem(true);
 		break;
 	case DIK_RIGHT:
-		aladin->SetState(ALADIN_STATE_WALKING_RIGHT);
+		aladin->SetDirection(1);
+		aladin->SetState(ALADIN_STATE_DI_PHAI);
+		break;
+	case DIK_LEFT:
+		aladin->SetDirection(-1);
+		aladin->SetState(ALADIN_STATE_DI_TRAI);
 		break;
 	case DIK_A: // reset
-		aladin->SetState(ALADIN_STATE_IDLE_RIGHT);
+		aladin->SetState(ALADIN_STATE_IDLE_PHAI);
 		aladin->SetPosition(50.0f, 0.0f);
 		aladin->SetSpeed(0, 0);
 		break;
@@ -134,8 +139,8 @@ void CSampleKeyHander::OnKeyDown(int KeyCode)
 		break;
 	case DIK_DOWN:
 		if (aladin->GetDirection() == 1)
-			aladin->SetState(ALADIN_STATE_SIT_RIGHT);
-		else aladin->SetState(ALADIN_STATE_SIT_LEFT);
+			aladin->SetState(ALADIN_STATE_NGOI_PHAI);
+		else aladin->SetState(ALADIN_STATE_NGOI_TRAI);
 		break;
 	case DIK_0:
 		ofstream ofs;
@@ -156,10 +161,10 @@ void CSampleKeyHander::KeyState(BYTE* states)
 	// disable control key when Aladin die 
 	if (aladin->GetState() == ALADIN_STATE_DIE) return;
 	if (game->IsKeyDown(DIK_RIGHT)) {
-		if (aladin->GetState() != ALADIN_STATE_JUMP_RIGHT)
+		if (aladin->GetState() != ALADIN_STATE_NHAY_PHAI)
 		{
 			aladin->SetDirection(1);
-			aladin->SetState(ALADIN_STATE_WALKING_RIGHT);
+			aladin->SetState(ALADIN_STATE_DI_PHAI);
 		}
 
 	}
@@ -167,7 +172,7 @@ void CSampleKeyHander::KeyState(BYTE* states)
 		aladin->SetState(ALADIN_STATE_JUMP);*/
 	else
 		if (game->IsKeyDown(DIK_LEFT)) {
-			aladin->SetState(ALADIN_STATE_WALKING_LEFT);
+			aladin->SetState(ALADIN_STATE_DI_TRAI);
 			aladin->SetDirection(-1);
 		}
 	/*if(game->IsKeyDown(DIK_X))
@@ -185,13 +190,13 @@ void CSampleKeyHander::KeyState(BYTE* states)
 			if (game->IsKeyDown(DIK_DOWN))
 			{
 				if (aladin->GetDirection() == 1)
-					aladin->SetState(ALADIN_STATE_SIT_RIGHT);
-				else aladin->SetState(ALADIN_STATE_SIT_LEFT);
+					aladin->SetState(ALADIN_STATE_NGOI_PHAI);
+				else aladin->SetState(ALADIN_STATE_NGOI_TRAI);
 			}
 			else {
 				if (aladin->GetDirection() == 1)
-					aladin->SetState(ALADIN_STATE_IDLE_RIGHT);
-				else aladin->SetState(ALADIN_STATE_IDLE_LEFT);
+					aladin->SetState(ALADIN_STATE_IDLE_PHAI);
+				else aladin->SetState(ALADIN_STATE_IDLE_TRAI);
 			}
 }
 

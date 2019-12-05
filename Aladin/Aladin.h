@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 #include "GameObject.h"
 
 #define ALADIN_WALKING_SPEED				0.2f 
@@ -8,32 +8,53 @@
 #define ALADIN_GRAVITY						0.002f
 #define ALADIN_DIE_DEFLECT_SPEED			0.5f
 
-#define ALADIN_STATE_IDLE_RIGHT				0
-#define ALADIN_STATE_IDLE_LEFT				1
-#define ALADIN_STATE_WALKING_RIGHT			100
-#define ALADIN_STATE_WALKING_LEFT			200
+#define ALADIN_STATE_IDLE_PHAI				0		// đứng
+#define ALADIN_STATE_IDLE_TRAI				1
+#define ALADIN_STATE_DI_PHAI				2		//đi
+#define ALADIN_STATE_DI_TRAI				3
+#define ALADIN_STATE_NHAY					4		//nhảy
+#define ALADIN_STATE_NHAY_PHAI				5
+#define ALADIN_STATE_NHAY_TRAI				6
+#define ALADIN_STATE_CHEM_PHAI				7		//chém
+#define ALADIN_STATE_CHEM_TRAI				8
+#define ALADIN_STATE_NGOI_CHEM_PHAI			9
+#define ALADIN_STATE_NGOI_CHEM_TRAI			10
+#define ALADIN_STATE_NGOI_PHAI				11		//ngồi
+#define ALADIN_STATE_NGOI_TRAI				12
+#define ALADIN_STATE_NGUOC_LEN_PHAI			13		//ngước lên
+#define ALADIN_STATE_NGUOC_LEN_TRAI			14
+#define ALADIN_STATE_DAY_PHAI				15		//đẩy
+#define ALADIN_STATE_DAY_TRAI				16
+#define ALADIN_STATE_DUNG_CHAY_PHAI			17		//dừng
+#define ALADIN_STATE_DUNG_CHAY_TRAI			18
+#define ADADIN_STATE_TREO					19
+#define ALADIN_STATE_DIE                    100
 
-#define ALADIN_STATE_DIE					400
-#define ALADIN_STATE_JUMP					300
-#define ALADIN_STATE_JUMP_RIGHT				301
-#define ALADIN_STATE_SIT_RIGHT				7
-#define ALADIN_STATE_SIT_LEFT				8
-#define ALADIN_STATE_PUSH_RIGHT				11
-#define ALADIN_ANI_BIG_IDLE_RIGHT			0
-#define ALADIN_ANI_BIG_IDLE_LEFT			1
 
-#define ALADIN_ANI_BIG_WALKING_RIGHT		2
-#define ALADIN_ANI_BIG_WALKING_LEFT			3
+#define ALADIN_ANI_IDLE_PHAI				0		// đứng
+#define ALADIN_ANI_IDLE_TRAI				1
+#define ALADIN_ANI_DI_PHAI					2		//đi
+#define ALADIN_ANI_DI_TRAI					3
+#define ALADIN_ANI_NHAY						4		//nhảy
+#define ALADIN_ANI_NHAY_PHAI				5
+#define ALADIN_ANI_NHAY_TRAI				6
+#define ALADIN_ANI_CHEM_PHAI				7		//chém
+#define ALADIN_ANI_CHEM_TRAI				8
+#define ALADIN_ANI_NGOI_CHEM_PHAI			9
+#define ALADIN_ANI_NGOI_CHEM_TRAI			10
+#define ALADIN_ANI_NGOI_PHAI				11		//ngồi
+#define ALADIN_ANI_NGOI_TRAI				12
+#define ALADIN_ANI_NGUOC_LEN_PHAI			13		//ngước lên
+#define ALADIN_ANI_NGUOC_LEN_TRAI			14
+#define ALADIN_ANI_DAY_PHAI					15		//đẩy
+#define ALADIN_ANI_DAY_TRAI					16
+#define ALADIN_ANI_DUNG_CHAY_PHAI			17		//dừng
+#define ALADIN_ANI_DUNG_CHAY_TRAI			18
+#define ADADIN_ANI_TREO						19
+#define ALADIN_ANI_DIE					    100
 
 
-#define ALADIN_ANI_BIG_JUMP					4
-#define ALADIN_ANI_BIG_JUMP_RIGHT			5
-
-#define ALADIN_ANI_SIT_RIGHT				7
-#define ALADIN_ANI_SIT_LEFT					8
-#define ALADIN_ANI_PUSH_WALL_RIGHT			11
 #define	ALADIN_LEVEL_BIG					2
-
 #define ALADIN_BIG_BBOX_WIDTH  43
 #define ALADIN_BIG_BBOX_HEIGHT 51
 
@@ -48,6 +69,7 @@ class CAladin : public CGameObject
 public:
 	CAladin() {
 		id = eType::ALADIN;
+		state = ALADIN_STATE_IDLE_PHAI;
 		stateNhay = false;
 		stateChem = false;
 		stateDay = false;
