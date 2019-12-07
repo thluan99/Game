@@ -40,18 +40,7 @@
 #include "Bat.h"
 #include "Land.h"
 #include "Grid.h"
-
-#define WINDOW_CLASS_NAME L"SampleWindow"
-#define MAIN_WINDOW_TITLE L"Aladin X Mario"
-
-#define MAX_FRAME_RATE			180
-
-#define ID_TEX_ALADIN			0
-#define ID_TEX_ALADIN_F			01
-#define ID_TEX_ENEMY			10
-#define ID_TEX_MISC				20
-#define ID_TEX_MAP				30
-#define ID_TEX_BRICK_2			40
+#include "texSurface.h"
 
 CGame *game;
 CAladin *aladin;
@@ -60,6 +49,7 @@ Camera *camera;
 Grid *grid;
 
 dxGraphics *dx_graphics;
+TextSurface *texSur;
 vector<LPGAMEOBJECT> objects;
 TileMap *tileMap;
 //---------------KeyBoard -------------------------
@@ -77,7 +67,7 @@ CSampleKeyHander * keyHandler;
 void CSampleKeyHander::OnKeyDown(int KeyCode)
 {
 	DebugOut(L"[INFO] KeyDown: %d\n", KeyCode);
-
+	//---------------test--------------------//
 	switch (KeyCode)
 	{
 	case DIK_5:
@@ -111,7 +101,7 @@ void CSampleKeyHander::OnKeyDown(int KeyCode)
 					grid->cells[i]->listGameObject[j]->SetState(ENEMY1_STATE_RUN_LEFT);
 		break;
 	}
-
+	//------------------end test ----------------------//
 	switch (KeyCode)
 	{
 	
@@ -156,15 +146,19 @@ void CSampleKeyHander::OnKeyDown(int KeyCode)
 		}
 		break;
 	case DIK_X:
-		if (aladin->getEnableKey() == true) {
-
-			
+		if (aladin->getEnableKey() == true) {			
 				aladin->SetState(ALADIN_STATE_NHAY);
 		}
 		break;
+
+	//---------hack ??? ---------//
+	case DIK_HOME:
+		aladin->SetX(aladin->GetX() + 50);
+		break;
+	case DIK_END:
+		aladin->SetX(aladin->GetX() - 50);
 	}
-	
-	
+	//---------end test------------//
 }
 
 void CSampleKeyHander::OnKeyUp(int KeyCode)
@@ -288,6 +282,9 @@ CGameObject * GetNewObjectEx(int ID)
 
 	case eType::LAND2:
 		return new CLand();
+
+	case eType::LAND3:
+		return new CLand();
 	}
 	return NULL;
 }
@@ -351,6 +348,242 @@ void CreateGrid(vector <CGameObject *> &objects, Grid *&grid)
 void Resources()
 {
 	// Lay tu file text trong thu muc : textures//temp//resources
+	// SU DUNG KHI CAN LOAD LAI OBJECT TRONG MAP
+	// item 3
+	// zone 1
+	for (int i = 0; i < 3; i++)
+	{
+		CLand * land = new CLand();
+		land->LoadResources(eType::LAND3);
+		land->SetPosition(7 * 32 + del * 2, 8 * 32 + 32 * i + del);
+		objects.push_back(land);
+	}
+	for (int i = 0; i < 9; i++)
+	{
+		CLand * land = new CLand();
+		land->LoadResources(eType::LAND3);
+		land->SetPosition(7 * 32 + del * 2, 18 * 32 + 32 * i + del);
+		objects.push_back(land);
+	}
+	for (int i = 0; i < 2; i++)
+	{
+		CLand * land = new CLand();
+		land->LoadResources(eType::LAND3);
+		land->SetPosition(4 * 32, 22 * 32 + 32 * i + del);
+		objects.push_back(land);
+	}
+	for (int i = 0; i < 2; i++)
+	{
+		CLand * land = new CLand();
+		land->LoadResources(eType::LAND3);
+		land->SetPosition(11 * 32 + del * 2, 7 * 32 + 32 * i + del);
+		objects.push_back(land);
+	}
+	for (int i = 0; i < 7; i++)
+	{
+		CLand * land = new CLand();
+		land->LoadResources(eType::LAND3);
+		land->SetPosition(14 * 32, 7 * 32 + 32 * i + del);
+		objects.push_back(land);
+	}
+	for (int i = 0; i < 8; i++)
+	{
+		CLand * land = new CLand();
+		land->LoadResources(eType::LAND3);
+		land->SetPosition(13 * 32 + del*2, 14 * 32 + 32 * i + del);
+		objects.push_back(land);
+	}
+	for (int i = 0; i < 3; i++)
+	{
+		CLand * land = new CLand();
+		land->LoadResources(eType::LAND3);
+		land->SetPosition(15 * 32, 26 * 32 + 32 * i + del);
+		objects.push_back(land);
+	}
+	for (int i = 0; i < 2; i++)
+	{
+		CLand * land = new CLand();
+		land->LoadResources(eType::LAND3);
+		land->SetPosition(10 * 32 + del*2, 27 * 32 + 32 * i + del);
+		objects.push_back(land);
+	}
+	// zone 2
+	for (int i = 0; i < 6; i++)
+	{
+		CLand * land = new CLand();
+		land->LoadResources(eType::LAND3);
+		land->SetPosition(24 * 32, 1 * 32 + 32 * i + del);
+		objects.push_back(land);
+	}
+	for (int i = 0; i < 2; i++)
+	{
+		CLand * land = new CLand();
+		land->LoadResources(eType::LAND3);
+		land->SetPosition(24 * 32, 10 * 32 + 32 * i + del*3);
+		objects.push_back(land);
+	}
+	for (int i = 0; i < 2; i++)
+	{
+		CLand * land = new CLand();
+		land->LoadResources(eType::LAND3);
+		land->SetPosition(22 * 32, 11 * 32 + 32 * i + del * 3);
+		objects.push_back(land);
+	}
+	for (int i = 0; i < 2; i++)
+	{
+		CLand * land = new CLand();
+		land->LoadResources(eType::LAND3);
+		land->SetPosition(19 * 32 + del*2, 13 * 32 + 32 * i + del);
+		objects.push_back(land);
+	}
+		CLand * land = new CLand();
+		land->LoadResources(eType::LAND3);
+		land->SetPosition(24 * 32, 22 * 32 + del);
+		objects.push_back(land);
+	//zone 3
+	for (int i = 0; i < 4; i++)
+	{
+		CLand * land = new CLand();
+		land->LoadResources(eType::LAND3);
+		land->SetPosition(35 * 32, 6 * 32 + 32 * i + del *3);
+		objects.push_back(land);
+	}
+	for (int i = 0; i < 2; i++)
+	{
+		CLand * land = new CLand();
+		land->LoadResources(eType::LAND3);
+		land->SetPosition(29 * 32, 9 * 32 + 32 * i + del*3);
+		objects.push_back(land);
+	}
+	for (int i = 0; i < 2; i++)
+	{
+		CLand * land = new CLand();
+		land->LoadResources(eType::LAND3);
+		land->SetPosition(30 * 32, 14 * 32 + 32 * i + del);
+		objects.push_back(land);
+	}
+	land = new CLand();
+	land->LoadResources(eType::LAND3);
+	land->SetPosition(34 * 32, 14 * 32 + del);
+	objects.push_back(land);
+	for (int i = 0; i < 2; i++)
+	{
+		CLand * land = new CLand();
+		land->LoadResources(eType::LAND3);
+		land->SetPosition(28 * 32, 16 * 32 + 32 * i + del);
+		objects.push_back(land);
+	}
+	for (int i = 0; i < 14; i++)
+	{
+		CLand * land = new CLand();
+		land->LoadResources(eType::LAND3);
+		land->SetPosition(35 * 32, 15 * 32 + 32 * i + del);
+		objects.push_back(land);
+	}
+	land = new CLand();
+	land->LoadResources(eType::LAND3);
+	land->SetPosition(29 * 32 + del*2, 21 * 32 + del);
+	objects.push_back(land);
+
+	land = new CLand();
+	land->LoadResources(eType::LAND3);
+	land->SetPosition(27 * 32, 22 * 32 + del);
+	objects.push_back(land);
+	for (int i = 0; i < 3; i++)
+	{
+		CLand * land = new CLand();
+		land->LoadResources(eType::LAND3);
+		land->SetPosition(28 * 32 + del*2, 26 * 32 + 32 * i + del);
+		objects.push_back(land);
+	}
+	// zone 4/1
+	for (int i = 0; i < 2; i++)
+	{
+		CLand * land = new CLand();
+		land->LoadResources(eType::LAND3);
+		land->SetPosition(43 * 32 + del*2, 6 * 32 + 32 * i + del * 3);
+		objects.push_back(land);
+	}
+	for (int i = 0; i < 2; i++)
+	{
+		CLand * land = new CLand();
+		land->LoadResources(eType::LAND3);
+		land->SetPosition(39 * 32, 10 * 32 + 32 * i + del);
+		objects.push_back(land);
+	}
+	for (int i = 0; i < 3; i++)
+	{
+		CLand * land = new CLand();
+		land->LoadResources(eType::LAND3);
+		land->SetPosition(47 * 32 + del * 2, 9 * 32 + 32 * i + del);
+		objects.push_back(land);
+	}
+	for (int i = 0; i < 7; i++)
+	{
+		CLand * land = new CLand();
+		land->LoadResources(eType::LAND3);
+		land->SetPosition(48 * 32, 0 * 32 + 32 * i + del);
+		objects.push_back(land);
+	}
+	for (int i = 0; i < 3; i++)
+	{
+		CLand * land = new CLand();
+		land->LoadResources(eType::LAND3);
+		land->SetPosition(39 * 32, 21 * 32 + 32 * i + del*3);
+		objects.push_back(land);
+	}
+	for (int i = 0; i < 3; i++)
+	{
+		CLand * land = new CLand();
+		land->LoadResources(eType::LAND3);
+		land->SetPosition(41 * 32 + del * 2, 23 * 32 + 32 * i + del * 3);
+		objects.push_back(land);
+	}
+	//zone 4/2
+	for (int i = 0; i < 8; i++)
+	{
+		CLand * land = new CLand();
+		land->LoadResources(eType::LAND3);
+		land->SetPosition(53 * 32 + del*2, 3 * 32 + 32 * i + del*3);
+		objects.push_back(land);
+	}
+	for (int i = 0; i < 19; i++)
+	{
+		CLand * land = new CLand();
+		land->LoadResources(eType::LAND3);
+		land->SetPosition(55 * 32 + del*2, 0 * 32 + 32 * i + del);
+		objects.push_back(land);
+	}
+	for (int i = 0; i < 2; i++)
+	{
+		CLand * land = new CLand();
+		land->LoadResources(eType::LAND3);
+		land->SetPosition(51 * 32 + del * 2, 22 * 32 + 32 * i + del *3);
+		objects.push_back(land);
+	}
+	// zone5
+	for (int i = 0; i < 8; i++)
+	{
+		CLand * land = new CLand();
+		land->LoadResources(eType::LAND3);
+		land->SetPosition(60 * 32, 19 * 32 + 32 * i + del);
+		objects.push_back(land);
+	}
+	////------big mid collum -----
+	for (int i = 0; i < 23; i++)
+	{
+		CLand * land = new CLand();
+		land->LoadResources(eType::LAND3);
+		land->SetPosition(46 * 32 + del * 2, 11 * 32 + 32 * i + del * 3);
+		objects.push_back(land);
+	}
+	for (int i = 0; i < 23; i++)
+	{
+		CLand * land = new CLand();
+		land->LoadResources(eType::LAND3);
+		land->SetPosition(49 * 32, 11 * 32 + 32 * i + del * 3);
+		objects.push_back(land);
+	}
 }
 
 void LoadResources()
@@ -364,7 +597,10 @@ void LoadResources()
 	aladin->SetPosition(100.f, 0.0f);
 	objects.push_back(aladin);
 
-	//Resources();
+	texSur = new TextSurface();
+	texSur->LoadResources(eType::TEXSURFACE);
+
+	Resources();
 	//grid->LoadResourses(objects, aladin);
 }
 
@@ -377,7 +613,7 @@ void Update(DWORD dt)
 	// We know that Aladin is the first object in the list hence we won't add him into the colliable object list
 	// TO-DO: This is a "dirty" way, need a more organized way 
 
-	/*vector<LPGAMEOBJECT> coObjects;
+	vector<LPGAMEOBJECT> coObjects;
 	for (int i = 1; i < objects.size(); i++)
 	{
 		coObjects.push_back(objects[i]);
@@ -386,9 +622,9 @@ void Update(DWORD dt)
 	for (int i = 0; i < objects.size(); i++)
 	{
 		objects[i]->Update(dt,&coObjects);
-	}*/
+	}
 
-	grid->UpdateCollision(dt, aladin);
+	//grid->UpdateCollision(dt, aladin);
 
 	// Update camera to follow aladin
 	camera->Follow(aladin);
@@ -420,8 +656,9 @@ void Render()
 
 		/*for (int i = 0; i < objects.size(); i++)
 			objects[i]->Render();*/
-		grid->RenderObjectEx(camera, objects);
 		aladin->Render();
+		grid->RenderObject(camera, objects);
+		texSur->Render();
 
 		spriteHandler->End();
 		d3ddv->EndScene();

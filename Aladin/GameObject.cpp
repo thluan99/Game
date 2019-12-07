@@ -173,6 +173,11 @@ int CGameObject::GetId()
 	return id;
 }
 
+void CGameObject::ReLoad() 
+{
+	this->SetPosition(this->firstPosX, this->firstPosY);
+}
+
 CGameObject::~CGameObject()
 {
 

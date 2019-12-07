@@ -147,6 +147,7 @@
     <ClInclude Include="Bat.h" />
     <ClInclude Include="Land.h" />
     <ClInclude Include="Sprites.h" />
+    <ClInclude Include="texSurface.h" />
     <ClInclude Include="Textures.h" />
     <ClInclude Include="TileMap.h" />
   </ItemGroup>
@@ -168,6 +169,7 @@
     <ClCompile Include="Bat.cpp" />
     <ClCompile Include="Land.cpp" />
     <ClCompile Include="Sprites.cpp" />
+    <ClCompile Include="texSurface.cpp" />
     <ClCompile Include="Textures.cpp" />
     <ClCompile Include="TileMap.cpp" />
   </ItemGroup>

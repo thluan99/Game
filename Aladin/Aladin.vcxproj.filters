@@ -42,6 +42,9 @@
     <ClCompile Include="Land.cpp">
       <Filter>Map</Filter>
     </ClCompile>
+    <ClCompile Include="texSurface.cpp">
+      <Filter>Map</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="debug.h" />
@@ -83,6 +86,9 @@
       <Filter>Enemy</Filter>
     </ClInclude>
     <ClInclude Include="Land.h">
+      <Filter>Map</Filter>
+    </ClInclude>
+    <ClInclude Include="texSurface.h">
       <Filter>Map</Filter>
     </ClInclude>
   </ItemGroup>

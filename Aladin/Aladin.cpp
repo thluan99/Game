@@ -30,8 +30,7 @@ void CAladin::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 
 	// No collision occured, proceed normally
 	if (coEvents.size()==0)
-	{
-		
+	{	
 		x += dx;
 		y += dy;
 		if((vy- ALADIN_GRAVITY * dt)<dy)
@@ -49,9 +48,7 @@ void CAladin::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 		
 	}
 	else
-	{
-		
-		
+	{		
 		float min_tx, min_ty, nx = 0, ny;
 
 		FilterCollision(coEvents, coEventsResult, min_tx, min_ty, nx, ny);
@@ -79,7 +76,6 @@ void CAladin::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 			
 		}
 	}
-
 	// clean up collision events
 	for (UINT i = 0; i < coEvents.size(); i++) delete coEvents[i];
 }
@@ -204,11 +200,6 @@ void CAladin::Render()
 	default:
 		animations[ani]->RenderAladin(x, y + ALADIN_BIG_BBOX_HEIGHT, this->direction, alpha);
 	}	
-		
-	
-	
-	
-
 	//RenderBoundingBox();
 }
 
@@ -671,14 +662,6 @@ void CAladin::LoadResources(int ID)
 	this->AddAnimation(510);		// 18 dừng phải-
 	this->AddAnimation(511);		// 19 dừng trái-
 	this->AddAnimation(512);		// 20 trèo lên
-	
-
-
-
-
-
-
-
 }
 
 void CAladin::GetBoundingBox(float &left, float &top, float &right, float &bottom)

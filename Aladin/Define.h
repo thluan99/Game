@@ -9,6 +9,18 @@ using namespace std;
 #define MAP_LIMIT_BOT 32*36
 #define GRAVITY 0.002f
 
+#define WINDOW_CLASS_NAME L"SampleWindow"
+#define MAIN_WINDOW_TITLE L"Aladin X Mario"
+
+#define MAX_FRAME_RATE			180
+
+#define ID_TEX_ALADIN			0
+#define ID_TEX_ALADIN_F			01
+#define ID_TEX_ENEMY			10
+#define ID_TEX_MISC				20
+#define ID_TEX_MAP				30
+#define ID_TEX_BRICK_2			40
+
 #define del 8 // sai số tỉ đối
 // ID object
 enum eType
@@ -27,4 +39,7 @@ enum eType
 	LAND	= 99,
 	LAND1	= 90,
 	LAND2	= 91,
+	LAND3	= 92,
+
+	TEXSURFACE = 100,
 };

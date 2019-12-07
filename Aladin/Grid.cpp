@@ -175,7 +175,6 @@ bool Grid::isInCell(LPGAMEOBJECT gameObject, int cellPosX, int cellPosY)
 		return true;
 	return false;
 }
-
 bool Grid::isInCellMin(LPGAMEOBJECT gameObject, int cellPosX, int cellPosY)
 {
 	float left, top, right, bot;
@@ -320,7 +319,10 @@ void Grid::RenderObjectEx(Camera *camera, vector<LPGAMEOBJECT> &objects)
 					cells[n]->listGameObject.push_back(cells[n]->listGameObjectTemp[j]);
 			if (!cells[n]->listGameObject.empty())
 				for (int i = 0; i < cells[n]->listGameObject.size(); i++)
+				{
+					cells[n]->listGameObject[i]->ReLoad();
 					cells[n]->listGameObject[i]->Render();
+				}
 			cells[n]->listGameObjectTemp.clear();
 			//(L"[INFO] : clear temp list");
 		}
@@ -354,7 +356,7 @@ void Grid::UpdateCollision(DWORD dt, CAladin *&aladin)
 		vector <CGameObject*> coObjects;
 		for (int j = 0; j < cells[i]->listGameObject.size(); j++)
 			coObjects.push_back(cells[i]->listGameObject[j]);
-		if (isInCellMin(aladin, cells[i]->x, cells[i]->y))
+		if (isInCell(aladin, cells[i]->x, cells[i]->y))
 			aladin->Update(dt, &coObjects);
 		for (int j = 0; j < cells[i]->listGameObject.size(); j++)
 			cells[i]->listGameObject[j]->Update(dt, &coObjects);
