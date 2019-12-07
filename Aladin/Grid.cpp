@@ -351,16 +351,34 @@ bool Grid::isCellInCamera(Camera *camera, Cell *cell)
 
 void Grid::UpdateCollision(DWORD dt, CAladin *&aladin)
 {
+	vector<CGameObject*> coObj4Aladin;
 	for (int i = 1; i <= cells.size(); i++)
 	{
 		vector <CGameObject*> coObjects;
 		for (int j = 0; j < cells[i]->listGameObject.size(); j++)
+		{
+			if (isInCell(aladin, cells[i]->x, cells[i]->y))
+			{
+				coObj4Aladin.push_back(cells[i]->listGameObject[j]);
+			}
+
 			coObjects.push_back(cells[i]->listGameObject[j]);
+<<<<<<< HEAD
 		if (isInCell(aladin, cells[i]->x, cells[i]->y))
 			aladin->Update(dt, &coObjects);
+=======
+		}
+
+		//if (isInCell(aladin, cells[i]->x, cells[i]->y))
+		//{
+		//	aladin->Update(dt, &coObjects);
+		//}
+
+>>>>>>> 4e7caf13a7b8242a237aec9c30bdec1e3b098fe2
 		for (int j = 0; j < cells[i]->listGameObject.size(); j++)
 			cells[i]->listGameObject[j]->Update(dt, &coObjects);
 	}
+	aladin->Update(dt, &coObj4Aladin);
 }
 
 Cell* Grid::Get(int ID)
