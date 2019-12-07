@@ -103,6 +103,9 @@ CGameObject * GetNewObject(int ID)
 
 	case eType::LAND2:
 		return new CLand();
+
+	case eType::LAND3:
+		return new CLand();
 	}
 	return NULL;
 }
@@ -363,18 +366,9 @@ void Grid::UpdateCollision(DWORD dt, CAladin *&aladin)
 			}
 
 			coObjects.push_back(cells[i]->listGameObject[j]);
-<<<<<<< HEAD
-		if (isInCell(aladin, cells[i]->x, cells[i]->y))
-			aladin->Update(dt, &coObjects);
-=======
+		/*if (isInCell(aladin, cells[i]->x, cells[i]->y))
+			aladin->Update(dt, &coObjects);*/
 		}
-
-		//if (isInCell(aladin, cells[i]->x, cells[i]->y))
-		//{
-		//	aladin->Update(dt, &coObjects);
-		//}
-
->>>>>>> 4e7caf13a7b8242a237aec9c30bdec1e3b098fe2
 		for (int j = 0; j < cells[i]->listGameObject.size(); j++)
 			cells[i]->listGameObject[j]->Update(dt, &coObjects);
 	}

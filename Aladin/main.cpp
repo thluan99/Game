@@ -152,11 +152,23 @@ void CSampleKeyHander::OnKeyDown(int KeyCode)
 		break;
 
 	//---------hack ??? ---------//
+	// ---- ĐÂY LÀ PHẦN PHỤC VỤ CHO TEST VÀ GHI FILE --------------//
 	case DIK_HOME:
 		aladin->SetX(aladin->GetX() + 50);
 		break;
 	case DIK_END:
 		aladin->SetX(aladin->GetX() - 50);
+		break;
+	case DIK_9:
+		grid->WriteGrid(objects);
+		DebugOut(L"[INFO] : Rewrite file gridWrite.txt\n");
+		break;
+	case DIK_0:
+		ofstream ofs;
+		ofs.open("textures\\gridWrite1.txt", ofstream::out | ofstream::trunc);
+		ofs.close();
+		DebugOut(L"[INFO] : Clear file gridWrite.txt\n");
+		break;
 	}
 	//---------end test------------//
 }
@@ -164,9 +176,7 @@ void CSampleKeyHander::OnKeyDown(int KeyCode)
 void CSampleKeyHander::OnKeyUp(int KeyCode)
 {
 	switch (KeyCode)
-	{
-
-	
+	{	
 	case DIK_RIGHT:
 		if(aladin->getEnableKey()==true)
 		aladin->SetState(ALADIN_STATE_IDLE);
@@ -349,241 +359,6 @@ void Resources()
 {
 	// Lay tu file text trong thu muc : textures//temp//resources
 	// SU DUNG KHI CAN LOAD LAI OBJECT TRONG MAP
-	// item 3
-	// zone 1
-	for (int i = 0; i < 3; i++)
-	{
-		CLand * land = new CLand();
-		land->LoadResources(eType::LAND3);
-		land->SetPosition(7 * 32 + del * 2, 8 * 32 + 32 * i + del);
-		objects.push_back(land);
-	}
-	for (int i = 0; i < 9; i++)
-	{
-		CLand * land = new CLand();
-		land->LoadResources(eType::LAND3);
-		land->SetPosition(7 * 32 + del * 2, 18 * 32 + 32 * i + del);
-		objects.push_back(land);
-	}
-	for (int i = 0; i < 2; i++)
-	{
-		CLand * land = new CLand();
-		land->LoadResources(eType::LAND3);
-		land->SetPosition(4 * 32, 22 * 32 + 32 * i + del);
-		objects.push_back(land);
-	}
-	for (int i = 0; i < 2; i++)
-	{
-		CLand * land = new CLand();
-		land->LoadResources(eType::LAND3);
-		land->SetPosition(11 * 32 + del * 2, 7 * 32 + 32 * i + del);
-		objects.push_back(land);
-	}
-	for (int i = 0; i < 7; i++)
-	{
-		CLand * land = new CLand();
-		land->LoadResources(eType::LAND3);
-		land->SetPosition(14 * 32, 7 * 32 + 32 * i + del);
-		objects.push_back(land);
-	}
-	for (int i = 0; i < 8; i++)
-	{
-		CLand * land = new CLand();
-		land->LoadResources(eType::LAND3);
-		land->SetPosition(13 * 32 + del*2, 14 * 32 + 32 * i + del);
-		objects.push_back(land);
-	}
-	for (int i = 0; i < 3; i++)
-	{
-		CLand * land = new CLand();
-		land->LoadResources(eType::LAND3);
-		land->SetPosition(15 * 32, 26 * 32 + 32 * i + del);
-		objects.push_back(land);
-	}
-	for (int i = 0; i < 2; i++)
-	{
-		CLand * land = new CLand();
-		land->LoadResources(eType::LAND3);
-		land->SetPosition(10 * 32 + del*2, 27 * 32 + 32 * i + del);
-		objects.push_back(land);
-	}
-	// zone 2
-	for (int i = 0; i < 6; i++)
-	{
-		CLand * land = new CLand();
-		land->LoadResources(eType::LAND3);
-		land->SetPosition(24 * 32, 1 * 32 + 32 * i + del);
-		objects.push_back(land);
-	}
-	for (int i = 0; i < 2; i++)
-	{
-		CLand * land = new CLand();
-		land->LoadResources(eType::LAND3);
-		land->SetPosition(24 * 32, 10 * 32 + 32 * i + del*3);
-		objects.push_back(land);
-	}
-	for (int i = 0; i < 2; i++)
-	{
-		CLand * land = new CLand();
-		land->LoadResources(eType::LAND3);
-		land->SetPosition(22 * 32, 11 * 32 + 32 * i + del * 3);
-		objects.push_back(land);
-	}
-	for (int i = 0; i < 2; i++)
-	{
-		CLand * land = new CLand();
-		land->LoadResources(eType::LAND3);
-		land->SetPosition(19 * 32 + del*2, 13 * 32 + 32 * i + del);
-		objects.push_back(land);
-	}
-		CLand * land = new CLand();
-		land->LoadResources(eType::LAND3);
-		land->SetPosition(24 * 32, 22 * 32 + del);
-		objects.push_back(land);
-	//zone 3
-	for (int i = 0; i < 4; i++)
-	{
-		CLand * land = new CLand();
-		land->LoadResources(eType::LAND3);
-		land->SetPosition(35 * 32, 6 * 32 + 32 * i + del *3);
-		objects.push_back(land);
-	}
-	for (int i = 0; i < 2; i++)
-	{
-		CLand * land = new CLand();
-		land->LoadResources(eType::LAND3);
-		land->SetPosition(29 * 32, 9 * 32 + 32 * i + del*3);
-		objects.push_back(land);
-	}
-	for (int i = 0; i < 2; i++)
-	{
-		CLand * land = new CLand();
-		land->LoadResources(eType::LAND3);
-		land->SetPosition(30 * 32, 14 * 32 + 32 * i + del);
-		objects.push_back(land);
-	}
-	land = new CLand();
-	land->LoadResources(eType::LAND3);
-	land->SetPosition(34 * 32, 14 * 32 + del);
-	objects.push_back(land);
-	for (int i = 0; i < 2; i++)
-	{
-		CLand * land = new CLand();
-		land->LoadResources(eType::LAND3);
-		land->SetPosition(28 * 32, 16 * 32 + 32 * i + del);
-		objects.push_back(land);
-	}
-	for (int i = 0; i < 14; i++)
-	{
-		CLand * land = new CLand();
-		land->LoadResources(eType::LAND3);
-		land->SetPosition(35 * 32, 15 * 32 + 32 * i + del);
-		objects.push_back(land);
-	}
-	land = new CLand();
-	land->LoadResources(eType::LAND3);
-	land->SetPosition(29 * 32 + del*2, 21 * 32 + del);
-	objects.push_back(land);
-
-	land = new CLand();
-	land->LoadResources(eType::LAND3);
-	land->SetPosition(27 * 32, 22 * 32 + del);
-	objects.push_back(land);
-	for (int i = 0; i < 3; i++)
-	{
-		CLand * land = new CLand();
-		land->LoadResources(eType::LAND3);
-		land->SetPosition(28 * 32 + del*2, 26 * 32 + 32 * i + del);
-		objects.push_back(land);
-	}
-	// zone 4/1
-	for (int i = 0; i < 2; i++)
-	{
-		CLand * land = new CLand();
-		land->LoadResources(eType::LAND3);
-		land->SetPosition(43 * 32 + del*2, 6 * 32 + 32 * i + del * 3);
-		objects.push_back(land);
-	}
-	for (int i = 0; i < 2; i++)
-	{
-		CLand * land = new CLand();
-		land->LoadResources(eType::LAND3);
-		land->SetPosition(39 * 32, 10 * 32 + 32 * i + del);
-		objects.push_back(land);
-	}
-	for (int i = 0; i < 3; i++)
-	{
-		CLand * land = new CLand();
-		land->LoadResources(eType::LAND3);
-		land->SetPosition(47 * 32 + del * 2, 9 * 32 + 32 * i + del);
-		objects.push_back(land);
-	}
-	for (int i = 0; i < 7; i++)
-	{
-		CLand * land = new CLand();
-		land->LoadResources(eType::LAND3);
-		land->SetPosition(48 * 32, 0 * 32 + 32 * i + del);
-		objects.push_back(land);
-	}
-	for (int i = 0; i < 3; i++)
-	{
-		CLand * land = new CLand();
-		land->LoadResources(eType::LAND3);
-		land->SetPosition(39 * 32, 21 * 32 + 32 * i + del*3);
-		objects.push_back(land);
-	}
-	for (int i = 0; i < 3; i++)
-	{
-		CLand * land = new CLand();
-		land->LoadResources(eType::LAND3);
-		land->SetPosition(41 * 32 + del * 2, 23 * 32 + 32 * i + del * 3);
-		objects.push_back(land);
-	}
-	//zone 4/2
-	for (int i = 0; i < 8; i++)
-	{
-		CLand * land = new CLand();
-		land->LoadResources(eType::LAND3);
-		land->SetPosition(53 * 32 + del*2, 3 * 32 + 32 * i + del*3);
-		objects.push_back(land);
-	}
-	for (int i = 0; i < 19; i++)
-	{
-		CLand * land = new CLand();
-		land->LoadResources(eType::LAND3);
-		land->SetPosition(55 * 32 + del*2, 0 * 32 + 32 * i + del);
-		objects.push_back(land);
-	}
-	for (int i = 0; i < 2; i++)
-	{
-		CLand * land = new CLand();
-		land->LoadResources(eType::LAND3);
-		land->SetPosition(51 * 32 + del * 2, 22 * 32 + 32 * i + del *3);
-		objects.push_back(land);
-	}
-	// zone5
-	for (int i = 0; i < 8; i++)
-	{
-		CLand * land = new CLand();
-		land->LoadResources(eType::LAND3);
-		land->SetPosition(60 * 32, 19 * 32 + 32 * i + del);
-		objects.push_back(land);
-	}
-	////------big mid collum -----
-	for (int i = 0; i < 23; i++)
-	{
-		CLand * land = new CLand();
-		land->LoadResources(eType::LAND3);
-		land->SetPosition(46 * 32 + del * 2, 11 * 32 + 32 * i + del * 3);
-		objects.push_back(land);
-	}
-	for (int i = 0; i < 23; i++)
-	{
-		CLand * land = new CLand();
-		land->LoadResources(eType::LAND3);
-		land->SetPosition(49 * 32, 11 * 32 + 32 * i + del * 3);
-		objects.push_back(land);
-	}
 }
 
 void LoadResources()
@@ -600,7 +375,7 @@ void LoadResources()
 	texSur = new TextSurface();
 	texSur->LoadResources(eType::TEXSURFACE);
 
-	Resources();
+	//Resources();
 	//grid->LoadResourses(objects, aladin);
 }
 
@@ -613,18 +388,18 @@ void Update(DWORD dt)
 	// We know that Aladin is the first object in the list hence we won't add him into the colliable object list
 	// TO-DO: This is a "dirty" way, need a more organized way 
 
-	vector<LPGAMEOBJECT> coObjects;
-	for (int i = 1; i < objects.size(); i++)
-	{
-		coObjects.push_back(objects[i]);
-	}
+	//vector<LPGAMEOBJECT> coObjects;
+	//for (int i = 1; i < objects.size(); i++)
+	//{
+	//	coObjects.push_back(objects[i]);
+	//}
 
-	for (int i = 0; i < objects.size(); i++)
-	{
-		objects[i]->Update(dt,&coObjects);
-	}
+	//for (int i = 0; i < objects.size(); i++)
+	//{
+	//	objects[i]->Update(dt,&coObjects);
+	//}
 
-	//grid->UpdateCollision(dt, aladin);
+	grid->UpdateCollision(dt, aladin);
 
 	// Update camera to follow aladin
 	camera->Follow(aladin);
@@ -657,7 +432,7 @@ void Render()
 		/*for (int i = 0; i < objects.size(); i++)
 			objects[i]->Render();*/
 		aladin->Render();
-		grid->RenderObject(camera, objects);
+		grid->RenderObjectEx(camera, objects);
 		texSur->Render();
 
 		spriteHandler->End();
