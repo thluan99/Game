@@ -36,6 +36,12 @@
     <ClCompile Include="Bat.cpp">
       <Filter>Enemy</Filter>
     </ClCompile>
+    <ClCompile Include="Enemy3.cpp">
+      <Filter>Enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="Land.cpp">
+      <Filter>Map</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="debug.h" />
@@ -72,6 +78,12 @@
     </ClInclude>
     <ClInclude Include="Bat.h">
       <Filter>Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="Enemy3.h">
+      <Filter>Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="Land.h">
+      <Filter>Map</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

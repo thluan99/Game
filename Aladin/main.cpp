@@ -1,4 +1,4 @@
-/* =============================================================
+﻿/* =============================================================
 	INTRODUCTION TO GAME PROGRAMMING SE102
 	
 	SAMPLE 04 - COLLISION
@@ -36,7 +36,9 @@
 #include "Goomba.h"
 #include "Enemy1.h"
 #include "Enemy2.h"
+#include "Enemy3.h"
 #include "Bat.h"
+#include "Land.h"
 #include "Grid.h"
 
 #define WINDOW_CLASS_NAME L"SampleWindow"
@@ -239,6 +241,18 @@ CGameObject * GetNewObjectEx(int ID)
 
 	case eType::BAT:
 		return new Bat();
+
+	case eType::ENEMY3:
+		return new Enemy3();
+
+	case eType::LAND:
+		return new CLand();
+
+	case eType::LAND1:
+		return new CLand();
+
+	case eType::LAND2:
+		return new CLand();
 	}
 	return NULL;
 }
@@ -256,6 +270,7 @@ void CreateGrid(vector <CGameObject *> &objects, Grid *&grid)
 
 	textures->Add(ID_TEX_MAP, L"textures\\map_tex.png", D3DCOLOR_XRGB(163, 73, 164));
 	textures->Add(ID_TEX_BRICK_2, L"textures\\tileset.png", (BACKGROUND_COLOR));
+	textures->Add(ID_TEX_LAND, L"textures\\pixel.png", D3DCOLOR_XRGB(255, 255, 255));
 
 	if (inFile.is_open())
 	{
@@ -298,6 +313,11 @@ void CreateGrid(vector <CGameObject *> &objects, Grid *&grid)
 	}
 }
 
+void Resources()
+{
+	// Lay tu file text trong thu muc : textures//temp//resources
+}
+
 void LoadResources()
 {
 	tileMap = new TileMap();
@@ -306,8 +326,10 @@ void LoadResources()
 
 	aladin = new CAladin();
 	aladin->LoadResources(eType::ALADIN);
-	aladin->SetPosition(50.f, 0.0f);
+	aladin->SetPosition(100.f, 0.0f);
 	objects.push_back(aladin);
+
+	//Resources();
 	//grid->LoadResourses(objects, aladin);
 }
 

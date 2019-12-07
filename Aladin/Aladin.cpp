@@ -14,12 +14,10 @@ void CAladin::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 	// Simple fall down
 	vy += ALADIN_GRAVITY*dt;
 
-	if (this->y > MAP_LIMIT_BOT - 100)
-		this->y = MAP_LIMIT_BOT - 100;
 	if (this->x > MAP_LIMIT_RIGHT - 50)
 		this->x = MAP_LIMIT_RIGHT - 50;
-	if (this->y < -50) this->y = -50;
 	if (this->x < 0) this->x = 0;
+	if (this->y < 0) this->y = 0;
 
 	vector<LPCOLLISIONEVENT> coEvents;
 	vector<LPCOLLISIONEVENT> coEventsResult;
@@ -114,8 +112,6 @@ void CAladin::Render()
 		}
 		else
 			animations[ani]->RenderAladin(x, y+ALADIN_BIG_BBOX_HEIGHT, this->direction, alpha);
-
-	
 
 	//RenderBoundingBox();
 }

@@ -1,0 +1,463 @@
+	
+
+Su dung cho ham resources() trong main 
+//-----------------------------------------------------//
+Copy tu day :
+
+//---- : sai số cạnh phải
+	// cot 1
+	for (int i = 0; i < 3; i++)
+	{
+		CLand * land = new CLand();
+		land->LoadResources(eType::LAND1);
+		land->SetPosition(0 + 32 * i, 9*32 + del);
+		objects.push_back(land);
+	}
+	for (int i = 0; i < 3; i++)
+	{
+		CLand * land = new CLand();
+		land->LoadResources(eType::LAND1);
+		land->SetPosition(0 + 32*i, 15*32 + 16 + del);
+		objects.push_back(land);
+	}
+	for (int i = 0; i < 4; i++) //----
+	{
+		CLand * land = new CLand();
+		land->LoadResources(eType::LAND1);
+		land->SetPosition(0 + 32*i, 22*32 + del);
+		objects.push_back(land);
+	}
+	// cot 2
+	for (int i = 0; i < 4; i++)//----
+	{
+		CLand * land = new CLand();
+		land->LoadResources(eType::LAND1);
+		land->SetPosition(4*32 + 32*i, 7*32 + del*2);
+		objects.push_back(land);
+	}
+	for (int i = 0; i < 4; i++)
+	{
+		CLand * land = new CLand();
+		land->LoadResources(eType::LAND1);
+		land->SetPosition(4*32 + del + 32*i, 11*32 + del);
+		objects.push_back(land);
+	}
+	for (int i = 0; i < 4; i++) //---- // --
+	{
+		CLand * land = new CLand();
+		land->LoadResources(eType::LAND1);
+		land->SetPosition(4*32 + 32*i, 17*32 + del*2);
+		objects.push_back(land);
+	}
+	for (int i = 0; i < 4; i++)
+	{
+		CLand * land = new CLand();
+		land->LoadResources(eType::LAND1);
+		land->SetPosition(4*32 + 32*i, 23*32 + del*3);
+		objects.push_back(land);
+	}
+	// cot 3
+	for (int i = 0; i < 3; i++) //---- //--
+	{
+		CLand * land = new CLand();
+		land->LoadResources(eType::LAND1);
+		land->SetPosition(14*32 + 32*i, 9*32 + del);
+		objects.push_back(land);
+	}
+	for (int i = 0; i < 2; i++) //----
+	{
+		CLand * land = new CLand();
+		land->LoadResources(eType::LAND1);
+		land->SetPosition(18*32 + del*2 + 32*i, 10*32);
+		objects.push_back(land);
+	}
+	for (int i = 0; i < 7; i++) //----
+	{
+		CLand * land = new CLand();
+		land->LoadResources(eType::LAND1);
+		land->SetPosition(13*32 + del + 32*i, 14*32 + del*2);
+		objects.push_back(land);
+	}
+	for (int i = 0; i < 10; i++) //---- //--
+	{
+		CLand * land = new CLand();
+		land->LoadResources(eType::LAND1);
+		land->SetPosition(14*32 + 32*i, 22*32 + del);
+		objects.push_back(land);
+	}
+	for (int i = 0; i < 6; i++)
+	{
+		CLand * land = new CLand();
+		land->LoadResources(eType::LAND1);
+		land->SetPosition(13*32 + del + 32*i, 25*32 + del*3);
+		objects.push_back(land);
+	}
+	for (int i = 0; i < 15; i++)
+	{
+		CLand * land = new CLand();
+		land->LoadResources(eType::LAND1);
+		land->SetPosition(14*32 + 32*i, 28*32 + del*3);
+		objects.push_back(land);
+	}
+	// 2.5
+	for (int i = 0; i < 3; i++)
+	{
+		CLand * land = new CLand();
+		land->LoadResources(eType::LAND1);
+		land->SetPosition(22*32 + 32*i, 11*32 + del*3);
+		objects.push_back(land);
+	}
+	for (int i = 0; i < 11; i++) //----
+	{
+		CLand * land = new CLand();
+		land->LoadResources(eType::LAND1);
+		land->SetPosition(17*32 + 32*i, 18*32 + del*2);
+		objects.push_back(land);
+	}
+	// cot 3
+	for (int i = 0; i < 4; i++) //----
+	{
+		CLand * land = new CLand();
+		land->LoadResources(eType::LAND1);
+		land->SetPosition(24*32 + 32*i, 7*32);
+		objects.push_back(land);
+	}
+	for (int i = 0; i < 3; i++)
+	{
+		CLand * land = new CLand();
+		land->LoadResources(eType::LAND1);
+		land->SetPosition(26*32 + del*2 + 32*i, 10*32);
+		objects.push_back(land);
+	}
+	for (int i = 0; i < 4; i++) //----
+	{
+		CLand * land = new CLand();
+		land->LoadResources(eType::LAND1);
+		land->SetPosition(24*32 + 32*i, 10*32 + del*3);
+		objects.push_back(land);
+	}
+	for (int i = 0; i < 2; i++)
+	{
+		CLand * land = new CLand();
+		land->LoadResources(eType::LAND1);
+		land->SetPosition(29*32 + del*2 + 32*i, 21*32 + del);
+		objects.push_back(land);
+	}
+	for (int i = 0; i < 3; i++)
+	{
+		CLand * land = new CLand();
+		land->LoadResources(eType::LAND1);
+		land->SetPosition(27*32 + 32*i, 22*32 + del);
+		objects.push_back(land);
+	}
+	for (int i = 0; i < 4; i++)
+	{
+		CLand * land = new CLand();
+		land->LoadResources(eType::LAND1);
+		land->SetPosition(23*32 + del*3 + 32*i, 23*32 + del);
+		objects.push_back(land);
+	}
+	// cot 4
+	for (int i = 0; i < 5; i++)
+	{
+		CLand * land = new CLand();
+		land->LoadResources(eType::LAND1);
+		land->SetPosition(34*32 + del + 32*i, 6*32 + del*3);
+		objects.push_back(land);
+	}
+	for (int i = 0; i < 4; i++) //----
+	{
+		CLand * land = new CLand();
+		land->LoadResources(eType::LAND1);
+		land->SetPosition(35*32 + 32*i, 10*32 + del);
+		objects.push_back(land);
+	}
+	for (int i = 0; i < 5; i++) //----
+	{
+		CLand * land = new CLand();
+		land->LoadResources(eType::LAND1);
+		land->SetPosition(33*32 + del + 32*i, 15*32 + del);
+		objects.push_back(land);
+	}
+	for (int i = 0; i < 5; i++)
+	{
+		CLand * land = new CLand();
+		land->LoadResources(eType::LAND1);
+		land->SetPosition(34*32 + del*3 + 32*i, 21*32 + del*3);
+		objects.push_back(land);
+	}
+	for (int i = 0; i < 3; i++)
+	{
+		CLand * land = new CLand();
+		land->LoadResources(eType::LAND1);
+		land->SetPosition(34*32 + del*3 + 32*i, 28*32 + del*3);
+		objects.push_back(land);
+	}
+	for (int i = 0; i < 1; i++)
+	{
+		CLand * land = new CLand();
+		land->LoadResources(eType::LAND1);
+		land->SetPosition(37*32 + del*2, 28*32 + del*3);
+		objects.push_back(land);
+	}
+	//4.5
+	for (int i = 0; i < 15; i++) //----
+	{
+		CLand * land = new CLand();
+		land->LoadResources(eType::LAND1);
+		land->SetPosition(39*32 + 32*i, 11*32 + del*3);
+		objects.push_back(land);
+	}
+	for (int i = 0; i < 1; i++) //--
+	{
+		CLand * land = new CLand();
+		land->LoadResources(eType::LAND1);
+		land->SetPosition(47*32 + del, 9*32 + del);
+		objects.push_back(land);
+	}
+	for (int i = 0; i < 1; i++) //--
+	{
+		CLand * land = new CLand();
+		land->LoadResources(eType::LAND1);
+		land->SetPosition(53*32 + del, 3*32 + del*3);
+		objects.push_back(land);
+	}
+	// cot 5
+	for (int i = 0; i < 5; i++)
+	{
+		CLand * land = new CLand();
+		land->LoadResources(eType::LAND1);
+		land->SetPosition(56*32 + 32*i, 11*32 + del*3);
+		objects.push_back(land);
+	}
+	for (int i = 0; i < 5; i++)
+	{
+		CLand * land = new CLand();
+		land->LoadResources(eType::LAND1);
+		if (i == 4)
+			land->SetPosition(59*32 + del*3, 19*32 + del);
+		else land->SetPosition(55*32 + del + 32*i, 19*32 + del);
+		objects.push_back(land);
+	}
+	for (int i = 0; i < 2; i++)
+	{
+		CLand * land = new CLand();
+		land->LoadResources(eType::LAND1);
+		land->SetPosition(57*32 + del*2 + 32*i, 26*32 + del*3);
+		objects.push_back(land);
+	}
+	for (int i = 0; i < 5; i++)
+	{
+		CLand * land = new CLand();
+		land->LoadResources(eType::LAND1);
+		land->SetPosition(56*32 + 32*i, 32*32 + del);
+		objects.push_back(land);
+	}
+	// cot 6
+	for (int i = 0; i < 4; i++)
+	{
+		CLand * land = new CLand();
+		land->LoadResources(eType::LAND1);
+		land->SetPosition(65*32 + 32*i, 6*32 + del*3);
+		objects.push_back(land);
+	}
+	for (int i = 0; i < 5; i++)
+	{
+		CLand * land = new CLand();
+		land->LoadResources(eType::LAND1);
+		land->SetPosition(65*32 + del*2 + 32*i, 18*32 + del*3);
+		objects.push_back(land);
+	}
+	//---- Item 2 //
+	// zone 1
+	for (int i = 0; i < 4; i++)
+	{
+		CLand * land = new CLand();
+		land->LoadResources(eType::LAND2);
+		land->SetPosition(8 * 32 + 32 * i, 8 * 32 + del * 3);
+		objects.push_back(land);
+	}
+	for (int i = 0; i < 3; i++)
+	{
+		CLand * land = new CLand();
+		land->LoadResources(eType::LAND2);
+		land->SetPosition(11 * 32 + del*2 + 32 * i, 7 * 32 + del);
+		objects.push_back(land);
+	}
+	for (int i = 0; i < 3; i++)
+	{
+		CLand * land = new CLand();
+		land->LoadResources(eType::LAND2);
+		land->SetPosition(10 * 32 + 32 * i, 11 * 32 + del * 3);
+		objects.push_back(land);
+	}
+	for (int i = 0; i < 3; i++)
+	{
+		CLand * land = new CLand();
+		land->LoadResources(eType::LAND2);
+		land->SetPosition(8 * 32 + 32 * i, 27 * 32 + del);
+		objects.push_back(land);
+	}
+	for (int i = 0; i < 4; i++)
+	{
+		CLand * land = new CLand();
+		land->LoadResources(eType::LAND2);
+		land->SetPosition(11 * 32 + 32 * i, 28 * 32 + del);
+		objects.push_back(land);
+	}
+	// zone 2
+	for (int i = 0; i < 4; i++)
+	{
+		CLand * land = new CLand();
+		land->LoadResources(eType::LAND2);
+		land->SetPosition(19 * 32 + del*2 + 32 * i, 13 * 32 + del);
+		objects.push_back(land);
+	}
+	// zone 3
+	for (int i = 0; i < 6; i++)
+	{
+		CLand * land = new CLand();
+		land->LoadResources(eType::LAND2);
+		land->SetPosition(29 * 32 + 32 * i, 8 * 32 + del*3);
+		objects.push_back(land);
+	}
+	for (int i = 0; i < 5; i++)
+	{
+		CLand * land = new CLand();
+		land->LoadResources(eType::LAND2);
+		land->SetPosition(29 * 32 + del*2 + 32 * i, 14 * 32 + del);
+		objects.push_back(land);
+	}
+	for (int i = 0; i < 3; i++)
+	{
+		CLand * land = new CLand();
+		land->LoadResources(eType::LAND2);
+		land->SetPosition(27 * 32 + del * 2 + 32 * i, 16 * 32 + del);
+		objects.push_back(land);
+	}
+	for (int i = 0; i < 2; i++)
+	{
+		CLand * land = new CLand();
+		land->LoadResources(eType::LAND2);
+		land->SetPosition(33 * 32 + 32 * i, 24 * 32 + del);
+		objects.push_back(land);
+	}
+	for (int i = 0; i < 7; i++)
+	{
+		CLand * land = new CLand();
+		land->LoadResources(eType::LAND2);
+		land->SetPosition(28 * 32 + 32 * i, 26 * 32 + del);
+		objects.push_back(land);
+	}
+	// zone 4
+	for (int i = 0; i < 5; i++)
+	{
+		CLand * land = new CLand();
+		land->LoadResources(eType::LAND2);
+		land->SetPosition(43 * 32 + del*2 + 32 * i, 6 * 32 + del * 3);
+		objects.push_back(land);
+	}
+	for (int i = 0; i < 3; i++)
+	{
+		CLand * land = new CLand();
+		land->LoadResources(eType::LAND2);
+		land->SetPosition(41 * 32 + 32 * i, 8 * 32 + del);
+		objects.push_back(land);
+	}
+	for (int i = 0; i < 5; i++)
+	{
+		CLand * land = new CLand();
+		land->LoadResources(eType::LAND2);
+		land->SetPosition(51 * 32 + 32 * i, 16 * 32 + del*3);
+		objects.push_back(land);
+	}
+	for (int i = 0; i < 7; i++)
+	{
+		CLand * land = new CLand();
+		land->LoadResources(eType::LAND2);
+		land->SetPosition(44 * 32 + 32 * i, 19 * 32 + del);
+		objects.push_back(land);
+	}
+	for (int i = 0; i < 3; i++)
+	{
+		CLand * land = new CLand();
+		land->LoadResources(eType::LAND2);
+		land->SetPosition(49 * 32 + 32 * i, 22 * 32 + del*3);
+		objects.push_back(land);
+	}
+	for (int i = 0; i < 5; i++)
+	{
+		CLand * land = new CLand();
+		land->LoadResources(eType::LAND2);
+		land->SetPosition(38 * 32 + del*2 + 32 * i, 23 * 32 + del * 3);
+		objects.push_back(land);
+	}
+	for (int i = 0; i < 6; i++)
+	{
+		CLand * land = new CLand();
+		land->LoadResources(eType::LAND2);
+		land->SetPosition(51 * 32 + 32 * i, 24 * 32 + del);
+		objects.push_back(land);
+	}
+	for (int i = 0; i < 3; i++)
+	{
+		CLand * land = new CLand();
+		land->LoadResources(eType::LAND2);
+		land->SetPosition(41 * 32 + del * 2 + 32 * i, 25 * 32 + del * 3);
+		objects.push_back(land);
+	}
+	for (int i = 0; i < 2; i++)
+	{
+		CLand * land = new CLand();
+		land->LoadResources(eType::LAND2);
+		land->SetPosition(44 * 32 + del * 2 + 32 * i, 27 * 32 + del);
+		objects.push_back(land);
+	}
+	for (int i = 0; i < 3; i++)
+	{
+		CLand * land = new CLand();
+		land->LoadResources(eType::LAND2);
+		land->SetPosition(44 * 32 + 32 * i, 29 * 32 + del);
+		objects.push_back(land);
+	}
+	for (int i = 0; i < 8; i++)
+	{
+		CLand * land = new CLand();
+		land->LoadResources(eType::LAND2);
+		land->SetPosition(49 * 32 + 32 * i, 30 * 32 + del*3);
+		objects.push_back(land);
+	}
+	// zone 5
+	for (int i = 0; i < 7; i++)
+	{
+		CLand * land = new CLand();
+		land->LoadResources(eType::LAND2);
+		land->SetPosition(59 * 32 + 32 * i, 7 * 32 + del * 3);
+		objects.push_back(land);
+	}
+	for (int i = 0; i < 6; i++)
+	{
+		CLand * land = new CLand();
+		land->LoadResources(eType::LAND2);
+		land->SetPosition(64 * 32 + 32 * i, 14 * 32 + del);
+		objects.push_back(land);
+	}
+	for (int i = 0; i < 3; i++)
+	{
+		CLand * land = new CLand();
+		land->LoadResources(eType::LAND2);
+		land->SetPosition(67 * 32 + 32 * i, 22 * 32 + del);
+		objects.push_back(land);
+	}
+	for (int i = 0; i < 2; i++)
+	{
+		CLand * land = new CLand();
+		land->LoadResources(eType::LAND2);
+		land->SetPosition(68 * 32 + 32 * i, 25 * 32 + del*3);
+		objects.push_back(land);
+	}
+	// ?? gioi han duoi
+	CLand * land = new CLand();
+	land->LoadResources(LAND);
+	land->SetPosition(0, 1120);
+	objects.push_back(land);

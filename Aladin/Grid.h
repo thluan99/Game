@@ -12,6 +12,9 @@
 #include "Camera.h"
 #include "Enemy1.h"
 #include "Enemy2.h"
+#include "Enemy3.h"
+#include "Bat.h"
+#include "Land.h"
 #include <fstream>
 #include <iostream>
 

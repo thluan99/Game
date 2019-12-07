@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 
 using namespace std;
 
@@ -8,6 +8,8 @@ using namespace std;
 #define MAP_LIMIT_RIGHT 32*71
 #define MAP_LIMIT_BOT 32*36
 #define GRAVITY 0.002f
+
+#define del 8 // sai số tỉ đối
 // ID object
 enum eType
 {
@@ -20,4 +22,9 @@ enum eType
 	ENEMY1	= 30,
 	ENEMY2	= 31,
 	BAT		= 32,
+	ENEMY3	= 33,
+
+	LAND	= 99,
+	LAND1	= 90,
+	LAND2	= 91,
 };

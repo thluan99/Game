@@ -1,7 +1,7 @@
 #pragma once
 #include "GameObject.h"
 
-#define ALADIN_WALKING_SPEED				0.2f 
+#define ALADIN_WALKING_SPEED				0.15f 
 //0.1f
 #define ALADIN_JUMP_SPEED_Y					0.2f
 #define ALADIN_JUMP_DEFLECT_SPEED			0.2f

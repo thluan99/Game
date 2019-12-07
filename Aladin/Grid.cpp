@@ -89,6 +89,20 @@ CGameObject * GetNewObject(int ID)
 	case eType::ENEMY2:
 		return new Enemy2();
 
+	case eType::BAT:
+		return new Bat();
+
+	case eType::ENEMY3:
+		return new Enemy3();
+
+	case eType::LAND:
+		return new CLand();
+
+	case eType::LAND1:
+		return new CLand();
+
+	case eType::LAND2:
+		return new CLand();
 	}
 	return NULL;
 }
