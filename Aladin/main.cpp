@@ -155,6 +155,13 @@ void CSampleKeyHander::OnKeyDown(int KeyCode)
 				aladin->SetState(ALADIN_STATE_CHEM);
 		}
 		break;
+	case DIK_X:
+		if (aladin->getEnableKey() == true) {
+
+			
+				aladin->SetState(ALADIN_STATE_NHAY);
+		}
+		break;
 	}
 	
 	
