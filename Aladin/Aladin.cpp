@@ -36,20 +36,34 @@ void CAladin::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 		
 		x += dx;
 		y += dy;
+		if((vy- ALADIN_GRAVITY * dt)<dy)
+			state = ALADIN_STATE_ROT;
+		else
+		{
+			if(state == ALADIN_STATE_ROT)
+			state = ALADIN_STATE_IDLE;
+		}
+		/*if (vy <=dy)
+		{
+			state = ALADIN_STATE_ROT ;
+		}
+		else state = ALADIN_STATE_IDLE;*/
 		
 	}
 	else
 	{
+		
+		
 		float min_tx, min_ty, nx = 0, ny;
 
 		FilterCollision(coEvents, coEventsResult, min_tx, min_ty, nx, ny);
 
 		// block 
 		x += min_tx*dx + nx*0.4f;		// nx*0.4f : need to push out a bit to avoid overlapping next frame
-		y += min_ty*dy + ny*0.4f;
+		y += min_ty * dy + ny * 0.4f;
 		
 		if (nx!=0) vx = 0;
-		if (ny!=0) vy = 0;
+		if (ny != 0) { vy = 0; }
 
 		// Collision logic with Goombas
 		for (UINT i = 0; i < coEventsResult.size(); i++)
@@ -178,11 +192,16 @@ void CAladin::Render()
 	case ALADIN_STATE_CHEM:
 	case ALADIN_STATE_NGOI_CHEM:
 	case ALADIN_STATE_NHAY:
+
+		if (state == ALADIN_STATE_NHAY)
+			vy = -ALADIN_JUMP_SPEED_Y;
 		animations[ani]->RenderAladin(stt, x, y + ALADIN_BIG_BBOX_HEIGHT, this->direction, alpha);
 		if (stt == 0)
 			enableKey = false;
-		else { enableKey = true; 
-		state = ALADIN_STATE_IDLE;
+		else
+		{
+			enableKey = true; 
+			state = ALADIN_STATE_IDLE;
 		}
 	default:
 		animations[ani]->RenderAladin(x, y + ALADIN_BIG_BBOX_HEIGHT, this->direction, alpha);
@@ -219,7 +238,8 @@ void CAladin::SetState(int state)
 		vy = 0;
 		break;
 	case ALADIN_STATE_NHAY:
-		vy = -ALADIN_JUMP_SPEED_Y;// -ALADIN_JUMP_SPEED_Y;
+		// -ALADIN_JUMP_SPEED_Y;
+		
 		nx = ALADIN_STATE_NHAY;
 		break;
 

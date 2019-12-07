@@ -3,7 +3,7 @@
 
 #define ALADIN_WALKING_SPEED				0.2f 
 //0.1f
-#define ALADIN_JUMP_SPEED_Y					0.2f
+#define ALADIN_JUMP_SPEED_Y					0.15f
 #define ALADIN_JUMP_DEFLECT_SPEED			0.2f
 #define ALADIN_GRAVITY						0.002f
 #define ALADIN_DIE_DEFLECT_SPEED			0.5f
@@ -71,6 +71,7 @@ public:
 	CAladin() {
 		id = eType::ALADIN;
 		state = ALADIN_STATE_IDLE;
+		
 		enableKey = true;
 		SetDirection(1);
 	};
