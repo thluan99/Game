@@ -100,58 +100,7 @@ void CSampleKeyHander::OnKeyDown(int KeyCode)
 				if (grid->cells[i]->listGameObject[j]->id == eType::ENEMY1)
 					grid->cells[i]->listGameObject[j]->SetState(ENEMY1_STATE_RUN_LEFT);
 		break;
-	}
-	//------------------end test ----------------------//
-	switch (KeyCode)
-	{
-	
-	case DIK_A: // reset
-		aladin->SetState(ALADIN_STATE_IDLE);
-		aladin->SetPosition(50.0f, 0.0f);
-		aladin->SetSpeed(0, 0);
-		break;
-	case DIK_RIGHT:
-		if (aladin->getEnableKey() == true) {
-			aladin->SetDirection(1);
-			aladin->SetState(ALADIN_STATE_DI);
-		}
-		
-		break;
-	case DIK_LEFT:
-		if (aladin->getEnableKey() == true) {
-			aladin->SetDirection(-1);
-			aladin->SetState(ALADIN_STATE_DI);
-		}
-		
-		break;
-	case DIK_UP:
-		if (aladin->getEnableKey() == true) {
-			aladin->SetState(ALADIN_STATE_NGUOC_LEN);
-		}
-		
-		break;
-	case DIK_DOWN:
-		if (aladin->getEnableKey() == true) {
-			aladin->SetState(ALADIN_STATE_NGOI);
-		}
-		
-		break;
-	case DIK_C:
-		if (aladin->getEnableKey() == true) {
-			
-			if (aladin->GetState()== ALADIN_STATE_NGOI)
-				aladin->SetState(ALADIN_STATE_NGOI_CHEM);
-			else
-				aladin->SetState(ALADIN_STATE_CHEM);
-		}
-		break;
-	case DIK_X:
-		if (aladin->getEnableKey() == true) {			
-				aladin->SetState(ALADIN_STATE_NHAY);
-		}
-		break;
-
-	//---------hack ??? ---------//
+		//---------hack ??? ---------//
 	// ---- ĐÂY LÀ PHẦN PHỤC VỤ CHO TEST VÀ GHI FILE --------------//
 	case DIK_HOME:
 		aladin->SetX(aladin->GetX() + 50);
@@ -169,8 +118,65 @@ void CSampleKeyHander::OnKeyDown(int KeyCode)
 		ofs.close();
 		DebugOut(L"[INFO] : Clear file gridWrite.txt\n");
 		break;
-	}
+	
 	//---------end test------------//
+	}
+	//------------------end test ----------------------//
+	switch (KeyCode)
+	{
+
+	case DIK_A: // reset
+		aladin->SetState(ALADIN_STATE_IDLE);
+		aladin->SetPosition(50.0f, 0.0f);
+		aladin->SetSpeed(0, 0);
+		break;
+	case DIK_RIGHT:
+		if (aladin->getEnableKey() == true) {
+			aladin->SetDirection(1);
+			aladin->SetState(ALADIN_STATE_DI);
+		}
+
+		break;
+	case DIK_LEFT:
+		if (aladin->getEnableKey() == true) {
+			aladin->SetDirection(-1);
+			aladin->SetState(ALADIN_STATE_DI);
+		}
+
+		break;
+	case DIK_UP:
+		if (aladin->getEnableKey() == true) {
+			aladin->SetState(ALADIN_STATE_NGUOC_LEN);
+		}
+
+		break;
+	case DIK_DOWN:
+		if (aladin->getEnableKey() == true) {
+			aladin->SetState(ALADIN_STATE_NGOI);
+		}
+
+		break;
+	case DIK_C:
+		if (aladin->getEnableKey() == true) {
+
+			if (aladin->GetState() == ALADIN_STATE_NGOI)
+				aladin->SetState(ALADIN_STATE_NGOI_CHEM);
+			else
+				aladin->SetState(ALADIN_STATE_CHEM);
+		}
+		break;
+	case DIK_X:
+		if (aladin->getEnableKey() == true) {
+			aladin->SetState(ALADIN_STATE_NHAY);
+		}
+		break;
+	case DIK_S:
+		if (aladin->getEnableKey() == true) {
+			aladin->SetState(ALADIN_STATE_CHEM_MANH);
+		}
+		break;
+
+	}
 }
 
 void CSampleKeyHander::OnKeyUp(int KeyCode)

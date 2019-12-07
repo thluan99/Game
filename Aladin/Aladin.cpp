@@ -138,6 +138,16 @@ void CAladin::Render()
 			ani = ALADIN_ANI_NGOI_CHEM_TRAI;
 		}
 		break;
+	case ALADIN_STATE_CHEM_MANH:
+		if (direction == 1)
+		{
+			ani = ALADIN_ANI_CHEM_MANH_PHAI;
+		}
+		else
+		{
+			ani = ALADIN_ANI_CHEM_MANH_TRAI;
+		}
+		break;
 	case ALADIN_STATE_NHAY:
 		
 			ani = ALADIN_ANI_NHAY;
@@ -186,6 +196,7 @@ void CAladin::Render()
 	case ALADIN_STATE_CHEM:
 	case ALADIN_STATE_NGOI_CHEM:
 	case ALADIN_STATE_NHAY:
+		case ALADIN_STATE_CHEM_MANH:
 
 		if (state == ALADIN_STATE_NHAY)
 			vy = -ALADIN_JUMP_SPEED_Y;
@@ -220,6 +231,11 @@ void CAladin::SetState(int state)
 		}
 		
 		
+		break;
+	case ALADIN_STATE_CHEM_MANH:
+		vx = 0;
+
+
 		break;
 	case ALADIN_STATE_NGUOC_LEN:
 		vy = 0;
@@ -639,6 +655,205 @@ void CAladin::LoadResources(int ID)
 	ani->Add(10298);
 	animations->Add(513, ani);
 
+	// chém mạnh phải
+	sprites->Add(10300, 11, 420, 11 + 42, 420 + 53, texAladin);
+	sprites->Add(10301, 66, 413, 66+38, 413+60, texAladin);
+
+	sprites->Add(10302, 111, 412, 111+65, 412+61, texAladin);   // lập 5 lần
+	sprites->Add(10303, 193, 415, 193+47, 415+58, texAladin);
+	sprites->Add(10304, 249, 418, 249+47, 418+54, texAladin);
+	sprites->Add(10305, 298, 424, 298+54, 424+48, texAladin);
+	sprites->Add(10306, 363, 401, 363+74, 401+71, texAladin);
+	sprites->Add(10307, 452, 386, 452+54, 386+86, texAladin);
+	sprites->Add(10308, 520, 401, 520+49, 401+71, texAladin);
+	sprites->Add(10309, 584, 405,584+51, 405+67, texAladin);
+
+	sprites->Add(10310, 111, 412, 111 + 65, 412 + 61, texAladin); //2
+	sprites->Add(10311, 193, 415, 193 + 47, 415 + 58, texAladin);
+	sprites->Add(10312, 249, 418, 249 + 47, 418 + 54, texAladin);
+	sprites->Add(10313, 298, 424, 298 + 54, 424 + 48, texAladin);
+	sprites->Add(10314, 363, 401, 363 + 74, 401 + 71, texAladin);
+	sprites->Add(10315, 452, 386, 452 + 54, 386 + 86, texAladin);
+	sprites->Add(10316, 520, 401, 520 + 49, 401 + 71, texAladin);
+	sprites->Add(10317, 584, 405, 584 + 51, 405 + 67, texAladin);
+
+	sprites->Add(10318, 111, 412, 111 + 65, 412 + 61, texAladin); //3
+	sprites->Add(10319, 193, 415, 193 + 47, 415 + 58, texAladin);
+	sprites->Add(10320, 249, 418, 249 + 47, 418 + 54, texAladin);
+	sprites->Add(10321, 298, 424, 298 + 54, 424 + 48, texAladin);
+	sprites->Add(10322, 363, 401, 363 + 74, 401 + 71, texAladin);
+	sprites->Add(10323, 452, 386, 452 + 54, 386 + 86, texAladin);
+	sprites->Add(10324, 520, 401, 520 + 49, 401 + 71, texAladin);
+	sprites->Add(10325, 584, 405, 584 + 51, 405 + 67, texAladin);
+
+	sprites->Add(10326, 111, 412, 111 + 65, 412 + 61, texAladin);  //4
+	sprites->Add(10327, 193, 415, 193 + 47, 415 + 58, texAladin);
+	sprites->Add(10328, 249, 418, 249 + 47, 418 + 54, texAladin);
+	sprites->Add(10329, 298, 424, 298 + 54, 424 + 48, texAladin);
+	sprites->Add(10330, 363, 401, 363 + 74, 401 + 71, texAladin);
+	sprites->Add(10331, 452, 386, 452 + 54, 386 + 86, texAladin);
+	sprites->Add(10332, 520, 401, 520 + 49, 401 + 71, texAladin);
+	sprites->Add(10333, 584, 405, 584 + 51, 405 + 67, texAladin);
+
+	sprites->Add(10334, 111, 412, 111 + 65, 412 + 61, texAladin); //5
+	sprites->Add(10335, 193, 415, 193 + 47, 415 + 58, texAladin);
+	sprites->Add(10336, 249, 418, 249 + 47, 418 + 54, texAladin);
+	sprites->Add(10337, 298, 424, 298 + 54, 424 + 48, texAladin);
+	sprites->Add(10338, 363, 401, 363 + 74, 401 + 71, texAladin);
+	sprites->Add(10339, 452, 386, 452 + 54, 386 + 86, texAladin);
+	sprites->Add(10340, 520, 401, 520 + 49, 401 + 71, texAladin);
+	sprites->Add(10341, 584, 405, 584 + 51, 405 + 67, texAladin);
+
+	sprites->Add(10342, 644, 415, 644+53, 415+57, texAladin);
+	sprites->Add(10343, 704, 418, 704+46, 418+54, texAladin);
+
+	ani = new CAnimation(70);	// chém mạnh
+	ani->Add(10300);
+	ani->Add(10301);
+	ani->Add(10302);
+	ani->Add(10303);
+	ani->Add(10304);
+	ani->Add(10305);
+	ani->Add(10306);
+	ani->Add(10307);
+	ani->Add(10308);
+	ani->Add(10309);
+	ani->Add(10310);
+	ani->Add(10311);
+	ani->Add(10312);
+	ani->Add(10313);
+	ani->Add(10314);
+	ani->Add(10315);
+	ani->Add(10316);
+	ani->Add(10317);
+	ani->Add(10318);
+	ani->Add(10319);
+	ani->Add(10320);
+	ani->Add(10321);
+	ani->Add(10322);
+	ani->Add(10323);
+	ani->Add(10324);
+	ani->Add(10325);
+	ani->Add(10326);
+	ani->Add(10327);
+	ani->Add(10328);
+	ani->Add(10329);
+	ani->Add(10330);
+	ani->Add(10331);
+	ani->Add(10332);
+	ani->Add(10333);
+	ani->Add(10334);
+	ani->Add(10335);
+	ani->Add(10336);
+	ani->Add(10337);
+	ani->Add(10338);
+	ani->Add(10339);
+	ani->Add(10340);
+	ani->Add(10341);
+	ani->Add(10342);
+	ani->Add(10343);
+	
+	animations->Add(515, ani);
+
+	// chém mạnh trái
+	sprites->Add(10400, 1068, 420, 1068 + 42, 420 + 53, texAladin_f);
+	sprites->Add(10401, 1017, 413, 1017 + 38, 413 + 60, texAladin_f);
+
+	sprites->Add(10402, 945, 412, 945 + 65, 412 + 61, texAladin_f);   // lập 5 lần
+	sprites->Add(10403, 881, 415, 881 + 47, 415 + 58, texAladin_f);
+	sprites->Add(10404, 825, 418, 825 + 47, 418 + 54, texAladin_f);
+	sprites->Add(10405, 769, 424, 769 + 54, 424 + 48, texAladin_f);
+	sprites->Add(10406, 684, 401, 684 + 74, 401 + 71, texAladin_f);
+	sprites->Add(10407, 615, 386, 615 + 54, 386 + 86, texAladin_f);
+	sprites->Add(10408, 552, 401, 552 + 49, 401 + 71, texAladin_f);
+	sprites->Add(10409, 486, 405, 486 + 51, 405 + 67, texAladin_f);
+
+	sprites->Add(10410, 945, 412, 945 + 65, 412 + 61, texAladin_f);   // lập 5 lần
+	sprites->Add(10411, 881, 415, 881 + 47, 415 + 58, texAladin_f);
+	sprites->Add(10412, 825, 418, 825 + 47, 418 + 54, texAladin_f);
+	sprites->Add(10413, 769, 424, 769 + 54, 424 + 48, texAladin_f);
+	sprites->Add(10414, 684, 401, 684 + 74, 401 + 71, texAladin_f);
+	sprites->Add(10415, 615, 386, 615 + 54, 386 + 86, texAladin_f);
+	sprites->Add(10416, 552, 401, 552 + 49, 401 + 71, texAladin_f);
+	sprites->Add(10417, 486, 405, 486 + 51, 405 + 67, texAladin_f);
+
+	sprites->Add(10418, 945, 412, 945 + 65, 412 + 61, texAladin_f);   // lập 5 lần
+	sprites->Add(10419, 881, 415, 881 + 47, 415 + 58, texAladin_f);
+	sprites->Add(10420, 825, 418, 825 + 47, 418 + 54, texAladin_f);
+	sprites->Add(10421, 769, 424, 769 + 54, 424 + 48, texAladin_f);
+	sprites->Add(10422, 684, 401, 684 + 74, 401 + 71, texAladin_f);
+	sprites->Add(10423, 615, 386, 615 + 54, 386 + 86, texAladin_f);
+	sprites->Add(10424, 552, 401, 552 + 49, 401 + 71, texAladin_f);
+	sprites->Add(10425, 486, 405, 486 + 51, 405 + 67, texAladin_f);
+
+	sprites->Add(10426, 945, 412, 945 + 65, 412 + 61, texAladin_f);   // lập 5 lần
+	sprites->Add(10427, 881, 415, 881 + 47, 415 + 58, texAladin_f);
+	sprites->Add(10428, 825, 418, 825 + 47, 418 + 54, texAladin_f);
+	sprites->Add(10429, 769, 424, 769 + 54, 424 + 48, texAladin_f);
+	sprites->Add(10430, 684, 401, 684 + 74, 401 + 71, texAladin_f);
+	sprites->Add(10431, 615, 386, 615 + 54, 386 + 86, texAladin_f);
+	sprites->Add(10432, 552, 401, 552 + 49, 401 + 71, texAladin_f);
+	sprites->Add(10433, 486, 405, 486 + 51, 405 + 67, texAladin_f);
+
+	sprites->Add(10434, 945, 412, 945 + 65, 412 + 61, texAladin_f);   // lập 5 lần
+	sprites->Add(10435, 881, 415, 881 + 47, 415 + 58, texAladin_f);
+	sprites->Add(10436, 825, 418, 825 + 47, 418 + 54, texAladin_f);
+	sprites->Add(10437, 769, 424, 769 + 54, 424 + 48, texAladin_f);
+	sprites->Add(10438, 684, 401, 684 + 74, 401 + 71, texAladin_f);
+	sprites->Add(10439, 615, 386, 615 + 54, 386 + 86, texAladin_f);
+	sprites->Add(10440, 552, 401, 552 + 49, 401 + 71, texAladin_f);
+	sprites->Add(10441, 486, 405, 486 + 51, 405 + 67, texAladin_f);
+
+	sprites->Add(10442, 424, 415, 424 + 53, 415 + 57, texAladin_f);
+	sprites->Add(10443, 371, 418, 371 + 46, 418 + 54, texAladin_f);
+
+	ani = new CAnimation(70);	// chém mạnh
+	ani->Add(10400);
+	ani->Add(10401);
+	ani->Add(10402);
+	ani->Add(10403);
+	ani->Add(10404);
+	ani->Add(10405);
+	ani->Add(10406);
+	ani->Add(10407);
+	ani->Add(10408);
+	ani->Add(10409);
+	ani->Add(10410);
+	ani->Add(10411);
+	ani->Add(10412);
+	ani->Add(10413);
+	ani->Add(10414);
+	ani->Add(10415);
+	ani->Add(10416);
+	ani->Add(10417);
+	ani->Add(10418);
+	ani->Add(10419);
+	ani->Add(10420);
+	ani->Add(10421);
+	ani->Add(10422);
+	ani->Add(10423);
+	ani->Add(10424);
+	ani->Add(10425);
+	ani->Add(10426);
+	ani->Add(10427);
+	ani->Add(10428);
+	ani->Add(10429);
+	ani->Add(10430);
+	ani->Add(10431);
+	ani->Add(10432);
+	ani->Add(10433);
+	ani->Add(10434);
+	ani->Add(10435);
+	ani->Add(10436);
+	ani->Add(10437);
+	ani->Add(10438);
+	ani->Add(10439);
+	ani->Add(10440);
+	ani->Add(10441);
+	ani->Add(10442);
+	ani->Add(10443);
+
+	animations->Add(516, ani);
 	
 
 	this->AddAnimation(400);		 // 0 đứng phải
@@ -662,6 +877,8 @@ void CAladin::LoadResources(int ID)
 	this->AddAnimation(510);		// 18 dừng phải-
 	this->AddAnimation(511);		// 19 dừng trái-
 	this->AddAnimation(512);		// 20 trèo lên
+	this->AddAnimation(515);		// 21 chém mạnh phải
+	this->AddAnimation(516);		// 22 chém mạnh trái
 }
 
 void CAladin::GetBoundingBox(float &left, float &top, float &right, float &bottom)

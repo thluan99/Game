@@ -29,6 +29,7 @@
 #define ALADIN_STATE_DUNG_CHAY_PHAI			18		//dừng
 #define ALADIN_STATE_DUNG_CHAY_TRAI			19
 #define ADADIN_STATE_TREO					20
+#define ALADIN_STATE_CHEM_MANH				21
 #define ALADIN_STATE_DIE                    100
 
 
@@ -53,6 +54,8 @@
 #define ALADIN_ANI_DUNG_CHAY_PHAI			18		//dừng
 #define ALADIN_ANI_DUNG_CHAY_TRAI			19
 #define ADADIN_ANI_TREO						20
+#define ALADIN_ANI_CHEM_MANH_PHAI			21
+#define ALADIN_ANI_CHEM_MANH_TRAI			22
 #define ALADIN_ANI_DIE					    100
 
 
