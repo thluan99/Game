@@ -69,7 +69,7 @@ void CAnimation::Render(float x, float y, int alpha)
 	frames[currentFrame]->GetSprite()->Draw(x, y, alpha);
 }
 
-void CAnimation::RenderAladin(float x, float y, int direct, int alpha)
+void CAnimation::RenderAladin( float x, float y, int direct, int alpha)
 {
 	DWORD now = GetTickCount();
 	if (currentFrame == -1)
@@ -84,14 +84,20 @@ void CAnimation::RenderAladin(float x, float y, int direct, int alpha)
 		{
 			currentFrame++;
 			lastFrameTime = now;
-			if (currentFrame == frames.size()) currentFrame = 0;
+			if (currentFrame == frames.size()) {
+				currentFrame = 0; 
+			}
 		}
 
 	}
 	int hei = frames[currentFrame]->GetSprite()->GetHeight();
 	int w = frames[currentFrame]->GetSprite()->GetWidth();
 
-	frames[currentFrame]->GetSprite()->Draw(x, y - hei, alpha);
+	if (direct == 1)
+		frames[currentFrame]->GetSprite()->Draw(x, y - hei, alpha);
+	else if (direct == -1)
+		frames[currentFrame]->GetSprite()->Draw(x - w / 2, y - hei, alpha);
+
 }
 void CAnimation::RenderAladin(int &stt,float x, float y, int direct, int alpha)
 {
@@ -108,10 +114,12 @@ void CAnimation::RenderAladin(int &stt,float x, float y, int direct, int alpha)
 		{
 			currentFrame++;
 			lastFrameTime = now;
-			if (currentFrame == frames.size()) { 
-				currentFrame = 0; 
-				stt = 0;
+			if (currentFrame == frames.size()) {
+				currentFrame = 0;
+				stt = 1;
 			}
+			else
+				stt = 0;
 		}
 
 	}

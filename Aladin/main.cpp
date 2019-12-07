@@ -114,87 +114,115 @@ void CSampleKeyHander::OnKeyDown(int KeyCode)
 
 	switch (KeyCode)
 	{
-	case DIK_X:
-		if (!aladin->getNhay() )
-			aladin->setNhay(true);
-		break;
-	case DIK_C:
-		if (!aladin->getChem())
-			aladin->setChem(true);
-		break;
-	case DIK_RIGHT:
-		aladin->SetState(ALADIN_STATE_WALKING_RIGHT);
-		break;
+	
 	case DIK_A: // reset
-		aladin->SetState(ALADIN_STATE_IDLE_RIGHT);
+		aladin->SetState(ALADIN_STATE_IDLE);
 		aladin->SetPosition(50.0f, 0.0f);
 		aladin->SetSpeed(0, 0);
 		break;
-	case DIK_9:
-		grid->WriteGrid(objects);
-		DebugOut(L"[INFO] : Rewrite file gridWrite.txt\n");
+	case DIK_RIGHT:
+		if (aladin->getEnableKey() == true) {
+			aladin->SetDirection(1);
+			aladin->SetState(ALADIN_STATE_DI);
+		}
+		
+		break;
+	case DIK_LEFT:
+		if (aladin->getEnableKey() == true) {
+			aladin->SetDirection(-1);
+			aladin->SetState(ALADIN_STATE_DI);
+		}
+		
+		break;
+	case DIK_UP:
+		if (aladin->getEnableKey() == true) {
+			aladin->SetState(ALADIN_STATE_NGUOC_LEN);
+		}
+		
 		break;
 	case DIK_DOWN:
-		if (aladin->GetDirection() == 1)
-			aladin->SetState(ALADIN_STATE_SIT_RIGHT);
-		else aladin->SetState(ALADIN_STATE_SIT_LEFT);
+		if (aladin->getEnableKey() == true) {
+			aladin->SetState(ALADIN_STATE_NGOI);
+		}
+		
 		break;
-	case DIK_0:
-		ofstream ofs;
-		ofs.open("textures\\gridWrite1.txt", ofstream::out | ofstream::trunc);
-		ofs.close();
-		DebugOut(L"[INFO] : Clear file gridWrite.txt\n");
+	case DIK_C:
+		if (aladin->getEnableKey() == true) {
+			
+			if (aladin->GetState()== ALADIN_STATE_NGOI)
+				aladin->SetState(ALADIN_STATE_NGOI_CHEM);
+			else
+				aladin->SetState(ALADIN_STATE_CHEM);
+		}
 		break;
-
 	}
+	
+	
 }
 
 void CSampleKeyHander::OnKeyUp(int KeyCode)
 {
-	DebugOut(L"[INFO] KeyUp: %d\n", KeyCode);
+	switch (KeyCode)
+	{
+
+	
+	case DIK_RIGHT:
+		if(aladin->getEnableKey()==true)
+		aladin->SetState(ALADIN_STATE_IDLE);
+		break;
+	case DIK_LEFT:		
+		if (aladin->getEnableKey() == true)
+		aladin->SetState(ALADIN_STATE_IDLE);
+		break;
+	case DIK_UP:
+		if (aladin->getEnableKey() == true)
+		aladin->SetState(ALADIN_STATE_IDLE);
+		break;
+	case DIK_DOWN:
+		if (aladin->getEnableKey() == true)
+		aladin->SetState(ALADIN_STATE_IDLE);
+		break;
+	case DIK_C:
+		if (aladin->getEnableKey() == true){ 
+			if(game->IsKeyDown(DIK_DOWN))
+				aladin->SetState(ALADIN_STATE_NGOI); 
+			else 
+				aladin->SetState(ALADIN_STATE_IDLE);
+		}
+			
+		break;
+	}
 }
 void CSampleKeyHander::KeyState(BYTE* states)
 {
 	// disable control key when Aladin die 
 	if (aladin->GetState() == ALADIN_STATE_DIE) return;
-	if (game->IsKeyDown(DIK_RIGHT)) {
-		if (aladin->GetState() != ALADIN_STATE_JUMP_RIGHT)
+	if (aladin->getEnableKey() == true)
+	{
+		if (game->IsKeyDown(DIK_RIGHT))
 		{
 			aladin->SetDirection(1);
-			aladin->SetState(ALADIN_STATE_WALKING_RIGHT);
+			aladin->SetState(ALADIN_STATE_DI);
 		}
-
-	}
-	/*else if (game->IsKeyDown(DIK_X))
-		aladin->SetState(ALADIN_STATE_JUMP);*/
-	else
-		if (game->IsKeyDown(DIK_LEFT)) {
-			aladin->SetState(ALADIN_STATE_WALKING_LEFT);
+		else if (game->IsKeyDown(DIK_LEFT))
+		{
 			aladin->SetDirection(-1);
+			aladin->SetState(ALADIN_STATE_DI);
 		}
-	/*if(game->IsKeyDown(DIK_X))
-   {
-	   if (aladin->GetState() == ALADIN_STATE_WALKING_RIGHT)
-		   aladin->SetState(ALADIN_STATE_JUMP_RIGHT);
-	   else
-		   aladin->SetState(ALADIN_STATE_JUMP);
-   }*/
-   /*else if (game->IsKeyDown(DIK_X)) {
-	   if(aladin->GetState() != ALADIN_STATE_JUMP)
-	   aladin->SetState(ALADIN_STATE_JUMP);
-   }*/
-		else //if(aladin->GetState()== ALADIN_STATE_WALKING_LEFT || aladin->GetState() == ALADIN_STATE_WALKING_RIGHT){
-			if (game->IsKeyDown(DIK_DOWN))
-			{
-				if (aladin->GetDirection() == 1)
-					aladin->SetState(ALADIN_STATE_SIT_RIGHT);
-				else aladin->SetState(ALADIN_STATE_SIT_LEFT);
-			}
-			else {
-				if (aladin->GetDirection() == 1)
-					aladin->SetState(ALADIN_STATE_IDLE_RIGHT);
-				else aladin->SetState(ALADIN_STATE_IDLE_LEFT);
-			}
+		else if (game->IsKeyDown(DIK_UP))
+		{
+			aladin->SetState(ALADIN_STATE_NGUOC_LEN);
+		}
+		else if (game->IsKeyDown(DIK_DOWN))
+		{
+			aladin->SetState(ALADIN_STATE_NGOI);
+		}
+		
+	}
+	/*else
+	{
+		aladin->SetState(ALADIN_STATE_IDLE);
+	}*/
 }
 
 #pragma endregion
