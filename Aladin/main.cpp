@@ -122,12 +122,67 @@ void CSampleKeyHander::OnKeyDown(int KeyCode)
 	//---------end test------------//
 	}
 	//------------------end test ----------------------//
+//	switch (KeyCode)
+//	{
+//
+//	case DIK_A: // reset
+//		aladin->SetState(ALADIN_STATE_IDLE);
+//		aladin->SetPosition(50.0f, 0.0f);
+//		aladin->SetSpeed(0, 0);
+//		break;
+//	case DIK_RIGHT:
+//		if (aladin->getEnableKey() == true) {
+//			aladin->SetDirection(1);
+//			aladin->SetState(ALADIN_STATE_DI);
+//		}
+//
+//		break;
+//	case DIK_LEFT:
+//		if (aladin->getEnableKey() == true) {
+//			aladin->SetDirection(-1);
+//			aladin->SetState(ALADIN_STATE_DI);
+//		}
+//
+//		break;
+//	case DIK_UP:
+//		if (aladin->getEnableKey() == true) {
+//			aladin->SetState(ALADIN_STATE_NGUOC_LEN);
+//		}
+//
+//		break;
+//	case DIK_DOWN:
+//		if (aladin->getEnableKey() == true) {
+//			aladin->SetState(ALADIN_STATE_NGOI);
+//		}
+//
+//		break;
+//	case DIK_C:
+//		if (aladin->getEnableKey() == true) {
+//
+//			if (aladin->GetState() == ALADIN_STATE_NGOI)
+//				aladin->SetState(ALADIN_STATE_NGOI_CHEM);
+//			else
+//				aladin->SetState(ALADIN_STATE_CHEM);
+//		}
+//		break;
+//	case DIK_X:
+//		if (aladin->getEnableKey() == true) {
+//			aladin->SetState(ALADIN_STATE_NHAY);
+//		}
+//		break;
+//	case DIK_S:
+//		if (aladin->getEnableKey() == true) {
+//			aladin->SetState(ALADIN_STATE_CHEM_MANH);
+//		}
+//		break;
+//
+//	}
 	switch (KeyCode)
 	{
-
-	case DIK_A: // reset
+	case DIK_A:
 		aladin->SetState(ALADIN_STATE_IDLE);
 		aladin->SetPosition(50.0f, 0.0f);
+		aladin->setEnableKey(true);
 		aladin->SetSpeed(0, 0);
 		break;
 	case DIK_RIGHT:
@@ -135,47 +190,49 @@ void CSampleKeyHander::OnKeyDown(int KeyCode)
 			aladin->SetDirection(1);
 			aladin->SetState(ALADIN_STATE_DI);
 		}
-
+		else {
+			if (aladin->getNhay()==true)
+				aladin->vx=  ALADIN_WALKING_SPEED;
+			
+		}
 		break;
 	case DIK_LEFT:
 		if (aladin->getEnableKey() == true) {
 			aladin->SetDirection(-1);
 			aladin->SetState(ALADIN_STATE_DI);
 		}
+		else {
+			if (aladin->getNhay() == true)
+				aladin->vx = -ALADIN_WALKING_SPEED;
 
+		}
 		break;
 	case DIK_UP:
 		if (aladin->getEnableKey() == true) {
 			aladin->SetState(ALADIN_STATE_NGUOC_LEN);
-		}
+			}
 
 		break;
 	case DIK_DOWN:
 		if (aladin->getEnableKey() == true) {
 			aladin->SetState(ALADIN_STATE_NGOI);
 		}
-
 		break;
 	case DIK_C:
 		if (aladin->getEnableKey() == true) {
-
-			if (aladin->GetState() == ALADIN_STATE_NGOI)
-				aladin->SetState(ALADIN_STATE_NGOI_CHEM);
-			else
-				aladin->SetState(ALADIN_STATE_CHEM);
+			aladin->setChem(true);
 		}
 		break;
 	case DIK_X:
-		if (aladin->getEnableKey() == true) {
-			aladin->SetState(ALADIN_STATE_NHAY);
+		if (aladin->getEnableKey() == true && aladin->GetState()!=ALADIN_STATE_NGOI) {
+			aladin->setNhay(true);
 		}
 		break;
-	case DIK_S:
-		if (aladin->getEnableKey() == true) {
-			aladin->SetState(ALADIN_STATE_CHEM_MANH);
-		}
+	case DIK_Q:
+		aladin->setEnableKey(false);
 		break;
-
+	default:
+		break;
 	}
 }
 
@@ -185,10 +242,12 @@ void CSampleKeyHander::OnKeyUp(int KeyCode)
 	{	
 	case DIK_RIGHT:
 		if(aladin->getEnableKey()==true)
+		//	if(aladin->GetState()==ALADIN_STATE_DI && aladin->getChem()==false && aladin->getNem() == false && aladin->getNem() == false)
 		aladin->SetState(ALADIN_STATE_IDLE);
 		break;
 	case DIK_LEFT:		
 		if (aladin->getEnableKey() == true)
+		//	if (aladin->GetState() == ALADIN_STATE_DI && aladin->getChem() == false && aladin->getNem() == false && aladin->getNem() == false)
 		aladin->SetState(ALADIN_STATE_IDLE);
 		break;
 	case DIK_UP:

@@ -13,7 +13,7 @@
 #define ALADIN_STATE_DI				2		//đi
 #define ALADIN_STATE_DI_TRAI				3
 #define ALADIN_STATE_NHAY					4		//nhảy
-#define ALADIN_STATE_ROT					5
+#define ALADIN_STATE_ROI					5
 #define ALADIN_STATE_NHAY_PHAI				6
 #define ALADIN_STATE_NHAY_TRAI				7
 #define ALADIN_STATE_CHEM				8		//chém
@@ -38,7 +38,7 @@
 #define ALADIN_ANI_DI_PHAI					2		//đi
 #define ALADIN_ANI_DI_TRAI					3
 #define ALADIN_ANI_NHAY						4		//nhảy
-#define ALADIN_ANI_ROT						5
+#define ALADIN_ANI_ROI						5
 #define ALADIN_ANI_NHAY_PHAI				6
 #define ALADIN_ANI_NHAY_TRAI				7
 #define ALADIN_ANI_CHEM_PHAI				8		//chém
@@ -69,12 +69,17 @@
 class CAladin : public CGameObject
 {
 	bool enableKey;
-	
+	bool isNhay;
+	bool isChem;
+	bool isNem;
+	bool isRoi;
 public:
 	CAladin() {
 		id = eType::ALADIN;
 		state = ALADIN_STATE_IDLE;
-		
+		isNhay = false;
+		isNem = false;
+		isChem = false;
 		enableKey = true;
 		SetDirection(1);
 	};
@@ -85,6 +90,22 @@ public:
 	virtual void GetBoundingBox(float& left, float& top, float& right, float& bottom);
 	virtual void ReLoad();
 
+	void setNhay(bool x) {
+		isNhay = x;
+	}
+	void setChem(bool x) {
+		isChem = x;
+	}
+	void setNem(bool x) {
+		isNem = x;
+	}
+	void setRoi(bool x) {
+		isRoi = x;
+	}
+	bool getNhay() { return isNhay; }
+	bool getRoi() { return isRoi; }
+	bool getChem() { return isChem; }
+	bool getNem() { return isNem; }
 	void	setEnableKey(bool x) { enableKey = x; }
 	bool getEnableKey() { return enableKey; }
 	
