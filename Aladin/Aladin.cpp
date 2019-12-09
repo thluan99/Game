@@ -280,22 +280,28 @@ void CAladin::Render()
 			isNhay = false;
 		}
 	}
-	/*else if (isNem == true)
+	else if (isNem == true)
 	{
 		switch (state)
 		{
-		case ALADIN_STATE_NGUOC_LEN:
+		
 		case ALADIN_STATE_IDLE:
 
-			ani = ALADIN_ANI_NHAY;
-
-			break;
-		case ALADIN_STATE_DI:
 			if (direction == 1)
-				ani = ALADIN_ANI_NHAY_PHAI;
+				ani = ALADIN_ANI_NEM_TAO_PHAI;
 			else
 			{
-				ani = ALADIN_ANI_NHAY_TRAI;
+				ani = ALADIN_ANI_NEM_TAO_TRAI;
+			}
+			break;
+
+			
+		case ALADIN_STATE_NGOI:
+			if (direction == 1)
+				ani = ALADIN_ANI_NGOI_NEM_TAO_PHAI;
+			else
+			{
+				ani = ALADIN_ANI_NGOI_NEM_TAO_TRAI;
 			}
 			break;
 		}
@@ -306,9 +312,9 @@ void CAladin::Render()
 		{
 			enableKey = true;
 			state = ALADIN_STATE_IDLE;
-			isNhay = false;
+			isNem = false;
 		}
-	}*/
+	}
 	
 	else
 	{

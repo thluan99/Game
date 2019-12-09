@@ -228,8 +228,14 @@ void CSampleKeyHander::OnKeyDown(int KeyCode)
 			aladin->setNhay(true);
 		}
 		break;
+	case DIK_Z:
+		if (aladin->getEnableKey() == true ) {
+			aladin->setNem(true);
+		}
+		break;
+	
 	case DIK_Q:
-		aladin->setEnableKey(false);
+		aladin->setEnableKey(true);
 		break;
 	default:
 		break;

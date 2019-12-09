@@ -35,6 +35,8 @@ enum eType
 	ENEMY2	= 31,
 	BAT		= 32,
 	ENEMY3	= 33,
+	
+
 
 	LAND	= 99,
 	LAND1	= 90,
