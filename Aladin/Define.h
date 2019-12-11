@@ -35,7 +35,7 @@ enum eType
 	ENEMY2	= 31,
 	BAT		= 32,
 	ENEMY3	= 33,
-	
+	APPLE=34,
 
 
 	LAND	= 99,

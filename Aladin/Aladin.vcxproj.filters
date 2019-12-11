@@ -45,6 +45,7 @@
     <ClCompile Include="texSurface.cpp">
       <Filter>Map</Filter>
     </ClCompile>
+    <ClCompile Include="Apple.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="debug.h" />
@@ -91,6 +92,7 @@
     <ClInclude Include="texSurface.h">
       <Filter>Map</Filter>
     </ClInclude>
+    <ClInclude Include="Apple.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Map">

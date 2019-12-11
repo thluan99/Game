@@ -87,6 +87,7 @@ void CAladin::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 void CAladin::Render()
 {
 	if (isNhay==true)
+		
 		vy = -ALADIN_JUMP_SPEED_Y;
 	int ani;
 	switch (state)
@@ -276,7 +277,8 @@ void CAladin::Render()
 		else
 		{
 			enableKey = true;
-			//state = ALADIN_STATE_IDLE;
+			state = ALADIN_STATE_IDLE;
+			vx = 0;
 			isNhay = false;
 		}
 	}

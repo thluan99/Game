@@ -41,7 +41,7 @@
 #include "Land.h"
 #include "Grid.h"
 #include "texSurface.h"
-
+#include"Apple.h"
 CGame *game;
 CAladin *aladin;
 Camera *camera;
@@ -52,6 +52,9 @@ dxGraphics *dx_graphics;
 TextSurface *texSur;
 vector<LPGAMEOBJECT> objects;
 TileMap *tileMap;
+
+
+Apple *apple;
 //---------------KeyBoard -------------------------
 #pragma region KeyBoard
 
@@ -181,7 +184,7 @@ void CSampleKeyHander::OnKeyDown(int KeyCode)
 	{
 	case DIK_A:
 		aladin->SetState(ALADIN_STATE_IDLE);
-		aladin->SetPosition(50.0f, 0.0f);
+		aladin->SetPosition(500.0f, 1000.0f);
 		aladin->setEnableKey(true);
 		aladin->SetSpeed(0, 0);
 		break;
@@ -231,6 +234,12 @@ void CSampleKeyHander::OnKeyDown(int KeyCode)
 	case DIK_Z:
 		if (aladin->getEnableKey() == true ) {
 			aladin->setNem(true);
+			//apple - new Apple(aladin->x + 20, aladin->y + 20);
+			apple->SetPosition(aladin->x + 10, aladin->y);
+			apple->setNem(true);
+			if (aladin->direction == 1)
+				apple->direction = 1;
+			else apple->direction = -1;
 		}
 		break;
 	
@@ -366,6 +375,8 @@ CGameObject * GetNewObjectEx(int ID)
 
 	case eType::LAND3:
 		return new CLand();
+	case eType::APPLE:
+		return new Apple();
 	}
 	return NULL;
 }
@@ -434,13 +445,18 @@ void Resources()
 
 void LoadResources()
 {
+	apple = new Apple();
+	apple->LoadResources(eType::APPLE);
+	
+
+
 	tileMap = new TileMap();
 	tileMap->LoadResource();
 	tileMap->ReadMapFile("textures/tile_map.txt");
 
 	aladin = new CAladin();
 	aladin->LoadResources(eType::ALADIN);
-	aladin->SetPosition(100.f, 0.0f);
+	aladin->SetPosition(50.f, 1000.0f);
 	objects.push_back(aladin);
 
 	texSur = new TextSurface();
@@ -470,8 +486,11 @@ void Update(DWORD dt)
 	//	objects[i]->Update(dt,&coObjects);
 	//}
 
+	//if(apple!=NULL)
+	//apple->Update(dt);
 	grid->UpdateCollision(dt, aladin);
-
+	if(apple->getNem()==true)
+		apple->Update(dt);
 	// Update camera to follow aladin
 	camera->Follow(aladin);
 	camera->Update();
@@ -503,6 +522,8 @@ void Render()
 		/*for (int i = 0; i < objects.size(); i++)
 			objects[i]->Render();*/
 		aladin->Render();
+		if (apple->getNem() == true)
+		apple->Render();
 		grid->RenderObjectEx(camera, objects);
 		texSur->Render();
 
