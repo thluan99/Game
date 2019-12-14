@@ -571,6 +571,9 @@ void Render()
 		aladin->Render();
 
 		//render apple
+		
+			
+		grid->RenderObjectEx(camera, objects);
 		for (int i = listApples.size() - 1; i >= 0; i--)
 		{
 			if (listApples[i]->getNem() == true)
@@ -579,9 +582,8 @@ void Render()
 				DebugOut(L"============ %d\n", listApples[i]->GetX());
 			}
 		}
-			
-		grid->RenderObjectEx(camera, objects);
-		texSur->Render();		
+		texSur->Render();	
+
 
 		spriteHandler->End();
 		d3ddv->EndScene();

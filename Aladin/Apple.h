@@ -31,6 +31,7 @@ public:
 	virtual void Render();
 	virtual void Update(DWORD dt, vector<LPGAMEOBJECT>* colliable_objects = NULL);
 
+	void SetPosition(float, float);
 	void SetState(int state);
 	virtual void LoadResources(int ID);
 	float Calcu_Y_Apple(float);
@@ -47,7 +48,7 @@ public:
 		id = eType::APPLE;
 		this->x = x;
 		this->y = y;
-		this->staticX = x;
+		this->staticX = aladin_apple->GetX();
 		state = APPLE_STATE_IDLE;
 		isNem = true;
 	};

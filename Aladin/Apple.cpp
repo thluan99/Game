@@ -5,6 +5,7 @@
 void Apple::Render()
 {
 	int ani;
+
 	int alpha = 255;
 	if (state == APPLE_STATE_DIE)
 		ani = APPLE_ANI_DIE;
@@ -112,6 +113,13 @@ void Apple::GetBoundingBox(float & l, float & t, float & r, float & b)
 	t = y;
 	r = x + APPLE_BBOX_WIDTH;
 	b = y + APPLE_BBOX_HEIGHT;
+}
+
+void Apple::SetPosition(float x, float y)
+{
+	this->staticX = x;
+	this->x = x;
+	this->y = y;
 }
 
 void Apple::ReLoad()
