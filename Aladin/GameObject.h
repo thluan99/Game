@@ -57,6 +57,8 @@ public:
 	int nx;	 
 
 	int state;
+	int curr_ani;
+	int curr_frame;
 
 	DWORD dt; 
 	CTextures * textures;
@@ -96,6 +98,10 @@ public:
 		float &ny);
 
 	void AddAnimation(int aniId);
+	vector<LPANIMATION> GetAnimation()
+	{
+		return animations;
+	}
 
 	CGameObject();
 

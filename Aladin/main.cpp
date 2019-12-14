@@ -53,8 +53,7 @@ TextSurface *texSur;
 vector<LPGAMEOBJECT> objects;
 TileMap *tileMap;
 
-
-Apple *apple;
+vector<Apple*> listApples;
 //---------------KeyBoard -------------------------
 #pragma region KeyBoard
 
@@ -234,12 +233,19 @@ void CSampleKeyHander::OnKeyDown(int KeyCode)
 	case DIK_Z:
 		if (aladin->getEnableKey() == true ) {
 			aladin->setNem(true);
-			//apple - new Apple(aladin->x + 20, aladin->y + 20);
+			Apple* apple;
+			apple = new Apple();
+			apple->LoadResources(eType::APPLE);
+			//apple = new Apple(aladin->x + 20, aladin->y);
 			apple->SetPosition(aladin->x + 10, aladin->y);
+			DebugOut(L"aladin x: %d \n apple x: %d \n", aladin->x + 10, apple->x);
 			apple->setNem(true);
 			if (aladin->direction == 1)
 				apple->direction = 1;
 			else apple->direction = -1;
+			
+
+			listApples.push_back(apple);
 		}
 		break;
 	
@@ -445,11 +451,6 @@ void Resources()
 
 void LoadResources()
 {
-	apple = new Apple();
-	apple->LoadResources(eType::APPLE);
-	
-
-
 	tileMap = new TileMap();
 	tileMap->LoadResource();
 	tileMap->ReadMapFile("textures/tile_map.txt");
@@ -461,6 +462,34 @@ void LoadResources()
 
 	texSur = new TextSurface();
 	texSur->LoadResources(eType::TEXSURFACE);
+
+	//load apple
+	CTextures* textures = CTextures::GetInstance();
+	CSprites* sprites = CSprites::GetInstance();
+
+	textures->Add(ID_TEX_APPLE, L"textures\\aladin.png", D3DCOLOR_XRGB(255, 0, 255));
+	CAnimations* animations = CAnimations::GetInstance();
+
+	LPDIRECT3DTEXTURE9 textAPPLE = textures->Get(ID_TEX_APPLE);
+	// idle
+	LPANIMATION ani;
+	sprites->Add(200, 373, 24, 373 + 7, 24 + 7, textAPPLE);
+	ani = new CAnimation(100);
+	ani->Add(200);
+	animations->Add(999, ani);
+	// die
+	sprites->Add(201, 394, 23, 394 + 7, 23 + 10, textAPPLE);
+	sprites->Add(202, 414, 18, 414 + 20, 18 + 18, textAPPLE);
+	sprites->Add(203, 444, 16, 444 + 29, 16 + 22, textAPPLE);
+	sprites->Add(204, 485, 14, 485 + 31, 14 + 25, textAPPLE);
+	sprites->Add(205, 532, 13, 532 + 30, 13 + 27, textAPPLE);
+	ani = new CAnimation(100);
+	ani->Add(201);
+	ani->Add(202);
+	ani->Add(203);
+	ani->Add(204);
+	ani->Add(205);
+	animations->Add(998, ani);
 
 	//Resources();
 	//grid->LoadResourses(objects, aladin);
@@ -489,8 +518,26 @@ void Update(DWORD dt)
 	//if(apple!=NULL)
 	//apple->Update(dt);
 	grid->UpdateCollision(dt, aladin);
-	if(apple->getNem()==true)
-		apple->Update(dt);
+	for (int i = 0 ; i < listApples.size() ; i++)
+	{
+		if (listApples[i]->getNem() == true)
+		{
+			listApples[i]->Update(dt);
+
+
+			DebugOut(L"============ %d\n", listApples[i]->GetX());
+		}
+	}
+
+	for (int i = 0; i < listApples.size(); i++)
+	{
+		if (abs(listApples[i]->staticX - listApples[i]->GetX()) > 1000)
+		{
+			listApples.erase(listApples.begin() + i);
+			OutputDebugString(L"xóa doi tuong");
+		}
+	}
+	
 	// Update camera to follow aladin
 	camera->Follow(aladin);
 	camera->Update();
@@ -522,10 +569,19 @@ void Render()
 		/*for (int i = 0; i < objects.size(); i++)
 			objects[i]->Render();*/
 		aladin->Render();
-		if (apple->getNem() == true)
-		apple->Render();
+
+		//render apple
+		for (int i = listApples.size() - 1; i >= 0; i--)
+		{
+			if (listApples[i]->getNem() == true)
+			{
+				listApples[i]->Render();
+				DebugOut(L"============ %d\n", listApples[i]->GetX());
+			}
+		}
+			
 		grid->RenderObjectEx(camera, objects);
-		texSur->Render();
+		texSur->Render();		
 
 		spriteHandler->End();
 		d3ddv->EndScene();

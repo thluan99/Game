@@ -6,6 +6,7 @@
 #include "Sprites.h"
 #include "Textures.h"
 #include "Define.h"
+#include "Aladin.h"
 
 #define APPLE_BBOX_WIDTH	7
 #define APPLE_BBOX_HEIGHT	7
@@ -26,19 +27,36 @@ class Apple : public CGameObject
 
 	bool	isNem;
 public:
+	float staticX;
 	virtual void Render();
 	virtual void Update(DWORD dt, vector<LPGAMEOBJECT>* colliable_objects = NULL);
+
 	void SetState(int state);
 	virtual void LoadResources(int ID);
+	float Calcu_Y_Apple(float);
+
+
+
 	Apple() { id = eType::APPLE; 
 		 state = APPLE_STATE_IDLE;
 		isNem = false;
+		vy = -0.13f;
 	}
+	Apple(CAladin* aladin_apple, float x, float y)
+	{
+		id = eType::APPLE;
+		this->x = x;
+		this->y = y;
+		this->staticX = x;
+		state = APPLE_STATE_IDLE;
+		isNem = true;
+	};
 	Apple(float x, float y)
 	{
 		id = eType::APPLE;
 		this->x = x;
 		this->y = y;
+		this->staticX = x;
 		state = APPLE_STATE_IDLE;
 		isNem = true;
 	};

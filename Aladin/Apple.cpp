@@ -1,4 +1,6 @@
 #include  "Apple.h"
+#include "Aladin.h"
+#include "debug.h"
 
 void Apple::Render()
 {
@@ -10,18 +12,28 @@ void Apple::Render()
 	{
 		ani = APPLE_ANI_IDLE;
 	}
-	animations[0]->Render(x, y, 255);
+	animations[ani]->Render(x, y, 255);
 }
+
+float Apple::Calcu_Y_Apple(float vy)
+{
+
+	return vy + 0.01f;
+
+}
+
 
 void Apple::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
 	if (state == APPLE_STATE_IDLE)
 	{
-		vy = 0.1;
+		//vy = 0.1;
+		vy = Calcu_Y_Apple(vy);
+
 		if (direction == 1)
-			vx = 0.3f;
+			vx = 0.4f;
 		else
-			vx = -0.3;
+			vx = -0.4f;
 		x += (vx*dt);
 		y += (vy*dt);
 	}
@@ -30,7 +42,7 @@ void Apple::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 
 	//coEvents.clear();
 
-	//if (state != APPLE_STATE_DIE)
+	//if (state != _STATE_DIE)
 	//{
 	//	CalcPotentialCollisions(coObjects, coEvents);
 	//	//delete this;
@@ -64,31 +76,31 @@ void Apple::SetState(int state)
 }
 void Apple::LoadResources(int ID)
 {
-	textures = CTextures::GetInstance();
-	sprites = CSprites::GetInstance();
-	textures->Add(ID_TEX_APPLE, L"textures\\aladin.png", D3DCOLOR_XRGB(255, 0, 255));
-	CAnimations *animations = CAnimations::GetInstance();
+	//textures = CTextures::GetInstance();
+	//sprites = CSprites::GetInstance();
+	//textures->Add(ID_TEX_APPLE, L"textures\\aladin.png", D3DCOLOR_XRGB(255, 0, 0));
+	//CAnimations *animations = CAnimations::GetInstance();
 
-	LPDIRECT3DTEXTURE9 textAPPLE = textures->Get(ID_TEX_APPLE);
-	// idle
-	LPANIMATION ani;
-	sprites->Add(200, 373, 24, 373 + 7, 24 + 7, textAPPLE);
-	ani = new CAnimation(100);
-	ani->Add(200);
-	animations->Add(999, ani);
-	// die
-	sprites->Add(201, 394, 23, 394 + 7, 23 + 10, textAPPLE);
-	sprites->Add(202, 414, 18, 414 + 20, 18 + 18, textAPPLE);
-	sprites->Add(203, 444, 16, 444 + 29, 16 + 22, textAPPLE);
-	sprites->Add(204, 485, 14, 485 + 31, 14 + 25, textAPPLE);
-	sprites->Add(205, 532, 13, 532 + 30, 13 + 27, textAPPLE);
-	ani = new CAnimation(100);
-	ani->Add(201);
-	ani->Add(202);
-	ani->Add(203);
-	ani->Add(204);
-	ani->Add(205);
-	animations->Add(998, ani);
+	//LPDIRECT3DTEXTURE9 textAPPLE = textures->Get(ID_TEX_APPLE);
+	//// idle
+	//LPANIMATION ani;
+	//sprites->Add(200, 373, 24, 373 + 7, 24 + 7, textAPPLE);
+	//ani = new CAnimation(100);
+	//ani->Add(200);
+	//animations->Add(999, ani);
+	//// die
+	//sprites->Add(201, 394, 23, 394 + 7, 23 + 10, textAPPLE);
+	//sprites->Add(202, 414, 18, 414 + 20, 18 + 18, textAPPLE);
+	//sprites->Add(203, 444, 16, 444 + 29, 16 + 22, textAPPLE);
+	//sprites->Add(204, 485, 14, 485 + 31, 14 + 25, textAPPLE);
+	//sprites->Add(205, 532, 13, 532 + 30, 13 + 27, textAPPLE);
+	//ani = new CAnimation(100);
+	//ani->Add(201);
+	//ani->Add(202);
+	//ani->Add(203);
+	//ani->Add(204);
+	//ani->Add(205);
+	//animations->Add(998, ani);
 
 	this->AddAnimation(999);
 	this->AddAnimation(998);
