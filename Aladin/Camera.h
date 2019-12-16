@@ -14,11 +14,11 @@ public:
 	~Camera();
 
 	//Game fun
-	void Update();
 	void Follow(CAladin *following);
 	void Unfollow();
 	bool IsFollowing() const;
-	void SetTransform(dxGraphics* ) const;
+	void Update(int currentScene);
+	void SetTransform(dxGraphics*) const;
 	float cameraX;
 	float cameraY;
 	float GetXCam() { return cameraX; }

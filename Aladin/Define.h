@@ -7,6 +7,8 @@ using namespace std;
 #define BACKGROUND_COLOR D3DCOLOR_XRGB(0, 0, 0)
 #define MAP_LIMIT_RIGHT 32*71
 #define MAP_LIMIT_BOT 32*36
+#define MAP2_LIMIT_RIGHT 32*26
+#define MAP2_LIMIT_BOT 32*15
 #define GRAVITY 0.002f
 
 #define WINDOW_CLASS_NAME L"SampleWindow"
@@ -27,21 +29,22 @@ enum eType
 {
 	UNKNOWN_VALUE = -1,
 
-	ALADIN	= 01,
-	BRICK	= 10,
-	BRICK2	= 11,
-	GOOMBA	= 20,
-	ENEMY1	= 30,
-	ENEMY2	= 31,
-	BAT		= 32,
-	ENEMY3	= 33,
-	APPLE=34,
+	ALADIN = 01,
+	BRICK = 10,
+	BRICK2 = 11,
+	GOOMBA = 20,
+	ENEMY1 = 30,
+	ENEMY2 = 31,
+	BAT = 32,
+	ENEMY3 = 33,
+	APPLE = 34,
 
 
-	LAND	= 99,
-	LAND1	= 90,
-	LAND2	= 91,
-	LAND3	= 92,
+	LAND = 99,
+	M2LAND = 98,
+	LAND1 = 90,
+	LAND2 = 91,
+	LAND3 = 92,
 
 	TEXSURFACE = 100,
 };

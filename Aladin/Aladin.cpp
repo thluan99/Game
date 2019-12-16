@@ -412,8 +412,8 @@ void CAladin::LoadResources(int ID)
 	textures = CTextures::GetInstance();
 	sprites = CSprites::GetInstance();
 
-	textures->Add(ID_TEX_ALADIN, L"textures\\aladin.png", D3DCOLOR_XRGB(255, 0, 0));
-	textures->Add(ID_TEX_ALADIN_F, L"textures\\aladin_flip.png", D3DCOLOR_XRGB(255, 0, 0));
+	textures->Add(ID_TEX_ALADIN, L"textures\\aladin.png", D3DCOLOR_XRGB(255, 0, 255));
+	textures->Add(ID_TEX_ALADIN_F, L"textures\\aladin_flip.png", D3DCOLOR_XRGB(255, 0, 255));
 
 	CAnimations * animations = CAnimations::GetInstance();
 

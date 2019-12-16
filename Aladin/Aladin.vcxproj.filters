@@ -46,6 +46,15 @@
       <Filter>Map</Filter>
     </ClCompile>
     <ClCompile Include="Apple.cpp" />
+    <ClCompile Include="Scene.cpp">
+      <Filter>Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="Scene2.cpp">
+      <Filter>Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="Scene1.cpp">
+      <Filter>Scene</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="debug.h" />
@@ -93,6 +102,15 @@
       <Filter>Map</Filter>
     </ClInclude>
     <ClInclude Include="Apple.h" />
+    <ClInclude Include="Scene.h">
+      <Filter>Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="Scene2.h">
+      <Filter>Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="Scene1.h">
+      <Filter>Scene</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Map">
@@ -109,6 +127,9 @@
     </Filter>
     <Filter Include="Enemy">
       <UniqueIdentifier>{72d57aed-2bfc-46f1-b6d7-26b576702b19}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scene">
+      <UniqueIdentifier>{45bdbf13-50ce-4232-9fcb-9527cbdb1df4}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

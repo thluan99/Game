@@ -45,7 +45,7 @@ void TileMap::ReadMapFile(char* filename)
 	if (reader.fail())
 		MessageBox(NULL, L"LOI khong tim thay file ", L"ERROR", MB_OK);
 
-	reader  >> rows_Tile >> columns_Tile; //dong dau tien ROWS COLUMNS
+	reader >> rows_Tile >> columns_Tile; //dong dau tien ROWS COLUMNS
 	for (int i = 0; i < rows_Tile; i++)
 	{
 		for (int j = 0; j < columns_Tile; j++)
@@ -68,11 +68,11 @@ void TileMap::DrawMap(Camera *camera)
 	{
 		for (int j = 0; j < columns_Tile; j++)
 		{
-			if (tile_Map[i][j] != 0 && isInCamera(j,i,camera)) // kiểm tra cell nào trong cam thì render ra
+			if (tile_Map[i][j] != 0 && isInCamera(j, i, camera)) // kiểm tra cell nào trong cam thì render ra
 			{
 				//Vì j là columns nên nó sẽ gắn liền với giá trị tọa độ x, i là y
 				tiles->Get(tile_Map[i][j])->Draw(j*TILE_SIZE, i*TILE_SIZE);
-			}			
+			}
 		}
 	}
 }
@@ -92,22 +92,29 @@ bool TileMap::isInCamera(int x, int y, Camera* camera)
 
 }
 
+void TileMap::ClearMap()
+{
+	for (int i = 0; i < rows_Tile; i++)
+		for (int j = 0; j < columns_Tile; j++)
+			tile_Map[i][j] == 0;
+}
+
 
 //======================================
 //Hàm này thực hiện cắt file ảnh tileset rồi lưu từng ảnh vào tiles.
 //======================================
-void TileMap::LoadResource()
+void TileMap::LoadResource(LPCWSTR stringPathimg)
 {
 	CTextures *textures = CTextures::GetInstance();
 
-	textures->Add(ID_TEX_TILE_SET, FILE_PATH, D3DCOLOR_XRGB(255, 0, 255));
+	textures->Add(ID_TEX_TILE_SET, stringPathimg, D3DCOLOR_XRGB(255, 0, 255));
 
 	LPDIRECT3DTEXTURE9 texTileSet = textures->Get(ID_TEX_TILE_SET);
 	D3DXIMAGE_INFO info;
-	HRESULT re = D3DXGetImageInfoFromFile(FILE_PATH, &info);
+	HRESULT re = D3DXGetImageInfoFromFile(stringPathimg, &info);
 	if (re != D3D_OK)
 	{
-		DebugOut(L"[ERROR] GetImageInfoFromFile failed: %s\n", FILE_PATH);
+		DebugOut(L"[ERROR] GetImageInfoFromFile failed: %s\n", stringPathimg);
 		return;
 	}
 

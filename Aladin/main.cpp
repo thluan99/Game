@@ -41,19 +41,26 @@
 #include "Land.h"
 #include "Grid.h"
 #include "texSurface.h"
-#include"Apple.h"
+#include "Apple.h"
+#include "Scene.h"
+#include "Scene1.h"
+#include "Scene2.h"
+
 CGame *game;
-CAladin *aladin;
 Camera *camera;
 
 Grid *grid;
 
 dxGraphics *dx_graphics;
-TextSurface *texSur;
 vector<LPGAMEOBJECT> objects;
-TileMap *tileMap;
 
-vector<Apple*> listApples;
+Scene1 * scene1;
+Scene2 * scene2;
+Scene *scene;
+
+int currentScene = 1;
+int nextSceneX = 2176;
+int nextSceneY = 64, nextSceneYx = 64 + 128;
 //---------------KeyBoard -------------------------
 #pragma region KeyBoard
 
@@ -73,42 +80,45 @@ void CSampleKeyHander::OnKeyDown(int KeyCode)
 	switch (KeyCode)
 	{
 	case DIK_5:
-		for (int i = 1; i < grid->cells.size(); i++)
-			for (int j = 0; j < grid->cells[i]->listGameObject.size(); j++)
-				if (grid->cells[i]->listGameObject[j]->id == eType::ENEMY1)
-					grid->cells[i]->listGameObject[j]->SetState(ENEMY1_STATE_ATTACK_LEFT);
+		for (int i = 1; i < scene->grid->cells.size(); i++)
+			for (int j = 0; j < scene->grid->cells[i]->listGameObject.size(); j++)
+				if (scene->grid->cells[i]->listGameObject[j]->id == eType::ENEMY1)
+					scene->grid->cells[i]->listGameObject[j]->SetState(ENEMY1_STATE_ATTACK_LEFT);
 		break;
 	case DIK_1:
-		for (int i = 1; i < grid->cells.size(); i++)
-			for (int j = 0; j < grid->cells[i]->listGameObject.size(); j++)
-				if (grid->cells[i]->listGameObject[j]->id == eType::ENEMY1)
-					grid->cells[i]->listGameObject[j]->SetState(ENEMY1_STATE_ATTACK_RIGHT_MID);
+		for (int i = 1; i < scene->grid->cells.size(); i++)
+			for (int j = 0; j < scene->grid->cells[i]->listGameObject.size(); j++)
+				if (scene->grid->cells[i]->listGameObject[j]->id == eType::ENEMY1)
+					scene->grid->cells[i]->listGameObject[j]->SetState(ENEMY1_STATE_ATTACK_RIGHT_MID);
 		break;
 	case DIK_2:
-		for (int i = 1; i < grid->cells.size(); i++)
-			for (int j = 0; j < grid->cells[i]->listGameObject.size(); j++)
-				if (grid->cells[i]->listGameObject[j]->id == eType::ENEMY1)
-					grid->cells[i]->listGameObject[j]->SetState(ENEMY1_STATE_HIT_LEFT);
+		for (int i = 1; i < scene->grid->cells.size(); i++)
+			for (int j = 0; j < scene->grid->cells[i]->listGameObject.size(); j++)
+				if (scene->grid->cells[i]->listGameObject[j]->id == eType::ENEMY1)
+					scene->grid->cells[i]->listGameObject[j]->SetState(ENEMY1_STATE_HIT_LEFT);
 		break;
 	case DIK_3:
-		for (int i = 1; i < grid->cells.size(); i++)
-			for (int j = 0; j < grid->cells[i]->listGameObject.size(); j++)
-				if (grid->cells[i]->listGameObject[j]->id == eType::ENEMY1)
-					grid->cells[i]->listGameObject[j]->SetState(ENEMY1_STATE_IDLE_RIGHT);
+		for (int i = 1; i < scene->grid->cells.size(); i++)
+			for (int j = 0; j < scene->grid->cells[i]->listGameObject.size(); j++)
+				if (scene->grid->cells[i]->listGameObject[j]->id == eType::ENEMY1)
+					scene->grid->cells[i]->listGameObject[j]->SetState(ENEMY1_STATE_IDLE_RIGHT);
 		break;
 	case DIK_4:
-		for (int i = 1; i < grid->cells.size(); i++)
-			for (int j = 0; j < grid->cells[i]->listGameObject.size(); j++)
-				if (grid->cells[i]->listGameObject[j]->id == eType::ENEMY1)
-					grid->cells[i]->listGameObject[j]->SetState(ENEMY1_STATE_RUN_LEFT);
+		for (int i = 1; i < scene->grid->cells.size(); i++)
+			for (int j = 0; j < scene->grid->cells[i]->listGameObject.size(); j++)
+				if (scene->grid->cells[i]->listGameObject[j]->id == eType::ENEMY1)
+					scene->grid->cells[i]->listGameObject[j]->SetState(ENEMY1_STATE_RUN_LEFT);
 		break;
 		//---------hack ??? ---------//
 	// ---- ĐÂY LÀ PHẦN PHỤC VỤ CHO TEST VÀ GHI FILE --------------//
 	case DIK_HOME:
-		aladin->SetX(aladin->GetX() + 50);
+		scene->aladin->SetX(scene->aladin->GetX() + 50);
 		break;
 	case DIK_END:
-		aladin->SetX(aladin->GetX() - 50);
+		scene->aladin->SetX(scene->aladin->GetX() - 50);
+		break;
+	case DIK_8:
+		scene->aladin->SetPosition(2100, 50);
 		break;
 	case DIK_9:
 		grid->WriteGrid(objects);
@@ -128,53 +138,53 @@ void CSampleKeyHander::OnKeyDown(int KeyCode)
 //	{
 //
 //	case DIK_A: // reset
-//		aladin->SetState(ALADIN_STATE_IDLE);
-//		aladin->SetPosition(50.0f, 0.0f);
-//		aladin->SetSpeed(0, 0);
+//		scene->aladin->SetState(scene->aladin_STATE_IDLE);
+//		scene->aladin->SetPosition(50.0f, 0.0f);
+//		scene->aladin->SetSpeed(0, 0);
 //		break;
 //	case DIK_RIGHT:
-//		if (aladin->getEnableKey() == true) {
-//			aladin->SetDirection(1);
-//			aladin->SetState(ALADIN_STATE_DI);
+//		if (scene->aladin->getEnableKey() == true) {
+//			scene->aladin->SetDirection(1);
+//			scene->aladin->SetState(scene->aladin_STATE_DI);
 //		}
 //
 //		break;
 //	case DIK_LEFT:
-//		if (aladin->getEnableKey() == true) {
-//			aladin->SetDirection(-1);
-//			aladin->SetState(ALADIN_STATE_DI);
+//		if (scene->aladin->getEnableKey() == true) {
+//			scene->aladin->SetDirection(-1);
+//			scene->aladin->SetState(scene->aladin_STATE_DI);
 //		}
 //
 //		break;
 //	case DIK_UP:
-//		if (aladin->getEnableKey() == true) {
-//			aladin->SetState(ALADIN_STATE_NGUOC_LEN);
+//		if (scene->aladin->getEnableKey() == true) {
+//			scene->aladin->SetState(scene->aladin_STATE_NGUOC_LEN);
 //		}
 //
 //		break;
 //	case DIK_DOWN:
-//		if (aladin->getEnableKey() == true) {
-//			aladin->SetState(ALADIN_STATE_NGOI);
+//		if (scene->aladin->getEnableKey() == true) {
+//			scene->aladin->SetState(scene->aladin_STATE_NGOI);
 //		}
 //
 //		break;
 //	case DIK_C:
-//		if (aladin->getEnableKey() == true) {
+//		if (scene->aladin->getEnableKey() == true) {
 //
-//			if (aladin->GetState() == ALADIN_STATE_NGOI)
-//				aladin->SetState(ALADIN_STATE_NGOI_CHEM);
+//			if (scene->aladin->GetState() == scene->aladin_STATE_NGOI)
+//				scene->aladin->SetState(scene->aladin_STATE_NGOI_CHEM);
 //			else
-//				aladin->SetState(ALADIN_STATE_CHEM);
+//				scene->aladin->SetState(scene->aladin_STATE_CHEM);
 //		}
 //		break;
 //	case DIK_X:
-//		if (aladin->getEnableKey() == true) {
-//			aladin->SetState(ALADIN_STATE_NHAY);
+//		if (scene->aladin->getEnableKey() == true) {
+//			scene->aladin->SetState(scene->aladin_STATE_NHAY);
 //		}
 //		break;
 //	case DIK_S:
-//		if (aladin->getEnableKey() == true) {
-//			aladin->SetState(ALADIN_STATE_CHEM_MANH);
+//		if (scene->aladin->getEnableKey() == true) {
+//			scene->aladin->SetState(scene->aladin_STATE_CHEM_MANH);
 //		}
 //		break;
 //
@@ -182,75 +192,74 @@ void CSampleKeyHander::OnKeyDown(int KeyCode)
 	switch (KeyCode)
 	{
 	case DIK_A:
-		aladin->SetState(ALADIN_STATE_IDLE);
-		aladin->SetPosition(500.0f, 1000.0f);
-		aladin->setEnableKey(true);
-		aladin->SetSpeed(0, 0);
+		scene->aladin->SetState(ALADIN_STATE_IDLE);
+		if (currentScene == 1)
+			scene->aladin->SetPosition(500.0f, 1000.0f);
+		scene->aladin->setEnableKey(true);
+		scene->aladin->SetSpeed(0, 0);
 		break;
 	case DIK_RIGHT:
-		if (aladin->getEnableKey() == true) {
-			aladin->SetDirection(1);
-			aladin->SetState(ALADIN_STATE_DI);
+		if (scene->aladin->getEnableKey() == true) {
+			scene->aladin->SetDirection(1);
+			scene->aladin->SetState(ALADIN_STATE_DI);
 		}
 		else {
-			if (aladin->getNhay()==true)
-				aladin->vx=  ALADIN_WALKING_SPEED;
+			if (scene->aladin->getNhay()==true)
+				scene->aladin->vx=  ALADIN_WALKING_SPEED;
 			
 		}
 		break;
 	case DIK_LEFT:
-		if (aladin->getEnableKey() == true) {
-			aladin->SetDirection(-1);
-			aladin->SetState(ALADIN_STATE_DI);
+		if (scene->aladin->getEnableKey() == true) {
+			scene->aladin->SetDirection(-1);
+			scene->aladin->SetState(ALADIN_STATE_DI);
 		}
 		else {
-			if (aladin->getNhay() == true)
-				aladin->vx = -ALADIN_WALKING_SPEED;
+			if (scene->aladin->getNhay() == true)
+				scene->aladin->vx = -ALADIN_WALKING_SPEED;
 
 		}
 		break;
 	case DIK_UP:
-		if (aladin->getEnableKey() == true) {
-			aladin->SetState(ALADIN_STATE_NGUOC_LEN);
+		if (scene->aladin->getEnableKey() == true) {
+			scene->aladin->SetState(ALADIN_STATE_NGUOC_LEN);
 			}
 
 		break;
 	case DIK_DOWN:
-		if (aladin->getEnableKey() == true) {
-			aladin->SetState(ALADIN_STATE_NGOI);
+		if (scene->aladin->getEnableKey() == true) {
+			scene->aladin->SetState(ALADIN_STATE_NGOI);
 		}
 		break;
 	case DIK_C:
-		if (aladin->getEnableKey() == true) {
-			aladin->setChem(true);
+		if (scene->aladin->getEnableKey() == true) {
+			scene->aladin->setChem(true);
 		}
 		break;
 	case DIK_X:
-		if (aladin->getEnableKey() == true && aladin->GetState()!=ALADIN_STATE_NGOI) {
-			aladin->setNhay(true);
+		if (scene->aladin->getEnableKey() == true && scene->aladin->GetState()!=ALADIN_STATE_NGOI) {
+			scene->aladin->setNhay(true);
 		}
 		break;
 	case DIK_Z:
-		if (aladin->getEnableKey() == true ) {
-			aladin->setNem(true);
-			Apple* apple;
-			apple = new Apple();
-			apple->LoadResources(eType::APPLE);
-			//apple = new Apple(aladin->x + 20, aladin->y);
-			apple->SetPosition(aladin->x + 10, aladin->y);
-			DebugOut(L"aladin x: %d \n apple x: %d \n", aladin->x + 10, apple->x);
-			apple->setNem(true);
-			if (aladin->direction == 1)
-				apple->direction = 1;
-			else apple->direction = -1;
+		if (scene->aladin->getEnableKey() == true ) {
+			scene->aladin->setNem(true);
+			scene->apple = new Apple();
+			scene->apple->LoadResources(eType::APPLE);
+			//apple = new Apple(scene->aladin->x + 20, scene->aladin->y);
+			scene->apple->SetPosition(scene->aladin->x + 10, scene->aladin->y);
+			DebugOut(L"aladin x: %d \n apple x: %d \n", scene->aladin->x + 10, scene->apple->x);
+			scene->apple->setNem(true);
+			if (scene->aladin->direction == 1)
+				scene->apple->direction = 1;
+			else scene->apple->direction = -1;
 			
-
-			listApples.push_back(apple);
+			scene->listApples.push_back(scene->apple);
 		}
 		break;
 	
 	case DIK_Q:
-		aladin->setEnableKey(true);
+		scene->aladin->setEnableKey(true);
 		break;
 	default:
 		break;
@@ -262,29 +271,29 @@ void CSampleKeyHander::OnKeyUp(int KeyCode)
 	switch (KeyCode)
 	{	
 	case DIK_RIGHT:
-		if(aladin->getEnableKey()==true)
-		//	if(aladin->GetState()==ALADIN_STATE_DI && aladin->getChem()==false && aladin->getNem() == false && aladin->getNem() == false)
-		aladin->SetState(ALADIN_STATE_IDLE);
+		if(scene->aladin->getEnableKey()==true)
+		//	if(scene->aladin->GetState()==ALADIN_STATE_DI && scene->aladin->getChem()==false && scene->aladin->getNem() == false && scene->aladin->getNem() == false)
+		scene->aladin->SetState(ALADIN_STATE_IDLE);
 		break;
 	case DIK_LEFT:		
-		if (aladin->getEnableKey() == true)
-		//	if (aladin->GetState() == ALADIN_STATE_DI && aladin->getChem() == false && aladin->getNem() == false && aladin->getNem() == false)
-		aladin->SetState(ALADIN_STATE_IDLE);
+		if (scene->aladin->getEnableKey() == true)
+		//	if (scene->aladin->GetState() == ALADIN_STATE_DI && scene->aladin->getChem() == false && scene->aladin->getNem() == false && scene->aladin->getNem() == false)
+		scene->aladin->SetState(ALADIN_STATE_IDLE);
 		break;
 	case DIK_UP:
-		if (aladin->getEnableKey() == true)
-		aladin->SetState(ALADIN_STATE_IDLE);
+		if (scene->aladin->getEnableKey() == true)
+		scene->aladin->SetState(ALADIN_STATE_IDLE);
 		break;
 	case DIK_DOWN:
-		if (aladin->getEnableKey() == true)
-		aladin->SetState(ALADIN_STATE_IDLE);
+		if (scene->aladin->getEnableKey() == true)
+		scene->aladin->SetState(ALADIN_STATE_IDLE);
 		break;
 	case DIK_C:
-		if (aladin->getEnableKey() == true){ 
+		if (scene->aladin->getEnableKey() == true){ 
 			if(game->IsKeyDown(DIK_DOWN))
-				aladin->SetState(ALADIN_STATE_NGOI); 
+				scene->aladin->SetState(ALADIN_STATE_NGOI); 
 			else 
-				aladin->SetState(ALADIN_STATE_IDLE);
+				scene->aladin->SetState(ALADIN_STATE_IDLE);
 		}
 			
 		break;
@@ -292,27 +301,27 @@ void CSampleKeyHander::OnKeyUp(int KeyCode)
 }
 void CSampleKeyHander::KeyState(BYTE* states)
 {
-	// disable control key when Aladin die 
-	if (aladin->GetState() == ALADIN_STATE_DIE) return;
-	if (aladin->getEnableKey() == true)
+	// disable control key when scene->aladin die 
+	if (scene->aladin->GetState() == ALADIN_STATE_DIE) return;
+	if (scene->aladin->getEnableKey() == true)
 	{
 		if (game->IsKeyDown(DIK_RIGHT))
 		{
-			aladin->SetDirection(1);
-			aladin->SetState(ALADIN_STATE_DI);
+			scene->aladin->SetDirection(1);
+			scene->aladin->SetState(ALADIN_STATE_DI);
 		}
 		else if (game->IsKeyDown(DIK_LEFT))
 		{
-			aladin->SetDirection(-1);
-			aladin->SetState(ALADIN_STATE_DI);
+			scene->aladin->SetDirection(-1);
+			scene->aladin->SetState(ALADIN_STATE_DI);
 		}
 		else if (game->IsKeyDown(DIK_UP))
 		{
-			aladin->SetState(ALADIN_STATE_NGUOC_LEN);
+			scene->aladin->SetState(ALADIN_STATE_NGUOC_LEN);
 		}
 		else if (game->IsKeyDown(DIK_DOWN))
 		{
-			aladin->SetState(ALADIN_STATE_NGOI);
+			scene->aladin->SetState(ALADIN_STATE_NGOI);
 		}
 		
 	}
@@ -345,102 +354,11 @@ LRESULT CALLBACK WinProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 	TO-DO: Improve this function by loading texture,sprite,animation,object from file
 */
 
-CGameObject * GetNewObjectEx(int ID)
+void CreateGrid(vector <CGameObject *> &objects)
 {
-	switch (ID)
-	{
-	case eType::BRICK:
-		return new CBrick();
-
-	case eType::BRICK2:
-		return new CBrick();
-
-	case eType::GOOMBA:
-		return new CGoomba();
-
-	case eType::ENEMY1:
-		return new Enemy1();
-
-	case eType::ENEMY2:
-		return new Enemy2();
-
-	case eType::BAT:
-		return new Bat();
-
-	case eType::ENEMY3:
-		return new Enemy3();
-
-	case eType::LAND:
-		return new CLand();
-
-	case eType::LAND1:
-		return new CLand();
-
-	case eType::LAND2:
-		return new CLand();
-
-	case eType::LAND3:
-		return new CLand();
-	case eType::APPLE:
-		return new Apple();
-	}
-	return NULL;
-}
-
-void CreateGrid(vector <CGameObject *> &objects, Grid *&grid)
-{
-	int numCells, cells_size, columns, rows, width, height;
-	int cellID, numObjTypeCell, numObjForType, typeObj;
-	ifstream inFile;
-
-	inFile.open("textures\\gridWrite1.txt", ios::in);
-  
-	CTextures* textures;
-	textures = CTextures::GetInstance();
-
-	textures->Add(ID_TEX_MAP, L"textures\\map_tex.png", D3DCOLOR_XRGB(163, 73, 164));
-	textures->Add(ID_TEX_BRICK_2, L"textures\\tileset.png", (BACKGROUND_COLOR));
-	textures->Add(ID_TEX_LAND, L"textures\\pixel.png", D3DCOLOR_XRGB(255, 255, 255));
-
-	if (inFile.is_open())
-	{
-		inFile >> numCells >> cells_size >> columns >> rows >> width >> height;
-		grid = new Grid(width, height, cells_size);
-
-		for (int n = 1; n <= numCells; n++)
-		{
-				inFile >> cellID >> numObjTypeCell;
-				vector <CGameObject *> l_gameObject;
-				grid->AddCell(cellID, l_gameObject);
-
-				if (numObjTypeCell == 0)
-				{
-					DebugOut(L"Nothing\n");
-					continue;
-				}
-				for (int i = 0; i < numObjTypeCell; i++)
-				{
-					inFile >> typeObj >> numObjForType;
-					for (int j = 0; j < numObjForType; j++)
-					{
-						float objX, objY;
-						inFile >> objX >> objY;
-						CGameObject * gameObject = GetNewObjectEx(typeObj);
-						gameObject->gridID = cellID;
-						gameObject->firstPosX = objX;
-						gameObject->firstPosY = objY;
-						gameObject->LoadResources(typeObj);
-						gameObject->SetPosition(objX, objY);
-
-						objects.push_back(gameObject);
-						
-						//grid->TestObjInWhatCell(gameObject);
-						grid->cells[cellID]->listGameObject.push_back(gameObject);
-					}
-					DebugOut(L"-----------[Doc file]\n");
-			}
-		}
-	}
+	if (currentScene == 1)
+		scene1->CreateGrid(objects);
+	else scene2->CreateGrid(objects);
 }
 
 void Resources()
@@ -451,96 +369,28 @@ void Resources()
 
 void LoadResources()
 {
-	tileMap = new TileMap();
-	tileMap->LoadResource();
-	tileMap->ReadMapFile("textures/tile_map.txt");
-
-	aladin = new CAladin();
-	aladin->LoadResources(eType::ALADIN);
-	aladin->SetPosition(50.f, 1000.0f);
-	objects.push_back(aladin);
-
-	texSur = new TextSurface();
-	texSur->LoadResources(eType::TEXSURFACE);
-
-	//load apple
-	CTextures* textures = CTextures::GetInstance();
-	CSprites* sprites = CSprites::GetInstance();
-
-	textures->Add(ID_TEX_APPLE, L"textures\\aladin.png", D3DCOLOR_XRGB(255, 0, 255));
-	CAnimations* animations = CAnimations::GetInstance();
-
-	LPDIRECT3DTEXTURE9 textAPPLE = textures->Get(ID_TEX_APPLE);
-	// idle
-	LPANIMATION ani;
-	sprites->Add(200, 373, 24, 373 + 7, 24 + 7, textAPPLE);
-	ani = new CAnimation(100);
-	ani->Add(200);
-	animations->Add(999, ani);
-	// die
-	sprites->Add(201, 394, 23, 394 + 7, 23 + 10, textAPPLE);
-	sprites->Add(202, 414, 18, 414 + 20, 18 + 18, textAPPLE);
-	sprites->Add(203, 444, 16, 444 + 29, 16 + 22, textAPPLE);
-	sprites->Add(204, 485, 14, 485 + 31, 14 + 25, textAPPLE);
-	sprites->Add(205, 532, 13, 532 + 30, 13 + 27, textAPPLE);
-	ani = new CAnimation(100);
-	ani->Add(201);
-	ani->Add(202);
-	ani->Add(203);
-	ani->Add(204);
-	ani->Add(205);
-	animations->Add(998, ani);
-
-	//Resources();
-	//grid->LoadResourses(objects, aladin);
+	if (currentScene == 1)
+		scene1->LoadResources(objects);
+	else scene2->LoadResources(objects);
 }
 
-/*
-	Update world status for this frame
-	dt: time period between beginning of last frame and beginning of this frame
-*/
 void Update(DWORD dt)
 {
-	// We know that Aladin is the first object in the list hence we won't add him into the colliable object list
-	// TO-DO: This is a "dirty" way, need a more organized way 
-
-	//vector<LPGAMEOBJECT> coObjects;
-	//for (int i = 1; i < objects.size(); i++)
-	//{
-	//	coObjects.push_back(objects[i]);
-	//}
-
-	//for (int i = 0; i < objects.size(); i++)
-	//{
-	//	objects[i]->Update(dt,&coObjects);
-	//}
-
-	//if(apple!=NULL)
-	//apple->Update(dt);
-	grid->UpdateCollision(dt, aladin);
-	for (int i = 0 ; i < listApples.size() ; i++)
+	if (scene1->aladin->GetX() > nextSceneX && scene1->aladin->GetY() > nextSceneY && scene1->aladin->GetY() < nextSceneYx)
 	{
-		if (listApples[i]->getNem() == true)
-		{
-			listApples[i]->Update(dt);
-
-
-			DebugOut(L"============ %d\n", listApples[i]->GetX());
-		}
+		nextSceneX = nextSceneY = nextSceneYx = -128;
+		currentScene = 2;
+		scene1->Clear();
+		scene1->objects.clear();
+		scene2->CreateGrid(objects);
+		scene2->LoadResources(objects);
+		scene = scene2;
 	}
 
-	for (int i = 0; i < listApples.size(); i++)
-	{
-		if (abs(listApples[i]->staticX - listApples[i]->GetX()) > 1000)
-		{
-			listApples.erase(listApples.begin() + i);
-			OutputDebugString(L"xóa doi tuong");
-		}
-	}
-	
-	// Update camera to follow aladin
-	camera->Follow(aladin);
-	camera->Update();
+	if (currentScene == 1)
+		scene1->Update(dt);
+	else scene2->Update(dt);
+
 }
 
 /*
@@ -548,49 +398,9 @@ void Update(DWORD dt)
 */
 void Render()
 {
-	LPDIRECT3DDEVICE9 d3ddv = game->GetDirect3DDevice();
-	LPDIRECT3DSURFACE9 bb = game->GetBackBuffer();
-	LPD3DXSPRITE spriteHandler = game->GetSpriteHandler();
-
-	if (d3ddv->BeginScene())
-	{
-		// Clear back buffer with a color
-		d3ddv->ColorFill(bb, NULL, BACKGROUND_COLOR);
-		
-
-		spriteHandler->Begin(D3DXSPRITE_ALPHABLEND | D3DXSPRITE_OBJECTSPACE);
-		if (camera)
-		{
-			camera->SetTransform(dx_graphics);
-		}
-
-		tileMap->DrawMap(camera);
-
-		/*for (int i = 0; i < objects.size(); i++)
-			objects[i]->Render();*/
-		aladin->Render();
-
-		//render apple
-		
-			
-		grid->RenderObjectEx(camera, objects);
-		for (int i = listApples.size() - 1; i >= 0; i--)
-		{
-			if (listApples[i]->getNem() == true)
-			{
-				listApples[i]->Render();
-				DebugOut(L"============ %d\n", listApples[i]->GetX());
-			}
-		}
-		texSur->Render();	
-
-
-		spriteHandler->End();
-		d3ddv->EndScene();
-	}
-
-	// Display back buffer content to the screen
-	d3ddv->Present(NULL, NULL, NULL, NULL);
+	if (currentScene == 1)
+		scene1->Render();
+	else scene2->Render();
 }
 
 HWND CreateGameWindow(HINSTANCE hInstance, int nCmdShow, int ScreenWidth, int ScreenHeight)
@@ -687,16 +497,19 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	game = CGame::GetInstance();
 	game->Init(hWnd);
 
+	camera = Camera::GetInstance();
+
 	//grid = new Grid(MAP_LIMIT_RIGHT, MAP_LIMIT_BOT, 32 * 10);
+	scene1 = new Scene1(objects, dx_graphics, camera, game);
+	scene2 = new Scene2(objects, dx_graphics, camera, game);
 
-	CreateGrid(objects, grid);
+	scene = scene1;
 
+	CreateGrid(objects);
 	LoadResources();
 
 	keyHandler = new CSampleKeyHander();
 	game->InitKeyboard(keyHandler);
-
-	camera = Camera::GetInstance();
 
 	SetWindowPos(hWnd, 0, 0, 0, SCREEN_WIDTH * 1.5f, SCREEN_HEIGHT * 1.5f, SWP_NOMOVE | SWP_NOOWNERZORDER | SWP_NOZORDER);
 

@@ -58,6 +58,13 @@ void CLand::GetBoundingBox(float &l, float &t, float &r, float &b)
 		r = x + LAND3_BBOX_WIDTH;
 		b = y + LAND3_BBOX_HEIGHT;
 	}
+	else if (id == eType::M2LAND)
+	{
+		l = x;
+		t = y;
+		r = x + MAP2_LIMIT_RIGHT;
+		b = y + LAND_BBOX_HEIGHT;
+	}
 }
 
 void CLand::ReLoad()

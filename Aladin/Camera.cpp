@@ -3,7 +3,7 @@
 
 Camera * Camera::__instance = NULL;
 
-Camera::Camera(int width, int height,float angle, DirectX::XMFLOAT3 scaleFactors)
+Camera::Camera(int width, int height, float angle, DirectX::XMFLOAT3 scaleFactors)
 {
 	this->width = width;
 	this->height = height;
@@ -33,8 +33,19 @@ bool Camera::IsFollowing() const
 	return this->following != nullptr;
 }
 
-void Camera::Update()
+void Camera::Update(int currentScene)
 {
+	int right, bot;
+	if (currentScene == 1)
+	{
+		right = MAP_LIMIT_RIGHT;
+		bot = MAP_LIMIT_BOT;
+	}
+	else
+	{
+		right = MAP2_LIMIT_RIGHT;
+		bot = MAP2_LIMIT_BOT;
+	}
 	//cameraX = width / 2, cameraY = height / 2;
 
 	if (this->following)
@@ -46,17 +57,17 @@ void Camera::Update()
 		cameraX = SCREEN_WIDTH / 2;
 	if (cameraY < SCREEN_HEIGHT / 2)
 		cameraY = SCREEN_HEIGHT / 2;
-	if (cameraX > MAP_LIMIT_RIGHT - SCREEN_WIDTH / 2)
-		cameraX = MAP_LIMIT_RIGHT - SCREEN_WIDTH / 2;
-	if (cameraY > MAP_LIMIT_BOT - SCREEN_HEIGHT / 2)
-		cameraY = MAP_LIMIT_BOT - SCREEN_HEIGHT / 2;
+	if (cameraX > right - SCREEN_WIDTH / 2)
+		cameraX = right - SCREEN_WIDTH / 2;
+	if (cameraY > bot - SCREEN_HEIGHT / 2)
+		cameraY = bot - SCREEN_HEIGHT / 2;
 
 	//doan nay khong can thiet 
 	this->viewMatrix = D3DXMATRIX(
-		1, 0 , 0, 0,
-		0, 1 , 0, 0,
-		0, 0 , 1 ,0,
-		0, 0 , 0, 1
+		1, 0, 0, 0,
+		0, 1, 0, 0,
+		0, 0, 1, 0,
+		0, 0, 0, 1
 	);
 
 	//doan nay cung khong can thiet
@@ -75,6 +86,6 @@ void Camera::SetTransform(dxGraphics *dx_Graphics) const
 
 Camera *Camera::GetInstance()
 {
-	if (__instance == NULL) __instance =  new Camera(SCREEN_WIDTH, SCREEN_HEIGHT, 0.0f, DirectX::XMFLOAT3(1.0f, 1.0f, 1.0f));
+	if (__instance == NULL) __instance = new Camera(SCREEN_WIDTH, SCREEN_HEIGHT, 0.0f, DirectX::XMFLOAT3(1.0f, 1.0f, 1.0f));
 	return __instance;
 }
