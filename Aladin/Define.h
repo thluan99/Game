@@ -22,6 +22,8 @@ using namespace std;
 #define ID_TEX_MISC				20
 #define ID_TEX_MAP				30
 #define ID_TEX_BRICK_2			40
+#define	ID_TEX_JAFAR_R			11
+#define	ID_TEX_JAFAR_L			12
 
 #define del 8 // sai số tỉ đối
 // ID object
@@ -38,7 +40,10 @@ enum eType
 	BAT = 32,
 	ENEMY3 = 33,
 	APPLE = 34,
-
+	JAFAR = 35,
+	ANGFIRE = 36,
+	FIREATTACK = 37,
+	STAR	= 38,
 
 	LAND = 99,
 	M2LAND = 98,
@@ -47,4 +52,5 @@ enum eType
 	LAND3 = 92,
 
 	TEXSURFACE = 100,
+	BACKGROUND2 = 200,
 };

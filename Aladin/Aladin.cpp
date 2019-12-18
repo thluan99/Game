@@ -1,16 +1,14 @@
-﻿#include <algorithm>
+﻿ #include <algorithm>
 #include "debug.h"
 
 #include "Aladin.h"
 #include "Game.h"
 #include "Brick.h"
-#include "Goomba.h"
 
 void CAladin::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 {
 	// Calculate dx, dy 
 	CGameObject::Update(dt);
-
 	// Simple fall down
 	vy += ALADIN_GRAVITY*dt;
 
@@ -61,23 +59,28 @@ void CAladin::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 		x += min_tx*dx + nx*0.4f;	// nx*0.4f : need to push out a bit to avoid overlapping next frame
 		y += min_ty * dy + ny * 0.4f;
 		
-		if (nx!=0) vx = 0;
-		if (ny != 0) { vy = 0; }
+		if (nx != 0) vx = 0;
+		if (ny != 0) vy = 0; 
 
 		// Collision logic with Goombas
+
 		for (UINT i = 0; i < coEventsResult.size(); i++)
 		{
-			LPCOLLISIONEVENT e = coEventsResult[i];
+			LPCOLLISIONEVENT e = coEvents[i];
 
-			if (dynamic_cast<CBrick *>(e->obj)) // if e->obj is Goomba 
+			if (e->obj->id == eType::FIREATTACK)
 			{
-				CBrick* brick = dynamic_cast<CBrick*>(e->obj);
-				if (e->nx < 0)
+				HP--;
+				DebugOut(L"[INFO]: Aladin HP-- %d ", HP);
+			}		
+			if (e->obj->id == eType::FIREATTACK)
+			{
+				if (nx != 0 || ny != 0)
 				{
-					return;
+					//x = e->t*dx;
 				}
+				DebugOut(L"[[][][][[][================");
 			}
-			
 		}
 	}
 	// clean up collision events
@@ -154,64 +157,14 @@ void CAladin::Render()
 		{
 			ani = ALADIN_ANI_CHEM_MANH_TRAI;
 		}
-		break;
-	/*case ALADIN_STATE_DUNG_CHAY_PHAI:
-		ani = ALADIN_ANI_DUNG_CHAY_PHAI;
-		break;
-	case ALADIN_STATE_DUNG_CHAY_TRAI:
-		ani = ALADIN_ANI_DUNG_CHAY_TRAI;
-		break;
-	case ALADIN_STATE_NHAY:
-		
-			ani = ALADIN_ANI_NHAY;
-		*/
-		//break;
-	
+		break;	
 	}
 	
 
 	int alpha = 255;
-	/*if (stateNhay == true)
-	{
-		int stt = 3;
-		if (vx == 0)
-			animations[ALADIN_ANI_NHAY]->RenderAladin(stt,x, y + ALADIN_BIG_BBOX_HEIGHT,this->direction, alpha);
-		else animations[ALADIN_ANI_NHAY]->RenderAladin(stt, x, y + ALADIN_BIG_BBOX_HEIGHT, this->direction, alpha);
-
-		if (stt == 0)
-			stateNhay = false;
-		else
-			vy = -0.07;
-
-	}
-	else
-		if (stateChem == true)
-		{
-			int i;
-			if (direction == 1)
-				i = 6;
-			else i = 12;
-			int stt;
-			animations[i]->RenderAladin(stt, x, y+ ALADIN_BIG_BBOX_HEIGHT, this->direction, alpha);
-			if (stt == 0)
-				stateChem = false;
-		}
-		else*/
 	
 	int stt = 0;
-	 /*if (state == ALADIN_STATE_DUNG_CHAY_PHAI || state == ALADIN_STATE_DUNG_CHAY_TRAI)
-	{
-		animations[ani]->RenderAladin(stt, x, y + ALADIN_BIG_BBOX_HEIGHT, this->direction, alpha);
-		if (stt == 0)
-			enableKey = false;
-		else
-		{
-			enableKey = true;
-			state = ALADIN_STATE_IDLE;
 
-		}
-	 }
-	 else*/
 	 
 	if (isChem == true)
 	{
@@ -324,28 +277,6 @@ void CAladin::Render()
 		ani = ALADIN_ANI_ROI;
 		animations[ani]->RenderAladin(x, y + ALADIN_BIG_BBOX_HEIGHT, this->direction, alpha);
 	}
-	
-	/*switch (state)
-	{
-	case ALADIN_STATE_CHEM:
-	case ALADIN_STATE_NGOI_CHEM:
-	case ALADIN_STATE_NHAY:
-		case ALADIN_STATE_CHEM_MANH:
-
-		if (state == ALADIN_STATE_NHAY)
-			vy = -ALADIN_JUMP_SPEED_Y;
-		animations[ani]->RenderAladin(stt, x, y + ALADIN_BIG_BBOX_HEIGHT, this->direction, alpha);
-		if (stt == 0)
-			enableKey = false;
-		else
-		{
-			enableKey = true; 
-			state = ALADIN_STATE_IDLE;
-		}
-	default:
-		animations[ani]->RenderAladin(x, y + ALADIN_BIG_BBOX_HEIGHT, this->direction, alpha);
-	}	*/
-
 	//RenderBoundingBox();
 }
 

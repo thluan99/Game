@@ -25,9 +25,6 @@ CGameObject * Scene1::GetNewObjectEx(int ID)
 	case eType::BRICK2:
 		return new CBrick();
 
-	case eType::GOOMBA:
-		return new CGoomba();
-
 	case eType::ENEMY1:
 		return new Enemy1();
 
@@ -169,9 +166,7 @@ void Scene1::Update(DWORD dt)
 		if (listApples[i]->getNem() == true)
 		{
 			listApples[i]->Update(dt);
-
-
-			DebugOut(L"============ %d\n", listApples[i]->GetX());
+			//DebugOut(L"============ %d\n", listApples[i]->GetX());
 		}
 	}
 
@@ -222,7 +217,7 @@ void Scene1::Render()
 			if (listApples[i]->getNem() == true)
 			{
 				listApples[i]->Render();
-				DebugOut(L"============ %d\n", listApples[i]->GetX());
+				//DebugOut(L"============ %d\n", listApples[i]->GetX());
 			}
 		}
 		grid->RenderObjectEx(camera, objects);
