@@ -103,6 +103,9 @@ CGameObject * GetNewObject(int ID)
 
 	case eType::LAND3:
 		return new CLand();
+
+	case eType::ROPE:
+		return new CLand();
 	}
 	return NULL;
 }

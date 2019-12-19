@@ -92,9 +92,9 @@ void Scene2::CreateGrid(vector<CGameObject*>& objects)
 
 void Scene2::LoadResources(vector<CGameObject*> &objects)
 {
-	/*map2bk = new TileMap();
-	map2bk->LoadResource(L"textures/Scene2/tile_map22.png");
-	map2bk->ReadMapFile("textures/Scene2/tile_map22.txt");*/
+	//map2bk = new TileMap();
+	//map2bk->LoadResource(L"textures/Scene2/tile_map22.png");
+	//map2bk->ReadMapFile("textures/Scene2/tile_map22.txt");
 
 	tileMap = new TileMap();
 	tileMap->LoadResource(L"textures/Scene2/tile_map2.png");
@@ -301,7 +301,7 @@ void Scene2::Update(DWORD dt)
 				objects.erase(objects.begin() + i);
 	// CAP NHAT TRANG THAI ALADIN KHI SAO TRUNG TOA DO VOI ALADIN
 	for (int i = 0; i < objects.size(); i++)
-		if (objects[i]->id == eType::STAR)
+		if (objects[i]->id == eType::STAR && jafar->HP > jafar->henshinState)
 		{
 			int space = ALADIN_BIG_BBOX_WIDTH;
 			if (aladin->direction == -1) space = 0;
@@ -314,8 +314,7 @@ void Scene2::Update(DWORD dt)
 		}
 
 	//-----
-	bk2->SetPosition(aladin->GetX() - 50, aladin->GetY() - 300);
-	bk2->Update(dt);
+
 	//----////----//---//--/-/-/-/-//-//-/-----//
 
 	// ADD OBJECTS VAO LIST DE XET COLISION
@@ -366,8 +365,8 @@ void Scene2::Render()
 			camera->SetTransform(dx_graphics);
 		}
 
+		//map2bk->DrawMap(camera);
 		bk2->Render();
-
 		tileMap->DrawMap(camera);
 
 		if (apple->getNem() == true)

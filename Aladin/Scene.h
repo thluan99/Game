@@ -1,6 +1,8 @@
 #pragma once
 
 #include "debug.h"
+#include <d3d9.h>
+#include <d3dx9.h>
 #include "Define.h"
 #include "Game.h"
 #include "GameObject.h"

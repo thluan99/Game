@@ -122,14 +122,14 @@ void CSampleKeyHander::OnKeyDown(int KeyCode)
 	//case DIK_9:
 	//	if (currentScene == 1)
 	//	{
-	//		scene1->grid->WriteGrid(objects);
+	//		scene1->grid->InitWriteGrid(scene1->objects);
 	//		DebugOut(L"[INFO] : Rewrite file gridWrite.txt\n");
 	//	}break;
 	//case DIK_0:
 	//	if (currentScene == 1)
 	//	{
 	//		ofstream ofs;
-	//		ofs.open("textures\\gridWrite1.txt", ofstream::out | ofstream::trunc);
+	//		ofs.open("textures\\gridWrite.txt", ofstream::out | ofstream::trunc);
 	//		ofs.close();
 	//		DebugOut(L"[INFO] : Clear file gridWrite.txt\n");
 	//	}break;

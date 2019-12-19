@@ -50,6 +50,7 @@ enum eType
 	LAND1 = 90,
 	LAND2 = 91,
 	LAND3 = 92,
+	ROPE  = 93,
 
 	TEXSURFACE = 100,
 	BACKGROUND2 = 200,
