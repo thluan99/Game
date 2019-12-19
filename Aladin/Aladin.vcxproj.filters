@@ -55,6 +55,7 @@
     <ClCompile Include="Scene1.cpp">
       <Filter>Scene</Filter>
     </ClCompile>
+    <ClCompile Include="ActiveRange.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="debug.h" />
@@ -111,6 +112,7 @@
     <ClInclude Include="Scene1.h">
       <Filter>Scene</Filter>
     </ClInclude>
+    <ClInclude Include="ActiveRange.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Map">
