@@ -22,7 +22,10 @@ CGameObject * Scene1::GetNewObjectEx(int ID)
 	case eType::BRICK:
 		return new CBrick();
 
-	case eType::BRICK2:
+	case eType::BRICK_BALL:
+		return new CBrick();
+
+	case eType::BRICK_LINE:
 		return new CBrick();
 
 	case eType::ENEMY1:
@@ -70,7 +73,6 @@ void Scene1::CreateGrid(vector<CGameObject*>& objects)
 	textures = CTextures::GetInstance();
 
 	textures->Add(ID_TEX_MAP, L"textures\\map_tex.png", D3DCOLOR_XRGB(163, 73, 164));
-	textures->Add(ID_TEX_BRICK_2, L"textures\\tileset.png", (BACKGROUND_COLOR));
 	textures->Add(ID_TEX_LAND, L"textures\\pixel.png", D3DCOLOR_XRGB(255, 255, 255));
 
 	if (inFile.is_open())

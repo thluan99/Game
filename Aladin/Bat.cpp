@@ -12,6 +12,8 @@ void Bat::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
 	// caculate dx, dx
 	CGameObject::Update(dt);
+
+	activeRange.CalculateActiveRange(this);
 	// fall down
 	vy += GRAVITY * dt;
 

@@ -15,6 +15,8 @@ void Enemy2::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	// fall down
 	vy += GRAVITY * dt;
 
+	activeRange.CalculateActiveRange(this);
+
 	vector<LPCOLLISIONEVENT> coEvents;
 	vector<LPCOLLISIONEVENT> coEventsResult;
 

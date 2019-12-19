@@ -10,19 +10,24 @@ class CSprite
 protected:
 	int id;				// Sprite ID in the sprite database
 
-	int left; 
+	int left;
 	int top;
 	int right;
 	int bottom;
+	int anchor2Left, anchor2Top;
 
 	LPDIRECT3DTEXTURE9 texture;
-public: 
+public:
 	CSprite() {}
 	CSprite(int id, int left, int top, int right, int bottom, LPDIRECT3DTEXTURE9 tex);
+	CSprite(int id, int left, int top, int right, int bottom, int anchor2Left, int anchor2Top, LPDIRECT3DTEXTURE9 tex);
 	void Draw(float x, float y, int alpha = 255);
+	void DrawEx(float x, float  y, int alpha = 255);
 
 	int GetHeight() { return bottom - top; }
 	int GetWidth() { return right - left; }
+	int GetAnchorLeft() { return anchor2Left; }
+	int GetAnchorTop() { return anchor2Top; }
 };
 
 typedef CSprite * LPSPRITE;
@@ -38,6 +43,7 @@ class CSprites
 
 public:
 	void Add(int id, int left, int top, int right, int bottom, LPDIRECT3DTEXTURE9 tex);
+	void AddEx(int id, int left, int top, int right, int bottom, int Anchor2Left, int Anchor2Top, LPDIRECT3DTEXTURE9 tex);
 	LPSPRITE Get(int id);
 	LPSPRITE &operator[](int id) {return sprites[id];}
 
@@ -65,13 +71,15 @@ class CAnimation
 	DWORD lastFrameTime;
 	int defaultTime;
 	int currentFrame;
-	vector<LPANIMATION_FRAME> frames;
 public:
+	vector<LPANIMATION_FRAME> frames;
 	CAnimation(int defaultTime) { this->defaultTime = defaultTime; lastFrameTime = -1; currentFrame = -1; }
 	void Add(int spriteId, DWORD time = 0);
 	void Render(float x, float y, int alpha=255);
 	void RenderAladin(float x, float y, int direct, int alpha = 255);
-	void RenderAladin(int&,float x, float y, int direct, int alpha = 255);
+	void RenderAladin(int&, float x, float y, int direct, int alpha = 255);
+	int GetCurrentFrame() { return currentFrame; }
+
 };
 
 typedef CAnimation *LPANIMATION;

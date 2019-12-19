@@ -5,6 +5,7 @@
 #include "Game.h"
 #include "Sprites.h"
 #include "Textures.h"
+#include "ActiveRange.h"
 
 #define ENEMY_BBOX_WIDTH	47
 #define ENEMY_BBOX_HEIGHT	52	
@@ -39,6 +40,7 @@ class Enemy1 : public CGameObject
 	int HP;
 
 public:
+	ActiveRange activeRange;
 	virtual void Render();
 	virtual void Update(DWORD dt, vector<LPGAMEOBJECT>* colliable_objects = NULL);
 	void SetState(int state);
@@ -48,6 +50,7 @@ public:
 		id = eType::ENEMY1;
 		state = ENEMY1_STATE_IDLE_RIGHT;
 		direction = 1;
+		activeRange.CalculateActiveRange(this);
 	};
 	virtual void GetBoundingBox(float &l, float &t, float &r, float &b);
 	virtual void ReLoad();
