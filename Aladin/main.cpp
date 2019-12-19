@@ -33,6 +33,7 @@
 
 #include "Aladin.h"
 #include "Brick.h"
+#include "Goomba.h"
 #include "Enemy1.h"
 #include "Enemy2.h"
 #include "Enemy3.h"
@@ -119,25 +120,75 @@ void CSampleKeyHander::OnKeyDown(int KeyCode)
 	case DIK_8:
 		scene->aladin->SetPosition(2100, 50);
 		break;
-	//case DIK_9:
-	//	if (currentScene == 1)
-	//	{
-	//		scene1->grid->InitWriteGrid(scene1->objects);
-	//		DebugOut(L"[INFO] : Rewrite file gridWrite.txt\n");
-	//	}break;
-	//case DIK_0:
-	//	if (currentScene == 1)
-	//	{
-	//		ofstream ofs;
-	//		ofs.open("textures\\gridWrite.txt", ofstream::out | ofstream::trunc);
-	//		ofs.close();
-	//		DebugOut(L"[INFO] : Clear file gridWrite.txt\n");
-	//	}break;
+	case DIK_9:
+		grid->WriteGrid(objects);
+		DebugOut(L"[INFO] : Rewrite file gridWrite.txt\n");
+		break;
+	case DIK_0:
+		ofstream ofs;
+		ofs.open("textures\\gridWrite1.txt", ofstream::out | ofstream::trunc);
+		ofs.close();
+		DebugOut(L"[INFO] : Clear file gridWrite.txt\n");
+		break;
 	
 	//---------end test------------//
 	}
 	//------------------end test ----------------------//
-
+//	switch (KeyCode)
+//	{
+//
+//	case DIK_A: // reset
+//		scene->aladin->SetState(scene->aladin_STATE_IDLE);
+//		scene->aladin->SetPosition(50.0f, 0.0f);
+//		scene->aladin->SetSpeed(0, 0);
+//		break;
+//	case DIK_RIGHT:
+//		if (scene->aladin->getEnableKey() == true) {
+//			scene->aladin->SetDirection(1);
+//			scene->aladin->SetState(scene->aladin_STATE_DI);
+//		}
+//
+//		break;
+//	case DIK_LEFT:
+//		if (scene->aladin->getEnableKey() == true) {
+//			scene->aladin->SetDirection(-1);
+//			scene->aladin->SetState(scene->aladin_STATE_DI);
+//		}
+//
+//		break;
+//	case DIK_UP:
+//		if (scene->aladin->getEnableKey() == true) {
+//			scene->aladin->SetState(scene->aladin_STATE_NGUOC_LEN);
+//		}
+//
+//		break;
+//	case DIK_DOWN:
+//		if (scene->aladin->getEnableKey() == true) {
+//			scene->aladin->SetState(scene->aladin_STATE_NGOI);
+//		}
+//
+//		break;
+//	case DIK_C:
+//		if (scene->aladin->getEnableKey() == true) {
+//
+//			if (scene->aladin->GetState() == scene->aladin_STATE_NGOI)
+//				scene->aladin->SetState(scene->aladin_STATE_NGOI_CHEM);
+//			else
+//				scene->aladin->SetState(scene->aladin_STATE_CHEM);
+//		}
+//		break;
+//	case DIK_X:
+//		if (scene->aladin->getEnableKey() == true) {
+//			scene->aladin->SetState(scene->aladin_STATE_NHAY);
+//		}
+//		break;
+//	case DIK_S:
+//		if (scene->aladin->getEnableKey() == true) {
+//			scene->aladin->SetState(scene->aladin_STATE_CHEM_MANH);
+//		}
+//		break;
+//
+//	}
 	switch (KeyCode)
 	{
 	case DIK_A:
@@ -224,8 +275,6 @@ void CSampleKeyHander::OnKeyDown(int KeyCode)
 			else scene->apple->direction = -1;
 			
 			scene->listApples.push_back(scene->apple);
-
-			scene->objects.push_back(scene->apple);
 		}
 		break;
 	
@@ -363,8 +412,7 @@ void Update(DWORD dt)
 		currentScene = 2;
 		scene1->Clear();
 		scene1->objects.clear();
-		objects.clear();
-		//scene2->CreateGrid(objects);
+		scene2->CreateGrid(objects);
 		scene2->LoadResources(objects);
 		scene = scene2;
 	}

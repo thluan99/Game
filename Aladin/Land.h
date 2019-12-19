@@ -1,7 +1,7 @@
 #pragma once
 #include "GameObject.h"
 
-#define LAND_BBOX_HEIGHT 100
+#define LAND_BBOX_HEIGHT 10
 #define LAND1_BBOX_HEIGHT 8
 #define LAND2_BBOX_HEIGHT 16
 #define LAND3_BBOX_HEIGHT 32

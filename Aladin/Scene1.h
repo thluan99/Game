@@ -14,7 +14,6 @@ public:
 	CGameObject * GetNewObjectEx(int ID);
 	void CreateGrid(vector <CGameObject *> &objects);
 	void LoadResources(vector<CGameObject*>& objects);
-	void Resources();
 	void Update(DWORD dt);
 	void Render();
 	void Clear();

@@ -4,6 +4,7 @@
     <ClCompile Include="debug.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="GameObject.cpp" />
+    <ClCompile Include="Goomba.cpp" />
     <ClCompile Include="Sprites.cpp" />
     <ClCompile Include="Textures.cpp" />
     <ClCompile Include="Brick.cpp">
@@ -54,26 +55,14 @@
     <ClCompile Include="Scene1.cpp">
       <Filter>Scene</Filter>
     </ClCompile>
-
     <ClCompile Include="ActiveRange.cpp" />
-    <ClCompile Include="Jafar.cpp">
-      <Filter>Enemy</Filter>
-    </ClCompile>
-    <ClCompile Include="FireAngry.cpp">
-      <Filter>Enemy</Filter>
-    </ClCompile>
-    <ClCompile Include="FireAttack.cpp">
-      <Filter>Enemy</Filter>
-    </ClCompile>
-    <ClCompile Include="Star.cpp">
-      <Filter>Enemy</Filter>
-    </ClCompile>
-
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="debug.h" />
+    <ClInclude Include="Define.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="GameObject.h" />
+    <ClInclude Include="Goomba.h" />
     <ClInclude Include="Sprites.h" />
     <ClInclude Include="Textures.h" />
     <ClInclude Include="Brick.h">
@@ -104,6 +93,9 @@
     <ClInclude Include="Bat.h">
       <Filter>Enemy</Filter>
     </ClInclude>
+    <ClInclude Include="Enemy3.h">
+      <Filter>Enemy</Filter>
+    </ClInclude>
     <ClInclude Include="Land.h">
       <Filter>Map</Filter>
     </ClInclude>
@@ -121,22 +113,6 @@
       <Filter>Scene</Filter>
     </ClInclude>
     <ClInclude Include="ActiveRange.h" />
-    <ClInclude Include="Jafar.h">
-      <Filter>Enemy</Filter>
-    </ClInclude>
-    <ClInclude Include="FireAngry.h">
-      <Filter>Enemy</Filter>
-    </ClInclude>
-    <ClInclude Include="Define.h" />
-    <ClInclude Include="Enemy3.h">
-      <Filter>Enemy</Filter>
-    </ClInclude>
-    <ClInclude Include="FireAttack.h">
-      <Filter>Enemy</Filter>
-    </ClInclude>
-    <ClInclude Include="Star.h">
-      <Filter>Enemy</Filter>
-    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Map">

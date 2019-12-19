@@ -34,7 +34,7 @@ struct CCollisionEvent
 class CGameObject
 {
 public:
-	int HP;
+	int Health;
 	int id;
 	int gridID;
 
@@ -65,8 +65,6 @@ public:
 	CSprites * sprites;
 	vector<LPANIMATION> animations;
 
-	bool fireFlag = false;
-	bool destroyFlag = false;
 public: 
 	void SetPosition(float x, float y) { this->x = x, this->y = y; }
 	void SetSpeed(float vx, float vy) { this->vx = vx, this->vy = vy; }
