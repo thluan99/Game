@@ -1,5 +1,7 @@
 ﻿#pragma once
 #include "GameObject.h"
+#include "FireAttack.h"
+#include "Star.h"
 
 #define ALADIN_WALKING_SPEED				0.15f 
 //0.1f
@@ -100,6 +102,7 @@ public:
 		SetDirection(1);
 		velJ = 0.0f;
 		timeIDLE = 0;
+		HP = 10;
 	};
 	virtual void Update(DWORD dt, vector<LPGAMEOBJECT>* colliable_objects = NULL);
 	virtual void Render();

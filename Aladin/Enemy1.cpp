@@ -70,44 +70,34 @@ void Enemy1::SetState(int state)
 	switch (state)
 	{
 	case ENEMY1_STATE_IDLE_LEFT:
-		direction = -1;
-		nx = ENEMY1_STATE_IDLE_LEFT;
+		nx = -1;
 		break;
 	case ENEMY1_STATE_IDLE_RIGHT:
-		direction = 1;
-		nx = ENEMY1_STATE_IDLE_RIGHT;
+		nx = 1;
 		break;
 	case ENEMY1_STATE_HIT_LEFT:
-		direction = -1;
-		nx = ENEMY1_STATE_HIT_LEFT;
+		nx = -1;
 		break;
 	case ENEMY1_STATE_HIT_RIGHT:
-		direction = 1;
-		nx = ENEMY1_STATE_HIT_RIGHT;
+		nx = 1;
 		break;
 	case ENEMY1_STATE_ATTACK_LEFT:
-		direction = -1;
-		nx = ENEMY1_STATE_ATTACK_LEFT;
+		nx = -1;
 		break;
 	case ENEMY1_STATE_ATTACK_RIGHT:
-		direction = 1;
-		nx = ENEMY1_STATE_ATTACK_RIGHT;
+		nx = 1;
 		break;
 	case ENEMY1_STATE_ATTACK_LEFT_MID:
-		direction = -1;
-		nx = ENEMY1_STATE_ATTACK_LEFT_MID;
+		nx = -1;
 		break;
 	case ENEMY1_STATE_ATTACK_RIGHT_MID:
-		direction = 1;
-		nx = ENEMY1_STATE_ATTACK_RIGHT_MID;
+		nx = 1;
 		break;
 	case ENEMY1_STATE_RUN_LEFT:
-		direction = -1;
-		nx = ENEMY1_STATE_RUN_LEFT;
+		nx = -1;
 		break;
 	case ENEMY1_STATE_RUN_RIGHT:
-		direction = 1;
-		nx = ENEMY1_STATE_RUN_RIGHT;
+		nx = 1;
 		break;
 	}
 }

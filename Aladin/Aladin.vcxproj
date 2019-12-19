@@ -70,8 +70,8 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <IncludePath>C:\Program Files %28x86%29\Microsoft DirectX SDK %28June 2010%29\Include;$(IncludePath)</IncludePath>
-    <LibraryPath>C:\Program Files %28x86%29\Microsoft DirectX SDK %28June 2010%29\Lib\x86;$(LibraryPath)</LibraryPath>
+    <IncludePath>E:\program files\Microsoft DirectX SDK (June 2010)\Include;C:\Program Files %28x86%29\Microsoft DirectX SDK %28June 2010%29\Include;$(IncludePath)</IncludePath>
+    <LibraryPath>E:\program files\Microsoft DirectX SDK (June 2010)\Lib\x86;C:\Program Files %28x86%29\Microsoft DirectX SDK %28June 2010%29\Lib\x86;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <IncludePath>C:\Program Files %28x86%29\Microsoft DirectX SDK %28June 2010%29\Include;$(IncludePath)</IncludePath>
@@ -140,18 +140,21 @@
     <ClInclude Include="Enemy1.h" />
     <ClInclude Include="Enemy2.h" />
     <ClInclude Include="Enemy3.h" />
+    <ClInclude Include="FireAngry.h" />
+    <ClInclude Include="FireAttack.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="GameObject.h" />
     <ClInclude Include="GameScene.h" />
-    <ClInclude Include="Goomba.h" />
     <ClInclude Include="Aladin.h" />
     <ClInclude Include="Grid.h" />
     <ClInclude Include="Bat.h" />
+    <ClInclude Include="Jafar.h" />
     <ClInclude Include="Land.h" />
     <ClInclude Include="Scene.h" />
     <ClInclude Include="Scene1.h" />
     <ClInclude Include="Scene2.h" />
     <ClInclude Include="Sprites.h" />
+    <ClInclude Include="Star.h" />
     <ClInclude Include="texSurface.h" />
     <ClInclude Include="Textures.h" />
     <ClInclude Include="TileMap.h" />
@@ -166,11 +169,13 @@
     <ClCompile Include="Enemy1.cpp" />
     <ClCompile Include="Enemy2.cpp" />
     <ClCompile Include="Enemy3.cpp" />
+    <ClCompile Include="FireAngry.cpp" />
+    <ClCompile Include="FireAttack.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="GameScene.cpp" />
-    <ClCompile Include="Goomba.cpp" />
     <ClCompile Include="Grid.cpp" />
+    <ClCompile Include="Jafar.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Aladin.cpp" />
     <ClCompile Include="Bat.cpp" />
@@ -179,6 +184,7 @@
     <ClCompile Include="Scene1.cpp" />
     <ClCompile Include="Scene2.cpp" />
     <ClCompile Include="Sprites.cpp" />
+    <ClCompile Include="Star.cpp" />
     <ClCompile Include="texSurface.cpp" />
     <ClCompile Include="Textures.cpp" />
     <ClCompile Include="TileMap.cpp" />

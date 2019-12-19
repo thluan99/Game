@@ -1,16 +1,14 @@
-﻿#include <algorithm>
+﻿ #include <algorithm>
 #include "debug.h"
 
 #include "Aladin.h"
 #include "Game.h"
 #include "Brick.h"
-#include "Goomba.h"
 
 void CAladin::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 {
 	// Calculate dx, dy 
 	CGameObject::Update(dt);
-
 	// Simple fall down
 	vy += ALADIN_GRAVITY * dt;
 
@@ -61,11 +59,12 @@ void CAladin::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 		x += min_tx*dx + nx*0.4f;	// nx*0.4f : need to push out a bit to avoid overlapping next frame
 		y += min_ty * dy + ny * 0.4f;
 		
-		if (nx!=0) vx = 0;
-		if (ny != 0) { vy = 0; }
+		if (nx != 0) vx = 0;
+		if (ny != 0) vy = 0; 
 
 		bool hasWall = false;
 		// Collision logic with Goombas
+
 		for (UINT i = 0; i < coEventsResult.size(); i++)
 		{
 			LPCOLLISIONEVENT e = coEventsResult[i];	
@@ -112,7 +111,19 @@ void CAladin::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 						x += e->t * dx;
 					}
 				}
-
+        
+			if (e->obj->id == eType::FIREATTACK)
+			{
+				HP--;
+				DebugOut(L"[INFO]: Aladin HP-- %d ", HP);
+			}		
+			if (e->obj->id == eType::FIREATTACK)
+			{
+				if (nx != 0 || ny != 0)
+				{
+					//x = e->t*dx;
+				}
+				DebugOut(L"[[][][][[][================");
 			}
 		}
 	}
@@ -189,8 +200,6 @@ void CAladin::Render()
 			ani = ALADIN_ANI_CHEM_MANH_TRAI;
 		}
 		break;
-
-
 	}
 
 
@@ -198,7 +207,6 @@ void CAladin::Render()
 
 
 	int stt = 0;
-
 	if (isChem == true)
 	{
 		switch (state)
@@ -362,7 +370,7 @@ void CAladin::Render()
 		animations[ani]->RenderAladin(x, y + ALADIN_BIG_BBOX_HEIGHT, this->direction, alpha);
 		curr_ani = ani;
 	}
-}
+
 
 float CAladin::CalculateYVeloc(float vy)
 {
