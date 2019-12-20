@@ -177,14 +177,14 @@ void Scene1::Update(DWORD dt)
 
 	grid->UpdateCollision(dt, aladin);
 	
-	for (int i = 0; i < listApples.size(); i++)
-	{
-		if (listApples[i]->getNem() == true)
-		{
-			listApples[i]->Update(dt);
-			//DebugOut(L"============ %d\n", listApples[i]->GetX());
-		}
-	}
+	//for (int i = 0; i < listApples.size(); i++)
+	//{
+	//	if (listApples[i]->getNem() == true)
+	//	{
+	//		listApples[i]->Update(dt);
+	//		//DebugOut(L"============ %d\n", listApples[i]->GetX());
+	//	}
+	//}
 
 	for (int i = 0; i < listApples.size(); i++)
 	{

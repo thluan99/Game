@@ -133,6 +133,7 @@
     <ClInclude Include="Star.h">
       <Filter>Enemy</Filter>
     </ClInclude>
+    <ClInclude Include="ActiveRange.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Map">
