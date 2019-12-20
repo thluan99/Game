@@ -10,6 +10,7 @@ void CAladin::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 	// Calculate dx, dy 
 	CGameObject::Update(dt);
 	// Simple fall down
+
 	vy += ALADIN_GRAVITY*dt;
 
 	if (this->x > MAP_LIMIT_RIGHT - 50)
@@ -73,11 +74,14 @@ void CAladin::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 				HP--;
 				DebugOut(L"[INFO]: Aladin HP-- %d ", HP);
 			}		
-			if (e->obj->id == eType::FIREATTACK)
+			if (e->obj->id == eType::ROPE)
 			{
+				isCollisonWithRope = true;
 				if (nx != 0 || ny != 0)
 				{
-					//x = e->t*dx;
+					x = x + dx;
+					y = y + dy;
+					xSetCollision = e->obj->GetX() - 5;
 				}
 				DebugOut(L"[[][][][[][================");
 			}
@@ -89,9 +93,13 @@ void CAladin::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 
 void CAladin::Render()
 {
-	if (isNhay==true)
-		
+	if (isNhay == true)
+	{
+		if (state == ALADIN_STATE_TREO) // state treo cho vy = 0.04
+			vy = 0.04;
+		else
 		vy = -ALADIN_JUMP_SPEED_Y;
+	}
 	int ani;
 	switch (state)
 	{
@@ -157,16 +165,26 @@ void CAladin::Render()
 		{
 			ani = ALADIN_ANI_CHEM_MANH_TRAI;
 		}
-		break;	
+		break;
+
+	case ALADIN_STATE_TREO:
+		ani = ALADIN_ANI_TREO;
+		break;
 	}
-	
 
 	int alpha = 255;
 	
 	int stt = 0;
 
 	 
-	if (isChem == true)
+	if (state == ALADIN_STATE_TREO) // set state treo 
+	{
+		ani = ALADIN_ANI_TREO;
+		vx = 0;
+		SetX(xSetCollision);
+		animations[ani]->Render(x, y);
+	}
+	else if (isChem == true)
 	{
 		switch (state)
 		{
@@ -232,6 +250,7 @@ void CAladin::Render()
 			enableKey = true;
 			state = ALADIN_STATE_IDLE;
 			vx = 0;
+			vy = 0;
 			isNhay = false;
 		}
 	}
@@ -334,6 +353,11 @@ void CAladin::SetState(int state)
 	case ALADIN_STATE_NGOI_TRAI:
 		vx = 0;
 		nx = ALADIN_STATE_NGOI_TRAI;
+		break;
+
+	case ALADIN_STATE_TREO:
+		vx = 0;
+		vy = 0;
 		break;
 	}
 }

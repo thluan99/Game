@@ -30,12 +30,12 @@
 #define ALADIN_STATE_DAY_TRAI				17
 #define ALADIN_STATE_DUNG_CHAY_PHAI			18		//dừng
 #define ALADIN_STATE_DUNG_CHAY_TRAI			19
-#define ADADIN_STATE_TREO					20
+#define ALADIN_STATE_TREO					20
 #define ALADIN_STATE_CHEM_MANH				21
 #define ALADIN_STATE_NHAY_CHEM				22
 #define ALADIN_STATE_NEM_TAO				23
 #define ALADIN_STATE_NGOI_NEM_TAO			24
-#define ALADIN_STATE_NHAY_NEM_TAO
+#define ALADIN_STATE_NHAY_NEM_TAO			25
 #define ALADIN_STATE_DIE                    100
 
 
@@ -59,7 +59,7 @@
 #define ALADIN_ANI_DAY_TRAI					17
 #define ALADIN_ANI_DUNG_CHAY_PHAI			18		//dừng
 #define ALADIN_ANI_DUNG_CHAY_TRAI			19
-#define ADADIN_ANI_TREO						20
+#define ALADIN_ANI_TREO						20
 #define ALADIN_ANI_CHEM_MANH_PHAI			21
 #define ALADIN_ANI_CHEM_MANH_TRAI			22
 #define ALADIN_ANI_NHAY_CHEM_PHAI			23
@@ -88,6 +88,8 @@ class CAladin : public CGameObject
 	bool isNem;
 	bool isRoi;
 public:
+	bool isCollisonWithRope = false;
+	int xSetCollision;
 	CAladin() {
 		id = eType::ALADIN;
 		state = ALADIN_STATE_IDLE;
@@ -121,7 +123,7 @@ public:
 	bool getRoi() { return isRoi; }
 	bool getChem() { return isChem; }
 	bool getNem() { return isNem; }
-	void	setEnableKey(bool x) { enableKey = x; }
+	void setEnableKey(bool x) { enableKey = x; }
 	bool getEnableKey() { return enableKey; }
 	
 };

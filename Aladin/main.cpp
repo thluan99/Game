@@ -171,9 +171,17 @@ void CSampleKeyHander::OnKeyDown(int KeyCode)
 		break;
 	case DIK_UP:
 		if (scene->aladin->getEnableKey() == true) {
-			scene->aladin->SetState(ALADIN_STATE_NGUOC_LEN);
+			if (scene->aladin->isCollisonWithRope == true)
+			{
+				scene->aladin->SetState(ALADIN_ANI_TREO);
 			}
-
+			else
+				scene->aladin->SetState(ALADIN_STATE_NGUOC_LEN);
+			}
+		else {
+			if (scene->aladin->isCollisonWithRope == true)
+				scene->aladin->SetState(ALADIN_STATE_TREO);
+		}
 		break;
 	case DIK_DOWN:
 		if (scene->aladin->getEnableKey() == true) {
