@@ -151,23 +151,37 @@ void CSampleKeyHander::OnKeyDown(int KeyCode)
 		if (scene->aladin->getEnableKey() == true) {
 			scene->aladin->SetDirection(1);
 			scene->aladin->SetState(ALADIN_STATE_DI);
+
+			if (scene->aladin->isStopAnimation == true)
+			{
+				scene->aladin->isStopAnimation = false;
+				scene->aladin->countTiming = 0;
+			}
 		}
 		else {
 			if (scene->aladin->getNhay()==true)
 				scene->aladin->vx=  ALADIN_WALKING_SPEED;
 			
 		}
+		scene->aladin->isStopAnimation = false;
 		break;
 	case DIK_LEFT:
 		if (scene->aladin->getEnableKey() == true) {
 			scene->aladin->SetDirection(-1);
 			scene->aladin->SetState(ALADIN_STATE_DI);
+
+			if (scene->aladin->isStopAnimation == true)
+			{
+				scene->aladin->isStopAnimation = false;
+				scene->aladin->countTiming = 0;
+			}
 		}
 		else {
 			if (scene->aladin->getNhay() == true)
 				scene->aladin->vx = -ALADIN_WALKING_SPEED;
 
 		}
+		scene->aladin->isStopAnimation = false;
 		break;
 	case DIK_UP:
 		if (scene->aladin->getEnableKey() == true) {
@@ -204,7 +218,14 @@ void CSampleKeyHander::OnKeyDown(int KeyCode)
 			scene->apple = new Apple();
 			scene->apple->LoadResources(eType::APPLE);
 			//apple = new Apple(scene->aladin->x + 20, scene->aladin->y);
-			scene->apple->SetPosition(scene->aladin->x + 10, scene->aladin->y);
+			if (scene->aladin->state == ALADIN_STATE_NGOI)
+			{
+				scene->apple->SetPosition(scene->aladin->x + 10, scene->aladin->y + 20);
+			}
+			else
+			{
+				scene->apple->SetPosition(scene->aladin->x + 10, scene->aladin->y);
+			}
 			DebugOut(L"aladin x: %d \n apple x: %d \n", scene->aladin->x + 10, scene->apple->x);
 			scene->apple->setNem(true);
 			if (scene->aladin->direction == 1)
@@ -230,14 +251,39 @@ void CSampleKeyHander::OnKeyUp(int KeyCode)
 	switch (KeyCode)
 	{	
 	case DIK_RIGHT:
-		if(scene->aladin->getEnableKey()==true)
-		//	if(scene->aladin->GetState()==ALADIN_STATE_DI && scene->aladin->getChem()==false && scene->aladin->getNem() == false && scene->aladin->getNem() == false)
-		scene->aladin->SetState(ALADIN_STATE_IDLE);
+		if (scene->aladin->getEnableKey() == true)
+			//	if(scene->aladin->GetState()==ALADIN_STATE_DI && scene->aladin->getChem()==false && scene->aladin->getNem() == false && scene->aladin->getNem() == false)
+		{
+			scene->aladin->SetState(ALADIN_STATE_IDLE);
+			if (scene->aladin->countTiming >= 125)
+			{
+				scene->aladin->isStopAnimation = true;
+				scene->aladin->SetState(ALADIN_STATE_DUNG_CHAY_PHAI);
+				DebugOut(L"Timing came");
+				scene->aladin->countTiming = 0;
+			}
+			else scene->aladin->isStopAnimation = false;
+		}
+		scene->aladin->countTiming = 0;
+
 		break;
 	case DIK_LEFT:		
 		if (scene->aladin->getEnableKey() == true)
-		//	if (scene->aladin->GetState() == ALADIN_STATE_DI && scene->aladin->getChem() == false && scene->aladin->getNem() == false && scene->aladin->getNem() == false)
-		scene->aladin->SetState(ALADIN_STATE_IDLE);
+			//	if (scene->aladin->GetState() == ALADIN_STATE_DI && scene->aladin->getChem() == false && scene->aladin->getNem() == false && scene->aladin->getNem() == false)
+		{
+			scene->aladin->SetState(ALADIN_STATE_IDLE);
+
+			if (scene->aladin->countTiming >= 125)
+			{
+				scene->aladin->isStopAnimation = true;
+				scene->aladin->SetState(ALADIN_STATE_DUNG_CHAY_TRAI);
+				DebugOut(L"Timing came");
+				scene->aladin->countTiming = 0;
+			}
+			else scene->aladin->isStopAnimation = false;
+		}
+		scene->aladin->countTiming = 0;
+
 		break;
 	case DIK_UP:
 		if (scene->aladin->getEnableKey() == true)

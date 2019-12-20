@@ -72,6 +72,7 @@ public:
 	void Render(float x, float y, int alpha=255);
 	void RenderAladin(float x, float y, int direct, int alpha = 255);
 	void RenderAladin(int&,float x, float y, int direct, int alpha = 255);
+	int GetCurrentFrame() { return currentFrame; }
 };
 
 typedef CAnimation *LPANIMATION;
