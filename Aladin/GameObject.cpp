@@ -71,7 +71,9 @@ void CGameObject::CalcPotentialCollisions(
 		LPCOLLISIONEVENT e = SweptAABBEx(coObjects->at(i));
 
 		if (e->t > 0 && e->t <= 1.0f)
+		{
 			coEvents.push_back(e);
+		}
 		else
 			delete e;
 	}
@@ -118,6 +120,7 @@ void CGameObject::RenderBoundingBox()
 	D3DXVECTOR3 p(x, y, 0);
 	RECT rect;
 
+	textures->Add(ID_TEX_JAFAR_R, L"textures\\bbox.png", D3DCOLOR_XRGB(255, 255, 255));
 	LPDIRECT3DTEXTURE9 bbox = CTextures::GetInstance()->Get(ID_TEX_BBOX);
 
 	float l,t,r,b; 
@@ -128,7 +131,7 @@ void CGameObject::RenderBoundingBox()
 	rect.right = (int)r - (int)l;
 	rect.bottom = (int)b - (int)t;
 
-	CGame::GetInstance()->Draw(x, y, bbox, rect.left, rect.top, rect.right, rect.bottom, 32);
+	CGame::GetInstance()->Draw(x, y, bbox, rect.left, rect.top, rect.right, rect.bottom, 255);
 }
 
 void CGameObject::AddAnimation(int aniId)
@@ -139,19 +142,19 @@ void CGameObject::AddAnimation(int aniId)
 
 int CGameObject::GetHealth()
 {
-	return Health;
+	return HP;
 }
 
 void CGameObject::SetHealth(int h)
 {
-	Health = h;
+	HP = h;
 }
 
 void CGameObject::SubHealth(int th)
 {
-	Health -= th;
-	if (Health < 0)
-		Health = 0;
+	HP -= th;
+	if (HP < 0)
+		HP = 0;
 }
 
 void CGameObject::SetDirection(int d)

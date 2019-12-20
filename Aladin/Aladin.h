@@ -1,5 +1,7 @@
 ﻿#pragma once
 #include "GameObject.h"
+#include "FireAttack.h"
+#include "Star.h"
 
 #define ALADIN_WALKING_SPEED				0.15f 
 //0.1f
@@ -28,12 +30,12 @@
 #define ALADIN_STATE_DAY_TRAI				17
 #define ALADIN_STATE_DUNG_CHAY_PHAI			18		//dừng
 #define ALADIN_STATE_DUNG_CHAY_TRAI			19
-#define ADADIN_STATE_TREO					20
+#define ALADIN_STATE_TREO					20
 #define ALADIN_STATE_CHEM_MANH				21
 #define ALADIN_STATE_NHAY_CHEM				22
 #define ALADIN_STATE_NEM_TAO				23
 #define ALADIN_STATE_NGOI_NEM_TAO			24
-#define ALADIN_STATE_NHAY_NEM_TAO
+#define ALADIN_STATE_NHAY_NEM_TAO			25
 #define ALADIN_STATE_DIE                    100
 
 
@@ -57,7 +59,7 @@
 #define ALADIN_ANI_DAY_TRAI					17
 #define ALADIN_ANI_DUNG_CHAY_PHAI			18		//dừng
 #define ALADIN_ANI_DUNG_CHAY_TRAI			19
-#define ADADIN_ANI_TREO						20
+#define ALADIN_ANI_TREO						20
 #define ALADIN_ANI_CHEM_MANH_PHAI			21
 #define ALADIN_ANI_CHEM_MANH_TRAI			22
 #define ALADIN_ANI_NHAY_CHEM_PHAI			23
@@ -66,9 +68,8 @@
 #define ALADIN_ANI_NEM_TAO_TRAI				26
 #define ALADIN_ANI_NGOI_NEM_TAO_PHAI		27
 #define ALADIN_ANI_NGOI_NEM_TAO_TRAI		28
-#define ALADIN_ANI_NHAY_NEM_TAO_PHAI		29
-#define ALADIN_ANI_NHAY_NEM_TAO_TRAI		30
-#define ALADIN_ANI_IDLE_APPLE_RIGHT			31
+#define ALADIN_ANI_NHAY_NEM_TAO_PHAI		27
+#define ALADIN_ANI_NHAY_NEM_TAO_TRAI		28
 #define ALADIN_ANI_DIE					    100
 
 
@@ -87,10 +88,8 @@ class CAladin : public CGameObject
 	bool isNem;
 	bool isRoi;
 public:
-	float velJ;
-	int timeIDLE;
-	int countTiming;
-	bool isStopAnimation;
+	bool isCollisonWithRope = false;
+	int xSetCollision;
 	CAladin() {
 		id = eType::ALADIN;
 		state = ALADIN_STATE_IDLE;
@@ -99,10 +98,7 @@ public:
 		isChem = false;
 		enableKey = true;
 		SetDirection(1);
-		velJ = 0.0f;
-		timeIDLE = 0;
-		countTiming = 0;
-		isStopAnimation = false;
+		HP = 10;
 	};
 	virtual void Update(DWORD dt, vector<LPGAMEOBJECT>* colliable_objects = NULL);
 	virtual void Render();
@@ -110,7 +106,6 @@ public:
 	virtual void LoadResources(int ID);
 	virtual void GetBoundingBox(float& left, float& top, float& right, float& bottom);
 	virtual void ReLoad();
-	float CalculateYVeloc(float y);
 
 	void setNhay(bool x) {
 		isNhay = x;
@@ -128,7 +123,7 @@ public:
 	bool getRoi() { return isRoi; }
 	bool getChem() { return isChem; }
 	bool getNem() { return isNem; }
-	void	setEnableKey(bool x) { enableKey = x; }
+	void setEnableKey(bool x) { enableKey = x; }
 	bool getEnableKey() { return enableKey; }
 	
 };
