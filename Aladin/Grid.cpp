@@ -77,10 +77,7 @@ CGameObject * GetNewObject(int ID)
 	case eType::BRICK:
 		return new CBrick();
 
-	case eType::BRICK_BALL:
-		return new CBrick();
-
-	case eType::BRICK_LINE:
+	case eType::BRICK2:
 		return new CBrick();
 
 	case eType::ENEMY1:

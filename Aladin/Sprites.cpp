@@ -10,20 +10,6 @@ CSprite::CSprite(int id, int left, int top, int right, int bottom, LPDIRECT3DTEX
 	this->right = right;
 	this->bottom = bottom;
 	this->texture = tex;
-	this->anchor2Left = 0;
-	this->anchor2Top = 0;
-}
-
-CSprite::CSprite(int id, int left, int top, int right, int bottom, int anchor2Left, int anchor2Top, LPDIRECT3DTEXTURE9 tex)
-{
-	this->id = id;
-	this->left = left;
-	this->top = top;
-	this->right = right;
-	this->bottom = bottom;
-	this->texture = tex;
-	this->anchor2Left = anchor2Left;
-	this->anchor2Top = anchor2Top;
 }
 
 CSprites * CSprites::__instance = NULL;
@@ -40,23 +26,9 @@ void CSprite::Draw(float x, float y, int alpha)
 	game->Draw(x, y, texture, left, top, right, bottom, alpha);
 }
 
-void CSprite::DrawEx(float x, float y, int alpha)
-{
-	CGame* game = CGame::GetInstance();
-	game->Draw(x - GetAnchorLeft(), y - GetAnchorTop(), texture, left, top, right, bottom, alpha);
-}
-
-
-
 void CSprites::Add(int id, int left, int top, int right, int bottom, LPDIRECT3DTEXTURE9 tex)
 {
 	LPSPRITE s = new CSprite(id, left, top, right, bottom, tex);
-	sprites[id] = s;
-}
-
-void CSprites::AddEx(int id, int left, int top, int right, int bottom, int anchor2Left, int anchor2Top, LPDIRECT3DTEXTURE9 tex)
-{
-	LPSPRITE s = new CSprite(id, left, top, right, bottom, anchor2Left, anchor2Top, tex);
 	sprites[id] = s;
 }
 
@@ -151,7 +123,7 @@ void CAnimation::RenderAladin(int &stt,float x, float y, int direct, int alpha)
 		}
 
 	}
-	int hei = frames[currentFrame]->GetSprite()->GetHeight();  
+	int hei = frames[currentFrame]->GetSprite()->GetHeight();
 	int w = frames[currentFrame]->GetSprite()->GetWidth();
 
 	if (direct == 1)

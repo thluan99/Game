@@ -21,42 +21,6 @@ CGameObject * Scene2::GetNewObjectEx(int ID)
 {
 	switch (ID)
 	{
-	case eType::BRICK:
-		return new CBrick();
-
-	case eType::BRICK_BALL:
-		return new CBrick();
-
-	case eType::BRICK_LINE:
-		return new CBrick();
-
-	case eType::GOOMBA:
-		return new CGoomba();
-
-	case eType::ENEMY1:
-		return new Enemy1();
-
-	case eType::ENEMY2:
-		return new Enemy2();
-
-	case eType::BAT:
-		return new Bat();
-
-	case eType::ENEMY3:
-		return new Enemy3();
-
-	case eType::LAND:
-		return new CLand();
-
-	case eType::LAND1:
-		return new CLand();
-
-	case eType::LAND2:
-		return new CLand();
-
-	case eType::LAND3:
-		return new CLand();
-
 	case eType::M2LAND:
 		return new CLand();
 
@@ -242,7 +206,7 @@ void Scene2::Update(DWORD dt)
 		if (abs(listApples[i]->staticX - listApples[i]->GetX()) > 1000)
 		{
 			listApples.erase(listApples.begin() + i);
-			OutputDebugString(L"xÃ³a doi tuong");
+			OutputDebugString(L"xóa doi tuong");
 		}
 	}
 

@@ -162,44 +162,31 @@ void CSampleKeyHander::OnKeyDown(int KeyCode)
 		if (scene->aladin->getEnableKey() == true) {
 			scene->aladin->SetDirection(-1);
 			scene->aladin->SetState(ALADIN_STATE_DI);
-
-			int f = scene->aladin->GetAnimation()[scene->aladin->curr_ani]->GetCurrentFrame();
-			if (f >= 10)
-			{
-				scene->aladin->isStopAnimation = true;
-				DebugOut(L"Bla bla stoping animation");
-			}
 		}
-		else 
-		{
+		else {
 			if (scene->aladin->getNhay() == true)
 				scene->aladin->vx = -ALADIN_WALKING_SPEED;
-		}
 
-		scene->aladin->isStopAnimation = false;
+		}
 		break;
 	case DIK_UP:
-		if (scene->aladin->getEnableKey() == true) 
-		{
+		if (scene->aladin->getEnableKey() == true) {
 			scene->aladin->SetState(ALADIN_STATE_NGUOC_LEN);
-		}
+			}
 
 		break;
 	case DIK_DOWN:
-		if (scene->aladin->getEnableKey() == true) 
-		{
+		if (scene->aladin->getEnableKey() == true) {
 			scene->aladin->SetState(ALADIN_STATE_NGOI);
 		}
 		break;
 	case DIK_C:
-		if (scene->aladin->getEnableKey() == true) 
-		{
+		if (scene->aladin->getEnableKey() == true) {
 			scene->aladin->setChem(true);
 		}
 		break;
 	case DIK_X:
-		if (scene->aladin->getEnableKey() == true && scene->aladin->GetState()!=ALADIN_STATE_NGOI)
-		{
+		if (scene->aladin->getEnableKey() == true && scene->aladin->GetState()!=ALADIN_STATE_NGOI) {
 			scene->aladin->setNhay(true);
 		}
 		break;
@@ -209,14 +196,7 @@ void CSampleKeyHander::OnKeyDown(int KeyCode)
 			scene->apple = new Apple();
 			scene->apple->LoadResources(eType::APPLE);
 			//apple = new Apple(scene->aladin->x + 20, scene->aladin->y);
-			if (scene->aladin->state == ALADIN_STATE_NGOI)
-			{
-				scene->apple->SetPosition(scene->aladin->x + 10, scene->aladin->y + 20);
-			}
-			else
-			{
-				scene->apple->SetPosition(scene->aladin->x + 10, scene->aladin->y);
-			}
+			scene->apple->SetPosition(scene->aladin->x + 10, scene->aladin->y);
 			DebugOut(L"aladin x: %d \n apple x: %d \n", scene->aladin->x + 10, scene->apple->x);
 			scene->apple->setNem(true);
 			if (scene->aladin->direction == 1)
@@ -248,18 +228,8 @@ void CSampleKeyHander::OnKeyUp(int KeyCode)
 		break;
 	case DIK_LEFT:		
 		if (scene->aladin->getEnableKey() == true)
-			//	if (scene->aladin->GetState() == ALADIN_STATE_DI && scene->aladin->getChem() == false && scene->aladin->getNem() == false && scene->aladin->getNem() == false)
-		{
-			scene->aladin->SetState(ALADIN_STATE_IDLE);
-
-			int f = scene->aladin->GetAnimation()[ALADIN_ANI_DI_TRAI]->GetCurrentFrame();
-			if (f >= 12)
-			{
-				scene->aladin->isStopAnimation = true;
-				DebugOut(L"Bla bla stoping animation");
-			}
-		}
-
+		//	if (scene->aladin->GetState() == ALADIN_STATE_DI && scene->aladin->getChem() == false && scene->aladin->getNem() == false && scene->aladin->getNem() == false)
+		scene->aladin->SetState(ALADIN_STATE_IDLE);
 		break;
 	case DIK_UP:
 		if (scene->aladin->getEnableKey() == true)
@@ -493,7 +463,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	keyHandler = new CSampleKeyHander();
 	game->InitKeyboard(keyHandler);
 
-	SetWindowPos(hWnd, 0, 0, 0, SCREEN_WIDTH * 2.5f, SCREEN_HEIGHT * 2.5f, SWP_NOMOVE | SWP_NOOWNERZORDER | SWP_NOZORDER);
+	SetWindowPos(hWnd, 0, 0, 0, SCREEN_WIDTH * 1.5f, SCREEN_HEIGHT * 1.5f, SWP_NOMOVE | SWP_NOOWNERZORDER | SWP_NOZORDER);
 
 	Run();
 

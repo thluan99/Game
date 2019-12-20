@@ -130,7 +130,6 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="ActiveRange.h" />
     <ClInclude Include="Apple.h" />
     <ClInclude Include="Brick.h" />
     <ClInclude Include="Camera.h" />
@@ -160,7 +159,6 @@
     <ClInclude Include="TileMap.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="ActiveRange.cpp" />
     <ClCompile Include="Apple.cpp" />
     <ClCompile Include="Brick.cpp" />
     <ClCompile Include="Camera.cpp" />

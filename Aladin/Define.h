@@ -2,8 +2,8 @@
 
 using namespace std;
 
-#define SCREEN_WIDTH 400
-#define SCREEN_HEIGHT 250
+#define SCREEN_WIDTH 600
+#define SCREEN_HEIGHT 400
 #define BACKGROUND_COLOR D3DCOLOR_XRGB(0, 0, 0)
 #define MAP_LIMIT_RIGHT 32*71
 #define MAP_LIMIT_BOT 32*36
@@ -33,8 +33,7 @@ enum eType
 
 	ALADIN = 01,
 	BRICK = 10,
-	BRICK_BALL = 11,
-	BRICK_LINE = 12,
+	BRICK2 = 11,
 	GOOMBA = 20,
 	ENEMY1 = 30,
 	ENEMY2 = 31,

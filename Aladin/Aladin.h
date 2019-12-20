@@ -68,9 +68,8 @@
 #define ALADIN_ANI_NEM_TAO_TRAI				26
 #define ALADIN_ANI_NGOI_NEM_TAO_PHAI		27
 #define ALADIN_ANI_NGOI_NEM_TAO_TRAI		28
-#define ALADIN_ANI_NHAY_NEM_TAO_PHAI		29
-#define ALADIN_ANI_NHAY_NEM_TAO_TRAI		30
-#define ALADIN_ANI_IDLE_APPLE_RIGHT			31
+#define ALADIN_ANI_NHAY_NEM_TAO_PHAI		27
+#define ALADIN_ANI_NHAY_NEM_TAO_TRAI		28
 #define ALADIN_ANI_DIE					    100
 
 
@@ -89,9 +88,6 @@ class CAladin : public CGameObject
 	bool isNem;
 	bool isRoi;
 public:
-	float velJ;
-	int timeIDLE;
-	bool isStopAnimation;
 	CAladin() {
 		id = eType::ALADIN;
 		state = ALADIN_STATE_IDLE;
@@ -100,8 +96,6 @@ public:
 		isChem = false;
 		enableKey = true;
 		SetDirection(1);
-		velJ = 0.0f;
-		timeIDLE = 0;
 		HP = 10;
 	};
 	virtual void Update(DWORD dt, vector<LPGAMEOBJECT>* colliable_objects = NULL);
@@ -110,7 +104,6 @@ public:
 	virtual void LoadResources(int ID);
 	virtual void GetBoundingBox(float& left, float& top, float& right, float& bottom);
 	virtual void ReLoad();
-	float CalculateYVeloc(float y);
 
 	void setNhay(bool x) {
 		isNhay = x;

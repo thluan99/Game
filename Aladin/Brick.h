@@ -5,6 +5,7 @@
 #define BRICK_BBOX_HEIGHT 17
 
 #define ID_TEX_MAP				30
+#define ID_TEX_BRICK_2			40
 
 
 class CBrick : public CGameObject
