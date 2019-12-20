@@ -1,6 +1,7 @@
 #pragma once
 #include "GameObject.h"
 
+#define ID_TEX_BK_M2 70
 
 class TextSurface : public CGameObject
 {

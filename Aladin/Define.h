@@ -2,8 +2,8 @@
 
 using namespace std;
 
-#define SCREEN_WIDTH 400
-#define SCREEN_HEIGHT 250
+#define SCREEN_WIDTH 600
+#define SCREEN_HEIGHT 400
 #define BACKGROUND_COLOR D3DCOLOR_XRGB(0, 0, 0)
 #define MAP_LIMIT_RIGHT 32*71
 #define MAP_LIMIT_BOT 32*36
@@ -21,7 +21,9 @@ using namespace std;
 #define ID_TEX_ENEMY			10
 #define ID_TEX_MISC				20
 #define ID_TEX_MAP				30
-
+#define ID_TEX_BRICK_2			40
+#define	ID_TEX_JAFAR_R			11
+#define	ID_TEX_JAFAR_L			12
 
 #define del 8 // sai số tỉ đối
 // ID object
@@ -31,21 +33,25 @@ enum eType
 
 	ALADIN = 01,
 	BRICK = 10,
-	BRICK_BALL = 11,
-	BRICK_LINE = 12,
+	BRICK2 = 11,
 	GOOMBA = 20,
 	ENEMY1 = 30,
 	ENEMY2 = 31,
 	BAT = 32,
 	ENEMY3 = 33,
 	APPLE = 34,
-
+	JAFAR = 35,
+	ANGFIRE = 36,
+	FIREATTACK = 37,
+	STAR	= 38,
 
 	LAND = 99,
 	M2LAND = 98,
 	LAND1 = 90,
 	LAND2 = 91,
 	LAND3 = 92,
+	ROPE  = 93,
 
 	TEXSURFACE = 100,
+	BACKGROUND2 = 200,
 };

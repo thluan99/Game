@@ -1,6 +1,8 @@
 #pragma once
 
 #include "debug.h"
+#include <d3d9.h>
+#include <d3dx9.h>
 #include "Define.h"
 #include "Game.h"
 #include "GameObject.h"
@@ -11,7 +13,6 @@
 
 #include "Aladin.h"
 #include "Brick.h"
-#include "Goomba.h"
 #include "Enemy1.h"
 #include "Enemy2.h"
 #include "Enemy3.h"
