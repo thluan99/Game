@@ -34,6 +34,7 @@ void Enemy1::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	CGameObject::Update(dt);
 	// fall down
 	vy += GRAVITY * dt;
+	activeRange.CalculateActiveRange(this);
 
 	vector<LPCOLLISIONEVENT> coEvents;
 	vector<LPCOLLISIONEVENT> coEventsResult;
@@ -56,9 +57,6 @@ void Enemy1::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 		// block 
 		x += min_tx * dx + nx * 0.4f;		// nx*0.4f : need to push out a bit to avoid overlapping next frame
 		y += min_ty * dy + ny * 0.4f;
-
-		if (nx != 0) vx = 0;
-		if (ny != 0) vy = 0;
 	}
 
 	// clean up collision events
@@ -72,34 +70,44 @@ void Enemy1::SetState(int state)
 	switch (state)
 	{
 	case ENEMY1_STATE_IDLE_LEFT:
-		nx = -1;
+		direction = -1;
+		nx = ENEMY1_STATE_IDLE_LEFT;
 		break;
 	case ENEMY1_STATE_IDLE_RIGHT:
-		nx = 1;
+		direction = 1;
+		nx = ENEMY1_STATE_IDLE_RIGHT;
 		break;
 	case ENEMY1_STATE_HIT_LEFT:
-		nx = -1;
+		direction = -1;
+		nx = ENEMY1_STATE_HIT_LEFT;
 		break;
 	case ENEMY1_STATE_HIT_RIGHT:
-		nx = 1;
+		direction = 1;
+		nx = ENEMY1_STATE_HIT_RIGHT;
 		break;
 	case ENEMY1_STATE_ATTACK_LEFT:
-		nx = -1;
+		direction = -1;
+		nx = ENEMY1_STATE_ATTACK_LEFT;
 		break;
 	case ENEMY1_STATE_ATTACK_RIGHT:
-		nx = 1;
+		direction = 1;
+		nx = ENEMY1_STATE_ATTACK_RIGHT;
 		break;
 	case ENEMY1_STATE_ATTACK_LEFT_MID:
-		nx = -1;
+		direction = -1;
+		nx = ENEMY1_STATE_ATTACK_LEFT_MID;
 		break;
 	case ENEMY1_STATE_ATTACK_RIGHT_MID:
-		nx = 1;
+		direction = 1;
+		nx = ENEMY1_STATE_ATTACK_RIGHT_MID;
 		break;
 	case ENEMY1_STATE_RUN_LEFT:
-		nx = -1;
+		direction = -1;
+		nx = ENEMY1_STATE_RUN_LEFT;
 		break;
 	case ENEMY1_STATE_RUN_RIGHT:
-		nx = 1;
+		direction = 1;
+		nx = ENEMY1_STATE_RUN_RIGHT;
 		break;
 	}
 }

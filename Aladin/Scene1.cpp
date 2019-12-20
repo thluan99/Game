@@ -22,8 +22,14 @@ CGameObject * Scene1::GetNewObjectEx(int ID)
 	case eType::BRICK:
 		return new CBrick();
 
-	case eType::BRICK2:
+	case eType::BRICK_BALL:
 		return new CBrick();
+
+	case eType::BRICK_LINE:
+		return new CBrick();
+
+	case eType::GOOMBA:
+		return new CGoomba();
 
 	case eType::ENEMY1:
 		return new Enemy1();
@@ -51,9 +57,6 @@ CGameObject * Scene1::GetNewObjectEx(int ID)
 
 	case eType::APPLE:
 		return new Apple();
-
-	case eType::ROPE:
-		return new CLand();
 	}
 	return NULL;
 }
@@ -70,7 +73,6 @@ void Scene1::CreateGrid(vector<CGameObject*>& objects)
 	textures = CTextures::GetInstance();
 
 	textures->Add(ID_TEX_MAP, L"textures\\map_tex.png", D3DCOLOR_XRGB(163, 73, 164));
-	textures->Add(ID_TEX_BRICK_2, L"textures\\tileset.png", (BACKGROUND_COLOR));
 	textures->Add(ID_TEX_LAND, L"textures\\pixel.png", D3DCOLOR_XRGB(255, 255, 255));
 
 	if (inFile.is_open())
@@ -134,7 +136,6 @@ void Scene1::LoadResources(vector<CGameObject*> &objects)
 	CTextures* textures = CTextures::GetInstance();
 	CSprites* sprites = CSprites::GetInstance();
 
-	textures->Add(ID_TEX_LAND, L"textures\\pixel.png", D3DCOLOR_XRGB(255, 255, 245));
 	textures->Add(ID_TEX_APPLE, L"textures\\aladin.png", D3DCOLOR_XRGB(255, 0, 255));
 	CAnimations* animations = CAnimations::GetInstance();
 
@@ -162,27 +163,17 @@ void Scene1::LoadResources(vector<CGameObject*> &objects)
 	apple = new Apple();
 }
 
-void Scene1::Resources()
-{
-}
-
 void Scene1::Update(DWORD dt)
 {
-	vector<LPGAMEOBJECT> coObjects;
-
-	for (int i = 0; i < objects.size(); i++)
-		coObjects.push_back(objects[i]);
-	for (int i = 0; i < objects.size(); i++)
-		objects[i]->Update(dt, &coObjects);
-
 	grid->UpdateCollision(dt, aladin);
-	
 	for (int i = 0; i < listApples.size(); i++)
 	{
 		if (listApples[i]->getNem() == true)
 		{
 			listApples[i]->Update(dt);
-			//DebugOut(L"============ %d\n", listApples[i]->GetX());
+
+
+			DebugOut(L"============ %d\n", listApples[i]->GetX());
 		}
 	}
 
@@ -233,7 +224,7 @@ void Scene1::Render()
 			if (listApples[i]->getNem() == true)
 			{
 				listApples[i]->Render();
-				//DebugOut(L"============ %d\n", listApples[i]->GetX());
+				DebugOut(L"============ %d\n", listApples[i]->GetX());
 			}
 		}
 		grid->RenderObjectEx(camera, objects);

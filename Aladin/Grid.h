@@ -6,6 +6,7 @@
 #include "Sprites.h"
 #include "GameObject.h"
 #include "Brick.h"
+#include "Goomba.h"
 #include "Define.h"
 #include "Aladin.h"
 #include "Camera.h"

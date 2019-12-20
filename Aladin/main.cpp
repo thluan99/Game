@@ -33,6 +33,7 @@
 
 #include "Aladin.h"
 #include "Brick.h"
+#include "Goomba.h"
 #include "Enemy1.h"
 #include "Enemy2.h"
 #include "Enemy3.h"
@@ -119,25 +120,20 @@ void CSampleKeyHander::OnKeyDown(int KeyCode)
 	case DIK_8:
 		scene->aladin->SetPosition(2100, 50);
 		break;
-	//case DIK_9:
-	//	if (currentScene == 1)
-	//	{
-	//		scene1->grid->InitWriteGrid(scene1->objects);
-	//		DebugOut(L"[INFO] : Rewrite file gridWrite.txt\n");
-	//	}break;
-	//case DIK_0:
-	//	if (currentScene == 1)
-	//	{
-	//		ofstream ofs;
-	//		ofs.open("textures\\gridWrite.txt", ofstream::out | ofstream::trunc);
-	//		ofs.close();
-	//		DebugOut(L"[INFO] : Clear file gridWrite.txt\n");
-	//	}break;
+	case DIK_9:
+		grid->WriteGrid(objects);
+		DebugOut(L"[INFO] : Rewrite file gridWrite.txt\n");
+		break;
+	case DIK_0:
+		ofstream ofs;
+		ofs.open("textures\\gridWrite1.txt", ofstream::out | ofstream::trunc);
+		ofs.close();
+		DebugOut(L"[INFO] : Clear file gridWrite.txt\n");
+		break;
 	
 	//---------end test------------//
 	}
-	//------------------end test ----------------------//
-
+	
 	switch (KeyCode)
 	{
 	case DIK_A:
@@ -151,6 +147,11 @@ void CSampleKeyHander::OnKeyDown(int KeyCode)
 		if (scene->aladin->getEnableKey() == true) {
 			scene->aladin->SetDirection(1);
 			scene->aladin->SetState(ALADIN_STATE_DI);
+			if (scene->aladin->isStopAnimation == true)
+			{
+				scene->aladin->isStopAnimation = false;
+				scene->aladin->countTiming = 0;
+			}
 		}
 		else {
 			if (scene->aladin->getNhay()==true)
@@ -162,39 +163,40 @@ void CSampleKeyHander::OnKeyDown(int KeyCode)
 		if (scene->aladin->getEnableKey() == true) {
 			scene->aladin->SetDirection(-1);
 			scene->aladin->SetState(ALADIN_STATE_DI);
+			if (scene->aladin->isStopAnimation == true)
+			{
+				scene->aladin->isStopAnimation = false;
+				scene->aladin->countTiming = 0;
+			}
 		}
-		else {
+		else 
+		{
 			if (scene->aladin->getNhay() == true)
 				scene->aladin->vx = -ALADIN_WALKING_SPEED;
-
 		}
 		break;
 	case DIK_UP:
-		if (scene->aladin->getEnableKey() == true) {
-			if (scene->aladin->isCollisonWithRope == true)
-			{
-				scene->aladin->SetState(ALADIN_ANI_TREO);
-			}
-			else
-				scene->aladin->SetState(ALADIN_STATE_NGUOC_LEN);
-			}
-		else {
-			if (scene->aladin->isCollisonWithRope == true)
-				scene->aladin->SetState(ALADIN_STATE_TREO);
+		if (scene->aladin->getEnableKey() == true) 
+		{
+			scene->aladin->SetState(ALADIN_STATE_NGUOC_LEN);
 		}
+
 		break;
 	case DIK_DOWN:
-		if (scene->aladin->getEnableKey() == true) {
+		if (scene->aladin->getEnableKey() == true) 
+		{
 			scene->aladin->SetState(ALADIN_STATE_NGOI);
 		}
 		break;
 	case DIK_C:
-		if (scene->aladin->getEnableKey() == true) {
+		if (scene->aladin->getEnableKey() == true) 
+		{
 			scene->aladin->setChem(true);
 		}
 		break;
 	case DIK_X:
-		if (scene->aladin->getEnableKey() == true && scene->aladin->GetState()!=ALADIN_STATE_NGOI) {
+		if (scene->aladin->getEnableKey() == true && scene->aladin->GetState()!=ALADIN_STATE_NGOI)
+		{
 			scene->aladin->setNhay(true);
 		}
 		break;
@@ -204,7 +206,14 @@ void CSampleKeyHander::OnKeyDown(int KeyCode)
 			scene->apple = new Apple();
 			scene->apple->LoadResources(eType::APPLE);
 			//apple = new Apple(scene->aladin->x + 20, scene->aladin->y);
-			scene->apple->SetPosition(scene->aladin->x + 10, scene->aladin->y);
+			if (scene->aladin->state == ALADIN_STATE_NGOI)
+			{
+				scene->apple->SetPosition(scene->aladin->x + 10, scene->aladin->y + 20);
+			}
+			else
+			{
+				scene->apple->SetPosition(scene->aladin->x + 10, scene->aladin->y);
+			}
 			DebugOut(L"aladin x: %d \n apple x: %d \n", scene->aladin->x + 10, scene->apple->x);
 			scene->apple->setNem(true);
 			if (scene->aladin->direction == 1)
@@ -212,8 +221,6 @@ void CSampleKeyHander::OnKeyDown(int KeyCode)
 			else scene->apple->direction = -1;
 			
 			scene->listApples.push_back(scene->apple);
-
-			scene->objects.push_back(scene->apple);
 		}
 		break;
 	
@@ -230,14 +237,39 @@ void CSampleKeyHander::OnKeyUp(int KeyCode)
 	switch (KeyCode)
 	{	
 	case DIK_RIGHT:
-		if(scene->aladin->getEnableKey()==true)
-		//	if(scene->aladin->GetState()==ALADIN_STATE_DI && scene->aladin->getChem()==false && scene->aladin->getNem() == false && scene->aladin->getNem() == false)
-		scene->aladin->SetState(ALADIN_STATE_IDLE);
+		if (scene->aladin->getEnableKey() == true)
+			//	if(scene->aladin->GetState()==ALADIN_STATE_DI && scene->aladin->getChem()==false && scene->aladin->getNem() == false && scene->aladin->getNem() == false)
+		{
+			scene->aladin->SetState(ALADIN_STATE_IDLE);
+			if (scene->aladin->countTiming >= 150)
+			{
+				scene->aladin->isStopAnimation = true;
+				scene->aladin->SetState(ALADIN_STATE_DUNG_CHAY_PHAI);
+				DebugOut(L"Timing came");
+				scene->aladin->countTiming = 0;
+			}
+			else scene->aladin->isStopAnimation = false;
+		}
+		scene->aladin->countTiming = 0;
+
 		break;
 	case DIK_LEFT:		
 		if (scene->aladin->getEnableKey() == true)
-		//	if (scene->aladin->GetState() == ALADIN_STATE_DI && scene->aladin->getChem() == false && scene->aladin->getNem() == false && scene->aladin->getNem() == false)
-		scene->aladin->SetState(ALADIN_STATE_IDLE);
+			//	if (scene->aladin->GetState() == ALADIN_STATE_DI && scene->aladin->getChem() == false && scene->aladin->getNem() == false && scene->aladin->getNem() == false)
+		{
+			scene->aladin->SetState(ALADIN_STATE_IDLE);
+
+			if (scene->aladin->countTiming >= 150)
+			{
+				scene->aladin->isStopAnimation = true;
+				scene->aladin->SetState(ALADIN_STATE_DUNG_CHAY_TRAI);
+				DebugOut(L"Timing came");
+				scene->aladin->countTiming = 0;
+			}
+			else scene->aladin->isStopAnimation = false;
+		}
+		scene->aladin->countTiming = 0;
+
 		break;
 	case DIK_UP:
 		if (scene->aladin->getEnableKey() == true)
@@ -341,8 +373,7 @@ void Update(DWORD dt)
 		currentScene = 2;
 		scene1->Clear();
 		scene1->objects.clear();
-		objects.clear();
-		//scene2->CreateGrid(objects);
+		scene2->CreateGrid(objects);
 		scene2->LoadResources(objects);
 		scene = scene2;
 	}
@@ -471,7 +502,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	keyHandler = new CSampleKeyHander();
 	game->InitKeyboard(keyHandler);
 
-	SetWindowPos(hWnd, 0, 0, 0, SCREEN_WIDTH * 1.5f, SCREEN_HEIGHT * 1.5f, SWP_NOMOVE | SWP_NOOWNERZORDER | SWP_NOZORDER);
+	SetWindowPos(hWnd, 0, 0, 0, SCREEN_WIDTH * 2.5f, SCREEN_HEIGHT * 2.5f, SWP_NOMOVE | SWP_NOOWNERZORDER | SWP_NOZORDER);
 
 	Run();
 

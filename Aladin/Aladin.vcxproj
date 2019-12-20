@@ -22,13 +22,13 @@
     <VCProjectVersion>15.0</VCProjectVersion>
     <ProjectGuid>{0CEDCE73-9775-46A9-9D9D-B8424E7D599D}</ProjectGuid>
     <RootNamespace>My04Collision</RootNamespace>
-    <WindowsTargetPlatformVersion>10.0.17763.0</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformVersion>10.0.18362.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v141</PlatformToolset>
+    <PlatformToolset>v142</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
@@ -130,6 +130,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="ActiveRange.h" />
     <ClInclude Include="Apple.h" />
     <ClInclude Include="Brick.h" />
     <ClInclude Include="Camera.h" />
@@ -139,26 +140,24 @@
     <ClInclude Include="Enemy1.h" />
     <ClInclude Include="Enemy2.h" />
     <ClInclude Include="Enemy3.h" />
-    <ClInclude Include="FireAngry.h" />
-    <ClInclude Include="FireAttack.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="GameObject.h" />
     <ClInclude Include="GameScene.h" />
+    <ClInclude Include="Goomba.h" />
     <ClInclude Include="Aladin.h" />
     <ClInclude Include="Grid.h" />
     <ClInclude Include="Bat.h" />
-    <ClInclude Include="Jafar.h" />
     <ClInclude Include="Land.h" />
     <ClInclude Include="Scene.h" />
     <ClInclude Include="Scene1.h" />
     <ClInclude Include="Scene2.h" />
     <ClInclude Include="Sprites.h" />
-    <ClInclude Include="Star.h" />
     <ClInclude Include="texSurface.h" />
     <ClInclude Include="Textures.h" />
     <ClInclude Include="TileMap.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="ActiveRange.cpp" />
     <ClCompile Include="Apple.cpp" />
     <ClCompile Include="Brick.cpp" />
     <ClCompile Include="Camera.cpp" />
@@ -167,13 +166,11 @@
     <ClCompile Include="Enemy1.cpp" />
     <ClCompile Include="Enemy2.cpp" />
     <ClCompile Include="Enemy3.cpp" />
-    <ClCompile Include="FireAngry.cpp" />
-    <ClCompile Include="FireAttack.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="GameScene.cpp" />
+    <ClCompile Include="Goomba.cpp" />
     <ClCompile Include="Grid.cpp" />
-    <ClCompile Include="Jafar.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Aladin.cpp" />
     <ClCompile Include="Bat.cpp" />
@@ -182,7 +179,6 @@
     <ClCompile Include="Scene1.cpp" />
     <ClCompile Include="Scene2.cpp" />
     <ClCompile Include="Sprites.cpp" />
-    <ClCompile Include="Star.cpp" />
     <ClCompile Include="texSurface.cpp" />
     <ClCompile Include="Textures.cpp" />
     <ClCompile Include="TileMap.cpp" />

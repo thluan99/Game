@@ -77,8 +77,14 @@ CGameObject * GetNewObject(int ID)
 	case eType::BRICK:
 		return new CBrick();
 
-	case eType::BRICK2:
+	case eType::BRICK_BALL:
 		return new CBrick();
+
+	case eType::BRICK_LINE:
+		return new CBrick();
+
+	case eType::GOOMBA:
+		return new CGoomba();
 
 	case eType::ENEMY1:
 		return new Enemy1();
@@ -102,9 +108,6 @@ CGameObject * GetNewObject(int ID)
 		return new CLand();
 
 	case eType::LAND3:
-		return new CLand();
-
-	case eType::ROPE:
 		return new CLand();
 	}
 	return NULL;
@@ -387,8 +390,6 @@ Grid::~Grid()
 
 void Grid::ClearGrid()
 {
-	for (int i = 1; i <= cells.size(); i++)
-		cells[i]->listGameObject.clear();
 	cells.clear();
 }
 
