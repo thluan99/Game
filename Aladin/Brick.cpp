@@ -113,6 +113,13 @@ void CBrick::GetBoundingBox(float &l, float &t, float &r, float &b)
 			r = l + (animations[0]->frames[curr_f]->GetSprite()->GetWidth());
 			b = t + (animations[0]->frames[curr_f]->GetSprite()->GetHeight());
 		}
+		else
+		{
+			l = 0;
+			t = 0;
+			r = 0;
+			b = 0;
+		}
 	}
 	else if (id == eType::BRICK2)
 	{
@@ -123,6 +130,13 @@ void CBrick::GetBoundingBox(float &l, float &t, float &r, float &b)
 			t = y;
 			r = l + (animations[0]->frames[curr_f]->GetSprite()->GetWidth());
 			b = t + (animations[0]->frames[curr_f]->GetSprite()->GetHeight());
+		}
+		else
+		{
+			l = 0;
+			t = 0;
+			r = 0;
+			b = 0;
 		}
 	}
 	else if (id == eType::BRICKLINE)
