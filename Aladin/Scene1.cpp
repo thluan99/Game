@@ -25,6 +25,9 @@ CGameObject * Scene1::GetNewObjectEx(int ID)
 	case eType::BRICK2:
 		return new CBrick();
 
+	case eType::BRICKLINE:
+		return new CBrick();
+
 	case eType::ENEMY1:
 		return new Enemy1();
 

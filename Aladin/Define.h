@@ -34,6 +34,7 @@ enum eType
 	ALADIN = 01,
 	BRICK = 10,
 	BRICK2 = 11,
+	BRICKLINE = 12,
 	GOOMBA = 20,
 	ENEMY1 = 30,
 	ENEMY2 = 31,
