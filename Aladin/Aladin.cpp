@@ -90,7 +90,7 @@ void CAladin::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 					y = y + dy;
 					xSetCollision = e->obj->GetX() - 5;
 				}
-				DebugOut(L"[[][][][[][================");
+				//DebugOut(L"[[][][][[][================");
 			}
 		}
 		for (UINT i = 0; i < coEventsResult.size(); i++)
@@ -674,7 +674,7 @@ void CAladin::LoadResources(int ID)
 	sprites->Add(10203, 171, 324, 171 + 82, 324 + 64, texAladin);
 	sprites->Add(10204, 260, 335, 260 + 51, 53 + 335, texAladin);
 
-	ani = new CAnimation(100);	// chém phải
+	ani = new CAnimation(90);	// chém phải
 	ani->Add(10200);
 	ani->Add(10201);
 	ani->Add(10202);
@@ -710,7 +710,7 @@ void CAladin::LoadResources(int ID)
 	sprites->Add(10222, 961, 314, 961 + 45, 314 + 74, texAladin_f);
 	sprites->Add(10223, 868, 324, 868 + 82, 324 + 64, texAladin_f);
 	sprites->Add(10224, 810, 335, 810 + 51, 335 + 53, texAladin_f);
-	ani = new CAnimation(100);
+	ani = new CAnimation(90);
 	ani->Add(10220);
 	ani->Add(10221);
 	ani->Add(10222);

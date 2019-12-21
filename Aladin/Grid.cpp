@@ -56,13 +56,13 @@ void Grid::InitWriteGrid(vector<LPGAMEOBJECT> objects)
 				{
 					listGameObject.push_back(objects[k]);
 					WriteFile(outF, count, posX, posY, objects[k]->id, objects[k]->x, objects[k]->y);
-					DebugOut(L"[]");
+					//DebugOut(L"[]");
 				}
 			}
 
 			//thêm list gameobject vào cell
 			Add(count, posX, posY, listGameObject);
-			DebugOut(L"\n[INFO] : Cell thu %d, %d, %d \n", count, posX, posY);
+			//DebugOut(L"\n[INFO] : Cell thu %d, %d, %d \n", count, posX, posY);
 			count++;
 		}
 	outF.close();//đóng file
@@ -148,7 +148,7 @@ void Grid::LoadResourses(vector<LPGAMEOBJECT> &objects, CAladin * aladin)
 			objects.push_back(object);
 
 			cells[ID]->listGameObject.push_back(object);
-			DebugOut(L"[INFO] : doc file");
+			//DebugOut(L"[INFO] : doc file");
 		}
 		cout << endl;
 	}

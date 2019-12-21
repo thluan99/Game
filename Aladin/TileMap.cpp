@@ -114,7 +114,7 @@ void TileMap::LoadResource(LPCWSTR stringPathimg)
 	HRESULT re = D3DXGetImageInfoFromFile(stringPathimg, &info);
 	if (re != D3D_OK)
 	{
-		DebugOut(L"[ERROR] GetImageInfoFromFile failed: %s\n", stringPathimg);
+		//DebugOut(L"[ERROR] GetImageInfoFromFile failed: %s\n", stringPathimg);
 		return;
 	}
 

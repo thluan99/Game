@@ -225,7 +225,7 @@ void CSampleKeyHander::OnKeyDown(int KeyCode)
 			{
 				scene->apple->SetPosition(scene->aladin->x + 10, scene->aladin->y);
 			}
-			DebugOut(L"aladin x: %d \n apple x: %d \n", scene->aladin->x + 10, scene->apple->x);
+			//DebugOut(L"aladin x: %d \n apple x: %d \n", scene->aladin->x + 10, scene->apple->x);
 			scene->apple->setNem(true);
 			if (scene->aladin->direction == 1)
 				scene->apple->direction = 1;
@@ -258,7 +258,7 @@ void CSampleKeyHander::OnKeyUp(int KeyCode)
 			{
 				scene->aladin->isStopAnimation = true;
 				scene->aladin->SetState(ALADIN_STATE_DUNG_CHAY_PHAI);
-				DebugOut(L"Timing came");
+				//DebugOut(L"Timing came");
 				scene->aladin->countTiming = 0;
 			}
 			else scene->aladin->isStopAnimation = false;
@@ -276,7 +276,7 @@ void CSampleKeyHander::OnKeyUp(int KeyCode)
 			{
 				scene->aladin->isStopAnimation = true;
 				scene->aladin->SetState(ALADIN_STATE_DUNG_CHAY_TRAI);
-				DebugOut(L"Timing came");
+				//DebugOut(L"Timing came");
 				scene->aladin->countTiming = 0;
 			}
 			else scene->aladin->isStopAnimation = false;

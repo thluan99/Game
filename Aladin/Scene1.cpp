@@ -109,7 +109,6 @@ void Scene1::CreateGrid(vector<CGameObject*>& objects)
 
 			if (numObjTypeCell == 0)
 			{
-				DebugOut(L"Nothing\n");
 				continue;
 			}
 			for (int i = 0; i < numObjTypeCell; i++)
@@ -137,7 +136,6 @@ void Scene1::CreateGrid(vector<CGameObject*>& objects)
 					//grid->TestObjInWhatCell(gameObject);
 					grid->cells[cellID]->listGameObject.push_back(gameObject);
 				}
-				DebugOut(L"-----------[Doc file]\n");
 			}
 		}
 	}
@@ -212,7 +210,6 @@ void Scene1::Update(DWORD dt)
 				&& (aladin->y >= bat->GetActiveRange().top && aladin->y <= bat->GetActiveRange().bottom))
 			{
 				bat->SetState(BAT_STATE_WAKEUP);
-				DebugOut(L"Walk up!\n");
 			}
 			else 
 			{
@@ -225,7 +222,6 @@ void Scene1::Update(DWORD dt)
 						bat->SetPosition(bat->x_default, bat->y_default);
 						bat->SetState(BAT_STATE_IDLE);
 					}
-					DebugOut(L"X_DEf= %f, Y_DEF = %f \n",abs(bat->x_default - bat->x), abs(bat->y_default - bat->y));
 				}
 				
 			}

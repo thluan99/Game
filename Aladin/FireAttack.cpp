@@ -44,7 +44,7 @@ void FireAttack::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 			LPCOLLISIONEVENT e = coEventsResult[i];
 			if (e->obj->id == eType::M2LAND)
 			{
-				DebugOut(L"[[][][][[][================");
+				//DebugOut(L"[[][][][[][================");
 			}
 		}
 	}

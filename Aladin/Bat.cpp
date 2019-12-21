@@ -94,7 +94,6 @@ void Bat::GoToXY(float& x, float& y, float x_des, float y_des)
 
 	x += vx * dt;
 	y += vy * dt;
-	DebugOut(L"/LOL\\ x: %f, y: %f \n", x, y);
 }
 
 void Bat::SetState(int state)

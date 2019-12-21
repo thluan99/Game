@@ -82,7 +82,7 @@ void Scene2::CreateGrid(vector<CGameObject*>& objects)
 					//grid->TestObjInWhatCell(gameObject);
 					grid->cells[cellID]->listGameObject.push_back(gameObject);
 				}
-				DebugOut(L"-----------[Doc file]\n");
+				//DebugOut(L"-----------[Doc file]\n");
 			}
 		}
 	}
