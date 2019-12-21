@@ -54,6 +54,24 @@ CGameObject * Scene1::GetNewObjectEx(int ID)
 
 	case eType::ROPE:
 		return new CLand();
+
+	case eType::ITEMAPPLE:
+		return new ItemApple ();
+
+	case eType::ITEMGENIE:
+		return new ItemGenie();
+
+	case eType::ITEMRUBY:
+		return new ItemRuby();
+
+	case eType::ITEMHEATH:
+		return new ItemsExHeath();
+
+	case eType::ITEMPOT:
+		return new PositionPot();
+
+	case eType::SHOP:
+		return new Shop();
 	}
 	return NULL;
 }
@@ -72,6 +90,8 @@ void Scene1::CreateGrid(vector<CGameObject*>& objects)
 	textures->Add(ID_TEX_MAP, L"textures\\map_tex.png", D3DCOLOR_XRGB(163, 73, 164));
 	textures->Add(ID_TEX_BRICK_2, L"textures\\tileset.png", (BACKGROUND_COLOR));
 	textures->Add(ID_TEX_LAND, L"textures\\pixel.png", D3DCOLOR_XRGB(255, 255, 255));
+	textures->Add(ID_TEX_ITEM, L"textures\\item.png", D3DCOLOR_XRGB(248, 0, 248));
+	textures->Add(ID_TEX_SHOP, L"textures\\shop.png", D3DCOLOR_XRGB(255, 0, 255));
 
 	if (inFile.is_open())
 	{

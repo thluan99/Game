@@ -21,6 +21,12 @@
 #include "Grid.h"
 #include "texSurface.h"
 #include "Apple.h"
+#include "ItemApple.h"
+#include "ItemGenie.h"
+#include "ItemRuby.h"
+#include "ItemsExHeath.h"
+#include "PositionPot.h"
+#include "Shop.h"
 
 class Scene
 {

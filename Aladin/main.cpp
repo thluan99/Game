@@ -154,8 +154,7 @@ void CSampleKeyHander::OnKeyDown(int KeyCode)
 		}
 		else {
 			if (scene->aladin->getNhay()==true)
-				scene->aladin->vx=  ALADIN_WALKING_SPEED;
-			
+				scene->aladin->vx=  ALADIN_WALKING_SPEED;			
 		}
 		break;
 	case DIK_LEFT:

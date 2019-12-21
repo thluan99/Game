@@ -96,9 +96,9 @@ void CAladin::Render()
 	if (isNhay == true)
 	{
 		if (state == ALADIN_STATE_TREO) // state treo cho vy = 0.04
-			vy = 0.04;
+			vy = -0.032;
 		else
-		vy = -ALADIN_JUMP_SPEED_Y;
+			vy = -ALADIN_JUMP_SPEED_Y;
 	}
 	int ani;
 	switch (state)
@@ -165,10 +165,6 @@ void CAladin::Render()
 		{
 			ani = ALADIN_ANI_CHEM_MANH_TRAI;
 		}
-		break;
-
-	case ALADIN_STATE_TREO:
-		ani = ALADIN_ANI_TREO;
 		break;
 	}
 

@@ -24,6 +24,8 @@ using namespace std;
 #define ID_TEX_BRICK_2			40
 #define	ID_TEX_JAFAR_R			11
 #define	ID_TEX_JAFAR_L			12
+#define ID_TEX_ITEM				15
+#define ID_TEX_SHOP				16
 
 #define del 8 // sai số tỉ đối
 // ID object
@@ -44,6 +46,14 @@ enum eType
 	ANGFIRE = 36,
 	FIREATTACK = 37,
 	STAR	= 38,
+
+	// ITEMS
+	ITEMAPPLE = 50,
+	ITEMRUBY  = 51,
+	ITEMGENIE = 52,
+	ITEMHEATH = 53,
+	ITEMPOT	  = 54,
+	SHOP	  = 55,
 
 	LAND = 99,
 	M2LAND = 98,

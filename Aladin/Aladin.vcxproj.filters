@@ -66,6 +66,24 @@
     <ClCompile Include="Star.cpp">
       <Filter>Enemy</Filter>
     </ClCompile>
+    <ClCompile Include="ItemApple.cpp">
+      <Filter>Items</Filter>
+    </ClCompile>
+    <ClCompile Include="ItemRuby.cpp">
+      <Filter>Items</Filter>
+    </ClCompile>
+    <ClCompile Include="ItemsExHeath.cpp">
+      <Filter>Items</Filter>
+    </ClCompile>
+    <ClCompile Include="PositionPot.cpp">
+      <Filter>Items</Filter>
+    </ClCompile>
+    <ClCompile Include="ItemGenie.cpp">
+      <Filter>Items</Filter>
+    </ClCompile>
+    <ClCompile Include="Shop.cpp">
+      <Filter>Items</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="debug.h" />
@@ -133,6 +151,24 @@
     <ClInclude Include="Star.h">
       <Filter>Enemy</Filter>
     </ClInclude>
+    <ClInclude Include="ItemApple.h">
+      <Filter>Items</Filter>
+    </ClInclude>
+    <ClInclude Include="ItemRuby.h">
+      <Filter>Items</Filter>
+    </ClInclude>
+    <ClInclude Include="ItemsExHeath.h">
+      <Filter>Items</Filter>
+    </ClInclude>
+    <ClInclude Include="PositionPot.h">
+      <Filter>Items</Filter>
+    </ClInclude>
+    <ClInclude Include="ItemGenie.h">
+      <Filter>Items</Filter>
+    </ClInclude>
+    <ClInclude Include="Shop.h">
+      <Filter>Items</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Map">
@@ -152,6 +188,9 @@
     </Filter>
     <Filter Include="Scene">
       <UniqueIdentifier>{45bdbf13-50ce-4232-9fcb-9527cbdb1df4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Items">
+      <UniqueIdentifier>{262dc2a2-ff69-444a-94bf-a1d04d7f7e3f}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

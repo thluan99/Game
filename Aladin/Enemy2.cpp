@@ -13,7 +13,7 @@ void Enemy2::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	// caculate dx, dx
 	CGameObject::Update(dt);
 	// fall down
-	vy += GRAVITY * dt;
+	vy = 0;
 
 	vector<LPCOLLISIONEVENT> coEvents;
 	vector<LPCOLLISIONEVENT> coEventsResult;
