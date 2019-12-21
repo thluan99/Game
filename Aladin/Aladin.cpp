@@ -234,7 +234,7 @@ void CAladin::Render()
 			case ALADIN_STATE_DI:
 				if (GetAnimation()[curr_ani] == animations[ALADIN_ANI_NHAY_PHAI] || GetAnimation()[curr_ani] == animations[ALADIN_ANI_NHAY_TRAI])
 				{
-					if (GetAnimation()[curr_ani]->GetCurrentFrame() == 6)
+					if (GetAnimation()[curr_ani]->GetCurrentFrame() == 7)
 					{
 						vy = 0.00f;
 					}
@@ -448,7 +448,6 @@ void CAladin::SetState(int state)
 
 		break;
 	case ALADIN_STATE_NGUOC_LEN:
-		vy = 0;
 		break;
 	case ALADIN_STATE_NHAY:
 		// -ALADIN_JUMP_SPEED_Y;

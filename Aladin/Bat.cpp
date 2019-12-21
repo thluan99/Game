@@ -5,13 +5,30 @@ void Bat::Render()
 	int ani = 0;
 	int alpha = 255;
 
-	animations[2]->Render(x, y, alpha);
+	switch (state)
+	{
+	case BAT_STATE_IDLE:
+		ani = BAT_ANI_IDLE;
+		break;
+
+	case BAT_STATE_WAKEUP:
+		ani = BAT_ANI_FLY;
+		break;
+
+	case BAT_STATE_FLY:
+		ani = BAT_ANI_FLY;
+		break;
+	}
+
+	animations[ani]->Render(x, y, alpha);
 }
 
 void Bat::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
 	// caculate dx, dx
-	CGameObject::Update(dt);
+	this->dt = dt;
+	//dx = vx * dt;
+	//dy = vy * dt;
 	// fall down
 	vy += GRAVITY * dt;
 
@@ -23,10 +40,18 @@ void Bat::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	if (state != BAT_STATE_DIE)
 		CalcPotentialCollisions(coObjects, coEvents);
 
+	if (state == BAT_STATE_IDLE)
+	{
+		
+	}
+	else if (GetState() == BAT_STATE_WAKEUP)
+	{
+
+	}
+
 	if (coEvents.size() == 0)
 	{
-		x += dx;
-		y += dy;
+
 	}
 	else
 	{
@@ -41,6 +66,35 @@ void Bat::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 
 	// clean up collision events
 	for (UINT i = 0; i < coEvents.size(); i++) delete coEvents[i];
+}
+
+void Bat::GoToXY(float& x, float& y, float x_des, float y_des)
+{
+	float vx = 0, vy = 0;
+ 
+	if (x_des > x)
+	{
+		vx = 0.1f;
+	
+	}
+	else if (x_des < x)
+	{
+		vx = -0.1f;
+
+	}
+
+	if (y_des > y)
+	{
+		vy = 0.15f;
+	}
+	else if (y_des < y)
+	{
+		vy = -0.15f;
+	}
+
+	x += vx * dt;
+	y += vy * dt;
+	DebugOut(L"/LOL\\ x: %f, y: %f \n", x, y);
 }
 
 void Bat::SetState(int state)

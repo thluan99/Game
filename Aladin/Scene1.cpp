@@ -1,5 +1,5 @@
 #include "Scene1.h"
-
+#include <math.h>
 
 
 Scene1::Scene1()
@@ -106,6 +106,12 @@ void Scene1::CreateGrid(vector<CGameObject*>& objects)
 					gameObject->LoadResources(typeObj);
 					gameObject->SetPosition(objX, objY);
 
+					if (gameObject->id == eType::BAT)
+					{
+						Bat* bat = dynamic_cast<Bat*>(gameObject);
+						bat->SetPositionDefault(objX, objY);
+					}
+
 					objects.push_back(gameObject);
 
 					//grid->TestObjInWhatCell(gameObject);
@@ -174,7 +180,47 @@ void Scene1::Update(DWORD dt)
 	vector<LPGAMEOBJECT> coObjects;
 
 	for (int i = 0; i < objects.size(); i++)
+	{
 		coObjects.push_back(objects[i]);
+
+		Bat * bat = dynamic_cast<Bat*>(objects[i]);
+		
+		if (bat)
+		{
+			
+			if ((aladin->x >= bat->GetActiveRange().left && aladin->x <= bat->GetActiveRange().right)
+				&& (aladin->y >= bat->GetActiveRange().top && aladin->y <= bat->GetActiveRange().bottom))
+			{
+				bat->SetState(BAT_STATE_WAKEUP);
+				DebugOut(L"Walk up!\n");
+			}
+			else 
+			{
+				if (bat->GetState() != BAT_STATE_IDLE)
+				{
+					bat->SetState(BAT_STATE_FLY);
+					//bat->SetPosition(bat->x_default, bat->y_default);
+					if (abs(bat->x_default - bat->x) <= 5.0f && abs(bat->y_default - bat->y) <= 5.0f)
+					{
+						bat->SetPosition(bat->x_default, bat->y_default);
+						bat->SetState(BAT_STATE_IDLE);
+					}
+					DebugOut(L"X_DEf= %f, Y_DEF = %f \n",abs(bat->x_default - bat->x), abs(bat->y_default - bat->y));
+				}
+				
+			}
+
+			if (bat->GetState() == BAT_STATE_WAKEUP)
+			{
+				//GoToXY(x, y, coObjects->at(i)->x, coObjects->at(i)->y);
+				bat->GoToXY(bat->x, bat->y, aladin->x, aladin->y);
+			}
+			else if (bat->GetState() == BAT_STATE_FLY)
+			{
+				bat->GoToXY(bat->x, bat->y, bat->x_default, bat->y_default);
+			}
+		}
+	}
 	for (int i = 0; i < objects.size(); i++)
 		objects[i]->Update(dt, &coObjects);
 
