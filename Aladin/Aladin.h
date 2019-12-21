@@ -36,6 +36,7 @@
 #define ALADIN_STATE_NEM_TAO				23
 #define ALADIN_STATE_NGOI_NEM_TAO			24
 #define ALADIN_STATE_NHAY_NEM_TAO			25
+#define ALADIN_STATE_IDLE_TAO				26
 #define ALADIN_STATE_DIE                    100
 
 

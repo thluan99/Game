@@ -101,6 +101,10 @@ void CAnimation::RenderAladin( float x, float y, int direct, int alpha)
 }
 void CAnimation::RenderAladin(int &stt,float x, float y, int direct, int alpha)
 {
+	if (stt == -1)
+	{
+		currentFrame = 0;
+	}
 	DWORD now = GetTickCount();
 	if (currentFrame == -1)
 	{

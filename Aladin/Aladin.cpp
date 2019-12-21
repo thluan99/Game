@@ -15,6 +15,14 @@ void CAladin::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 	{
 		countTiming += 1;
 	}
+	else if (GetState() == ALADIN_STATE_IDLE || GetState() == ALADIN_STATE_IDLE_TRAI)
+	{
+		timeIDLE += 1;
+	}
+	if (timeIDLE >= 150)
+	{
+		SetState(ALADIN_STATE_IDLE_TAO);
+	}
 
 	vy += ALADIN_GRAVITY*dt;
 
@@ -408,10 +416,37 @@ void CAladin::Render()
 			vx = 0;
 		}
 	}
+	else if (state == ALADIN_STATE_IDLE_TAO)
+	{
+		ani = ALADIN_ANI_IDLE_APPLE_RIGHT;
+		if (timeIDLE == 150)
+		{
+			stt = -1; //dat ve frame so 0
+		}
+		else
+		{
+			stt = 0;
+		}
+		animations[ani]->RenderAladin(stt, x, y + ALADIN_BIG_BBOX_HEIGHT, this->direction);
+		curr_ani = ani;
+
+		if (stt == 0)
+		{
+			enableKey = true;
+			timeIDLE = 0;;
+		}
+		else
+		{
+			enableKey = true;
+			state = ALADIN_STATE_IDLE;
+			timeIDLE = 0;
+			vx = 0;
+		}
+	}
 	else
 	{
-	if (isRoi == true)
-		ani = ALADIN_ANI_ROI;
+		if (isRoi == true)
+			ani = ALADIN_ANI_ROI;
 		animations[ani]->RenderAladin(x, y + ALADIN_BIG_BBOX_HEIGHT, this->direction, alpha);
 		curr_ani = ani;
 	}

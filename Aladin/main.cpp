@@ -254,7 +254,7 @@ void CSampleKeyHander::OnKeyUp(int KeyCode)
 			//	if(scene->aladin->GetState()==ALADIN_STATE_DI && scene->aladin->getChem()==false && scene->aladin->getNem() == false && scene->aladin->getNem() == false)
 		{
 			scene->aladin->SetState(ALADIN_STATE_IDLE);
-			if (scene->aladin->countTiming >= 125)
+			if (scene->aladin->countTiming >= 100)
 			{
 				scene->aladin->isStopAnimation = true;
 				scene->aladin->SetState(ALADIN_STATE_DUNG_CHAY_PHAI);
@@ -272,7 +272,7 @@ void CSampleKeyHander::OnKeyUp(int KeyCode)
 		{
 			scene->aladin->SetState(ALADIN_STATE_IDLE);
 
-			if (scene->aladin->countTiming >= 125)
+			if (scene->aladin->countTiming >= 100)
 			{
 				scene->aladin->isStopAnimation = true;
 				scene->aladin->SetState(ALADIN_STATE_DUNG_CHAY_TRAI);
