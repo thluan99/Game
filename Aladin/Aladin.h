@@ -68,8 +68,9 @@
 #define ALADIN_ANI_NEM_TAO_TRAI				26
 #define ALADIN_ANI_NGOI_NEM_TAO_PHAI		27
 #define ALADIN_ANI_NGOI_NEM_TAO_TRAI		28
-#define ALADIN_ANI_NHAY_NEM_TAO_PHAI		27
-#define ALADIN_ANI_NHAY_NEM_TAO_TRAI		28
+#define ALADIN_ANI_NHAY_NEM_TAO_PHAI		29
+#define ALADIN_ANI_NHAY_NEM_TAO_TRAI		30
+#define ALADIN_ANI_IDLE_APPLE_RIGHT			31
 #define ALADIN_ANI_DIE					    100
 
 
@@ -88,6 +89,10 @@ class CAladin : public CGameObject
 	bool isNem;
 	bool isRoi;
 public:
+	float velJ;
+	int timeIDLE;
+	int countTiming;
+	bool isStopAnimation;
 	bool isCollisonWithRope = false;
 	int xSetCollision;
 	CAladin() {
@@ -99,6 +104,10 @@ public:
 		enableKey = true;
 		SetDirection(1);
 		HP = 10;
+		velJ = 0.0f;
+		timeIDLE = 0;
+		countTiming = 0;
+		isStopAnimation = false;
 	};
 	virtual void Update(DWORD dt, vector<LPGAMEOBJECT>* colliable_objects = NULL);
 	virtual void Render();

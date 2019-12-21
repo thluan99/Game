@@ -6,6 +6,7 @@
 #include "Sprites.h"
 #include "Textures.h"
 #include "Define.h"
+#include "ActiveRange.h"
 
 #define BAT_BBOX_WIDTH	47
 #define BAT_BBOX_HEIGHT	52	
@@ -26,8 +27,11 @@
 class Bat : public CGameObject
 {
 	int HP;
+	ActiveRange activeRange;
 
 public:
+	float x_default, y_default;
+	ActiveRange GetActiveRange() { return activeRange; }
 	virtual void Render();
 	virtual void Update(DWORD dt, vector<LPGAMEOBJECT>* colliable_objects = NULL);
 	void SetState(int state);
@@ -36,7 +40,18 @@ public:
 	{
 		id = eType::BAT;
 		direction = 1;
+		SetState(BAT_STATE_IDLE);
 	};
 	virtual void GetBoundingBox(float &l, float &t, float &r, float &b);
 	virtual void ReLoad();
+	void SetPosition(float x, float y)
+	{ 
+		this->x = x, this->y = y;
+	}
+	void SetPositionDefault(float x, float y)
+	{
+		this->x_default = x, this->y_default = y;
+		activeRange.CalculateActiveRange(this);
+	}
+	void GoToXY(float& x, float& y, float x_des, float y_des);
 };
