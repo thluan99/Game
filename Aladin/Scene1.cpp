@@ -201,44 +201,49 @@ void Scene1::Update(DWORD dt)
 	{
 		coObjects.push_back(objects[i]);
 
-		Bat * bat = dynamic_cast<Bat*>(objects[i]);
 		
-		if (bat)
+	}
+	for (int i = 1; i < grid->cells.size(); i++)
+	{
+		for (int j = 0; j < grid->cells.at(i)->listGameObject.size(); j++)
 		{
-			
-			if ((aladin->x >= bat->GetActiveRange().left && aladin->x <= bat->GetActiveRange().right)
-				&& (aladin->y >= bat->GetActiveRange().top && aladin->y <= bat->GetActiveRange().bottom))
-			{
-				bat->SetState(BAT_STATE_WAKEUP);
-			}
-			else 
-			{
-				if (bat->GetState() != BAT_STATE_IDLE)
-				{
-					bat->SetState(BAT_STATE_FLY);
-					//bat->SetPosition(bat->x_default, bat->y_default);
-					if (abs(bat->x_default - bat->x) <= 5.0f && abs(bat->y_default - bat->y) <= 5.0f)
-					{
-						bat->SetPosition(bat->x_default, bat->y_default);
-						bat->SetState(BAT_STATE_IDLE);
-					}
-				}
-				
-			}
+			Bat* bat = dynamic_cast<Bat*>(grid->cells.at(i)->listGameObject[j]);
 
-			if (bat->GetState() == BAT_STATE_WAKEUP)
+			if (bat)
 			{
-				//GoToXY(x, y, coObjects->at(i)->x, coObjects->at(i)->y);
-				bat->GoToXY(bat->x, bat->y, aladin->x, aladin->y);
-			}
-			else if (bat->GetState() == BAT_STATE_FLY)
-			{
-				bat->GoToXY(bat->x, bat->y, bat->x_default, bat->y_default);
+
+				if ((aladin->x >= bat->GetActiveRange().left && aladin->x <= bat->GetActiveRange().right)
+					&& (aladin->y >= bat->GetActiveRange().top && aladin->y <= bat->GetActiveRange().bottom))
+				{
+					bat->SetState(BAT_STATE_WAKEUP);
+				}
+				else
+				{
+					if (bat->GetState() != BAT_STATE_IDLE)
+					{
+						bat->SetState(BAT_STATE_FLY);
+						//bat->SetPosition(bat->x_default, bat->y_default);
+						if (abs(bat->x_default - bat->x) <= 5.0f && abs(bat->y_default - bat->y) <= 5.0f)
+						{
+							bat->SetPosition(bat->x_default, bat->y_default);
+							bat->SetState(BAT_STATE_IDLE);
+						}
+					}
+
+				}
+
+				if (bat->GetState() == BAT_STATE_WAKEUP)
+				{
+					//GoToXY(x, y, coObjects->at(i)->x, coObjects->at(i)->y);
+					bat->GoToXY(bat->x, bat->y, aladin->x, aladin->y);
+				}
+				else if (bat->GetState() == BAT_STATE_FLY)
+				{
+					bat->GoToXY(bat->x, bat->y, bat->x_default, bat->y_default);
+				}
 			}
 		}
 	}
-	for (int i = 0; i < objects.size(); i++)
-		objects[i]->Update(dt, &coObjects);
 
 	grid->UpdateCollision(dt, aladin);
 	

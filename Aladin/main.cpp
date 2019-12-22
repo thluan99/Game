@@ -262,8 +262,15 @@ void CSampleKeyHander::OnKeyUp(int KeyCode)
 				scene->aladin->countTiming = 0;
 			}
 			else scene->aladin->isStopAnimation = false;
+
+			if (scene->aladin->isPushingWall == true)
+			{
+				scene->aladin->isPushingWall = false;
+				scene->aladin->SetState(ALADIN_STATE_IDLE);
+			}
 		}
 		scene->aladin->countTiming = 0;
+		scene->aladin->timeIDLE = 0;
 
 		break;
 	case DIK_LEFT:		
@@ -280,8 +287,15 @@ void CSampleKeyHander::OnKeyUp(int KeyCode)
 				scene->aladin->countTiming = 0;
 			}
 			else scene->aladin->isStopAnimation = false;
+
+			if (scene->aladin->isPushingWall == true)
+			{
+				scene->aladin->isPushingWall = false;
+				scene->aladin->SetState(ALADIN_STATE_IDLE);
+			}
 		}
 		scene->aladin->countTiming = 0;
+		scene->aladin->timeIDLE = 0;
 
 		break;
 	case DIK_UP:
@@ -300,6 +314,9 @@ void CSampleKeyHander::OnKeyUp(int KeyCode)
 				scene->aladin->SetState(ALADIN_STATE_IDLE);
 		}
 			
+		break;
+	case DIK_X:
+		scene->aladin->timeIDLE = 0;
 		break;
 	}
 }

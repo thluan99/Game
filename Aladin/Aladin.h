@@ -95,6 +95,7 @@ public:
 	int countTiming;
 	bool isStopAnimation;
 	bool isCollisonWithRope = false;
+	bool isPushingWall;
 	int xSetCollision;
 	CAladin() {
 		id = eType::ALADIN;
@@ -109,6 +110,7 @@ public:
 		timeIDLE = 0;
 		countTiming = 0;
 		isStopAnimation = false;
+		isPushingWall = false;
 	};
 	virtual void Update(DWORD dt, vector<LPGAMEOBJECT>* colliable_objects = NULL);
 	virtual void Render();

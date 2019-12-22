@@ -19,10 +19,16 @@ void CAladin::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 	{
 		timeIDLE += 1;
 	}
-	if (timeIDLE >= 150)
+	else if (vx != 0 || vy != 0)
+	{
+		timeIDLE = 1;
+	}
+	
+	if (timeIDLE >= 300)
 	{
 		SetState(ALADIN_STATE_IDLE_TAO);
 	}
+	
 
 	vy += ALADIN_GRAVITY*dt;
 
@@ -107,6 +113,10 @@ void CAladin::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 			if (e->obj->GetId() == eType::LAND3)
 			{
 				hasWall = true;
+				if (nx != 0)
+				{
+					isPushingWall = true;
+				}
 				break;
 			}
 
@@ -416,10 +426,35 @@ void CAladin::Render()
 			vx = 0;
 		}
 	}
+	else if (isPushingWall == true)
+	{
+		if (direction == 1)
+		{
+			ani = ALADIN_ANI_DAY_PHAI;
+		}
+		else
+		{
+			ani = ALADIN_ANI_DAY_TRAI;
+		}
+
+		if (direction == 1)
+		{
+			animations[ani]->RenderAladinF1(x + ALADIN_BIG_BBOX_WIDTH, y + ALADIN_BIG_BBOX_HEIGHT);
+			curr_ani = ani;
+		}
+		else
+		{
+			animations[ani]->RenderAladinF_1(x, y + ALADIN_BIG_BBOX_HEIGHT);
+			curr_ani = ani;
+		}
+
+		enableKey = true;
+		vx = 0;
+	}
 	else if (state == ALADIN_STATE_IDLE_TAO)
 	{
 		ani = ALADIN_ANI_IDLE_APPLE_RIGHT;
-		if (timeIDLE == 150)
+		if (timeIDLE == 300)
 		{
 			stt = -1; //dat ve frame so 0
 		}
@@ -433,13 +468,11 @@ void CAladin::Render()
 		if (stt == 0)
 		{
 			enableKey = true;
-			timeIDLE = 0;;
 		}
 		else
 		{
 			enableKey = true;
 			state = ALADIN_STATE_IDLE;
-			timeIDLE = 0;
 			vx = 0;
 		}
 	}

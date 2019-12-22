@@ -1,6 +1,7 @@
-#include "Sprites.h"
+﻿#include "Sprites.h"
 #include "Game.h"
 #include "debug.h"
+
 
 CSprite::CSprite(int id, int left, int top, int right, int bottom, LPDIRECT3DTEXTURE9 tex)
 {
@@ -99,6 +100,61 @@ void CAnimation::RenderAladin( float x, float y, int direct, int alpha)
 		frames[currentFrame]->GetSprite()->Draw(x - w / 2, y - hei, alpha);
 
 }
+
+//Truyền BBox X và BBox Y vào
+void CAnimation::RenderAladinF1(float x, float y, int alpha)
+{
+	DWORD now = GetTickCount();
+	if (currentFrame == -1)
+	{
+		currentFrame = 0;
+		lastFrameTime = now;
+	}
+	else
+	{
+		DWORD t = frames[currentFrame]->GetTime();
+		if (now - lastFrameTime > t)
+		{
+			currentFrame++;
+			lastFrameTime = now;
+			if (currentFrame == frames.size()) {
+				currentFrame = 0;
+			}
+		}
+
+	}
+	int hei = frames[currentFrame]->GetSprite()->GetHeight();
+	int wid = frames[currentFrame]->GetSprite()->GetWidth();
+	frames[currentFrame]->GetSprite()->Draw(x - wid, y - hei, alpha);
+}
+
+//Truyền BBox Y vào, không truyền BBox Y
+void CAnimation::RenderAladinF_1(float x, float y, int alpha)
+{
+	DWORD now = GetTickCount();
+	if (currentFrame == -1)
+	{
+		currentFrame = 0;
+		lastFrameTime = now;
+	}
+	else
+	{
+		DWORD t = frames[currentFrame]->GetTime();
+		if (now - lastFrameTime > t)
+		{
+			currentFrame++;
+			lastFrameTime = now;
+			if (currentFrame == frames.size()) {
+				currentFrame = 0;
+			}
+		}
+
+	}
+	int hei = frames[currentFrame]->GetSprite()->GetHeight();
+	int wid = frames[currentFrame]->GetSprite()->GetWidth();
+	frames[currentFrame]->GetSprite()->Draw(x - 22, y - hei, alpha);
+}
+
 void CAnimation::RenderAladin(int &stt,float x, float y, int direct, int alpha)
 {
 	if (stt == -1)
