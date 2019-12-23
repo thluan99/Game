@@ -163,9 +163,12 @@ void Scene1::LoadResources(vector<CGameObject*> &objects)
 
 	textures->Add(ID_TEX_LAND, L"textures\\pixel.png", D3DCOLOR_XRGB(255, 255, 245));
 	textures->Add(ID_TEX_APPLE, L"textures\\aladin.png", D3DCOLOR_XRGB(255, 0, 255));
+	textures->Add(ID_TEX_ENEMY2, L"textures\\enemy2.png", D3DCOLOR_XRGB(255, 0, 255));
+	textures->Add(ID_TEX_ENEMY2_FLIP, L"textures\\enemy2_flip.png", D3DCOLOR_XRGB(255, 0, 255));
 	CAnimations* animations = CAnimations::GetInstance();
 
 	LPDIRECT3DTEXTURE9 textAPPLE = textures->Get(ID_TEX_APPLE);
+	LPDIRECT3DTEXTURE9 tex_Enemy2 = textures->Get(ID_TEX_ENEMY2);
 	// idle
 	LPANIMATION ani;
 	sprites->Add(200, 373, 24, 373 + 7, 24 + 7, textAPPLE);
@@ -208,6 +211,7 @@ void Scene1::Update(DWORD dt)
 		for (int j = 0; j < grid->cells.at(i)->listGameObject.size(); j++)
 		{
 			Bat* bat = dynamic_cast<Bat*>(grid->cells.at(i)->listGameObject[j]);
+			Enemy2* enemy2 = dynamic_cast<Enemy2*>(grid->cells.at(i)->listGameObject[j]);
 
 			if (bat)
 			{
@@ -240,6 +244,28 @@ void Scene1::Update(DWORD dt)
 				else if (bat->GetState() == BAT_STATE_FLY)
 				{
 					bat->GoToXY(bat->x, bat->y, bat->x_default, bat->y_default);
+				}
+			}
+			if (enemy2)
+			{
+				if ((aladin->x >= enemy2->GetActiveRange().left && aladin->x <= enemy2->GetActiveRange().right)
+					&& (aladin->y >= enemy2->GetActiveRange().top && aladin->y <= enemy2->GetActiveRange().bottom))
+				{
+					if (enemy2->GetState() != ENEMY2_STATE_DIE)
+						enemy2->SetState(ENEMY2_STATE_ACTIVE);
+				}
+				
+				if (enemy2->trigger == 1)
+				{
+					for (int i = 0; i < 6; i++)
+					{
+						Bone* bone = new Bone();
+						bone->LoadResources(BONE);
+						bone->SetPosition(enemy2->x, enemy2->y);
+						objects.push_back(bone);
+					}
+					enemy2->trigger = 0;
+					enemy2->SetState(ENEMY2_STATE_DIE);
 				}
 			}
 		}

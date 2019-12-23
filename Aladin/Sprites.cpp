@@ -50,6 +50,7 @@ void CAnimation::Add(int spriteId, DWORD time)
 
 void CAnimation::Render(float x, float y, int alpha)
 {
+	alpha = 255;
 	DWORD now = GetTickCount();
 	if (currentFrame == -1) 
 	{
@@ -68,6 +69,42 @@ void CAnimation::Render(float x, float y, int alpha)
 		
 	}
 	frames[currentFrame]->GetSprite()->Draw(x, y, alpha);
+}
+
+int CAnimation::RenderJustOne(float x, float y, int alpha)
+{
+	alpha = 255;
+
+	DWORD now = GetTickCount();
+	if (currentFrame == -1)
+	{
+		currentFrame = 0;
+		lastFrameTime = now;
+	}
+	else
+	{
+		DWORD t = frames[currentFrame]->GetTime();
+		if (now - lastFrameTime > t)
+		{
+			currentFrame++;
+			lastFrameTime = now;
+		}
+		if (currentFrame >= frames.size())
+		{
+			currentFrame = frames.size() -  1;
+		}
+	}
+	int hei = frames[currentFrame]->GetSprite()->GetHeight();
+	frames[currentFrame]->GetSprite()->Draw(x, y - hei, alpha);
+
+	if (currentFrame == frames.size() - 1)
+	{
+		return 1;
+	}
+	else
+	{
+		return 0;
+	}
 }
 
 void CAnimation::RenderAladin( float x, float y, int direct, int alpha)

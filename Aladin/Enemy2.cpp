@@ -1,15 +1,44 @@
 #include "Enemy2.h"
 
+void Enemy2::SetPosition(float x, float y)
+{
+	this->x = x;
+	this->y = y;
+}
+
 void Enemy2::Render()
 {
-	int ani = 0;
 	int alpha = 255;
 
-	animations[1]->RenderAladin(x, y + ENEMY_BBOX_HEIGHT, direction, alpha);
+	if (state == ENEMY2_STATE_IDLE)
+	{
+		animations[ENEMY2_ANI_IDLE]->RenderAladin(x, y + ENEMY_BBOX_HEIGHT, direction);
+	}
+	else if (state == ENEMY2_STATE_ACTIVE)
+	{
+		trigger = animations[ENEMY2_ANI_ACTIVE]->RenderJustOne(x, y + ENEMY_BBOX_HEIGHT, direction);
+	}
+	else if (state == ENEMY2_STATE_DIE)
+	{
+
+	}
+	
 }
 
 void Enemy2::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
+	activeRange.CalculateActiveRange(this);
+
+	if (trigger == 1 || state == ENEMY2_STATE_DIE)
+	{
+
+		SetState(ENEMY2_STATE_DIE);
+		activeRange.bottom = 0;
+		activeRange.top = 0;
+		activeRange.left = 0;
+		activeRange.right = 0;
+	}
+
 	// caculate dx, dx
 	CGameObject::Update(dt);
 	// fall down
@@ -61,6 +90,13 @@ void Enemy2::LoadResources(int ID)
 	LPDIRECT3DTEXTURE9 textE2_f = textures->Get(ID_TEX_ENEMY2_FLIP);
 
 	LPANIMATION ani;
+
+	//IDLE///////////////////////////////
+	sprites->Add(46050, 8, 73, 8 + 86, 73 + 26, textE2);
+	ani = new CAnimation(100);
+	ani->Add(46050);
+	animations->Add(100, ani);//0
+	this->AddAnimation(100);
 	//----------IDLE LEFT ------------//
 	sprites->Add(46051, 774, 73, 86 + 774, 26 + 73, textE2_f);
 	sprites->Add(46052, 687, 68, 80 + 687, 29 + 68, textE2_f);
@@ -103,7 +139,7 @@ void Enemy2::LoadResources(int ID)
 	ani->Add(46068);
 	ani->Add(46069);
 	ani->Add(46070);
-	animations->Add(101, ani);
+	animations->Add(101, ani);//1
 	//----------IDLE Right ------------//
 	sprites->Add(46001, 8, 73, 86 + 8, 26 + 73, textE2);
 	sprites->Add(46002, 101, 68, 80 + 101, 29 + 68, textE2);
@@ -146,10 +182,11 @@ void Enemy2::LoadResources(int ID)
 	ani->Add(46018);
 	ani->Add(46019);
 	ani->Add(46020);
-	animations->Add(100, ani);
+	animations->Add(102, ani);
 
-	this->AddAnimation(100);		// 0 idle
-	this->AddAnimation(101);
+
+	this->AddAnimation(101);//1
+	this->AddAnimation(102);//2
 }
 
 void Enemy2::GetBoundingBox(float & l, float & t, float & r, float & b)

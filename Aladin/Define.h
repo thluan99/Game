@@ -47,6 +47,7 @@ enum eType
 	ANGFIRE = 36,
 	FIREATTACK = 37,
 	STAR	= 38,
+	BONE    = 39,
 
 	// ITEMS
 	ITEMAPPLE = 50,
