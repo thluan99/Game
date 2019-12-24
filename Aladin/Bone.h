@@ -27,5 +27,6 @@ public:
 	virtual void ReLoad();
 
 	void CalculateVeloc();
+	float Random(int, int);
 };
 

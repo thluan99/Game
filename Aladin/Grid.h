@@ -34,13 +34,11 @@ class Grid
 {
 private:
 
-	int rows, collums;
 	char * gridPathWrite;
 public:
+	int rows, collums;
 	//Lưu các đối tượng vào mảng
 	unordered_map<int, Cell *> cells;
-
-public:
 	int cell_Size;
 
 	void Add(int ID, int x, int y, vector<CGameObject*>);

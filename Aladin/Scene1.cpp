@@ -206,12 +206,14 @@ void Scene1::Update(DWORD dt)
 
 		
 	}
+
+
 	for (int i = 1; i < grid->cells.size(); i++)
 	{
 		for (int j = 0; j < grid->cells.at(i)->listGameObject.size(); j++)
 		{
-			Bat* bat = dynamic_cast<Bat*>(grid->cells.at(i)->listGameObject[j]);
-			Enemy2* enemy2 = dynamic_cast<Enemy2*>(grid->cells.at(i)->listGameObject[j]);
+			Bat* bat = dynamic_cast<Bat*>(grid->cells.at(i)->listGameObject.at(j));
+			Enemy2* enemy2 = dynamic_cast<Enemy2*>(grid->cells.at(i)->listGameObject.at(j));
 
 			if (bat)
 			{
@@ -257,12 +259,13 @@ void Scene1::Update(DWORD dt)
 				
 				if (enemy2->trigger == 1)
 				{
-					for (int i = 0; i < 6; i++)
+					for (int a = 0; a < 6; a++)
 					{
 						Bone* bone = new Bone();
 						bone->LoadResources(BONE);
 						bone->SetPosition(enemy2->x, enemy2->y);
-						objects.push_back(bone);
+
+						listBone.push_back(bone);
 					}
 					enemy2->trigger = 0;
 					enemy2->SetState(ENEMY2_STATE_DIE);
@@ -281,6 +284,11 @@ void Scene1::Update(DWORD dt)
 	//		//DebugOut(L"============ %d\n", listApples[i]->GetX());
 	//	}
 	//}
+	for (int i = listBone.size() - 1; i >= 0; i--)
+	{
+		listBone[i]->Update(dt);
+	}
+
 
 	for (int i = 0; i < listApples.size(); i++)
 	{
@@ -331,6 +339,10 @@ void Scene1::Render()
 				listApples[i]->Render();
 				//DebugOut(L"============ %d\n", listApples[i]->GetX());
 			}
+		}
+		for (int i = listBone.size() - 1; i >= 0; i--)
+		{
+			listBone[i]->Render();
 		}
 		grid->RenderObjectEx(camera, objects);
 

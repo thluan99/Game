@@ -6,6 +6,7 @@
 class Scene1 : public Scene
 {
 public:
+	vector<Bone*> listBone;
 	Scene1();
 	Scene1(vector<LPGAMEOBJECT> objects,
 		dxGraphics *dx_graphics,

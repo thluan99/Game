@@ -512,6 +512,8 @@ int Run()
 
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow)
 {
+	srand((int)time(NULL));
+
 	HWND hWnd = CreateGameWindow(hInstance, nCmdShow, SCREEN_WIDTH, SCREEN_HEIGHT);
 	dx_graphics = dxGraphics::GetInstance();
 	dx_graphics->Init(hWnd);

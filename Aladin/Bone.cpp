@@ -5,19 +5,16 @@ void Bone::Render()
 	animations[0]->Render(x, y);
 }
 
-float Random(int a, int b)
+float Bone::Random(int a, int b)
 {
-	return a + (b - a) * rand() / RAND_MAX;
+	return rand() % b + a;
 }
 
 
 void Bone::CalculateVeloc()
 {
-	srand((unsigned)time(NULL));
-
-	vx = Random(-5, 5) / 10;
-
-	vy = Random(-5, -1) / 10;
+	vx = (Random(-30.0f, 30.0f) / 100) * (rand() & 1 ? 1 : -1);
+	vy = Random(-30, -10.0f) / 100;
 }
 
 void Bone::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
@@ -30,7 +27,7 @@ void Bone::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 
 	if (this->x > activeRange.right || this->x < activeRange.left || this->y > activeRange.top || this->y < activeRange.bottom)
 	{
-		delete(this);
+
 	}
 }
 
@@ -73,10 +70,10 @@ void Bone::SetPosition(float x, float y)
 	this->x = x;
 	this->y = y;
 
-	activeRange.CalculateActiveRange(this);
-	activeRange.left += 50;
-	activeRange.top += 50;
-	activeRange.right += 50;
+	//activeRange.CalculateActiveRange(this);
+	//activeRange.left += 50;
+	//activeRange.top += 50;
+	//activeRange.right += 50;
 }
 void Bone::ReLoad()
 {
