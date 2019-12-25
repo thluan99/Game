@@ -316,13 +316,13 @@ void CSampleKeyHander::OnKeyUp(int KeyCode)
 
 		break;
 	case DIK_UP:
+		scene->aladin->CancelClimb = false;
 		if (scene->aladin->getEnableKey() == true)
 		{
-			if (scene->aladin->isCollisonWithRope == true)
+			if (scene->aladin->isCollisonWithRope == true && scene->aladin->CancelClimb == false)
 			{
 				scene->aladin->SetState(ALADIN_STATE_TREO);
 				scene->aladin->vy = 0;
-				scene->aladin->CancelClimb = false;
 				scene->aladin->climbActiveUp = false;
 			}			
 			else
@@ -332,7 +332,6 @@ void CSampleKeyHander::OnKeyUp(int KeyCode)
 		{
 			scene->aladin->SetState(ALADIN_STATE_TREO);
 			scene->aladin->vy = 0;
-			scene->aladin->CancelClimb = false;
 			scene->aladin->climbActiveUp = false;
 		}			
 		break;

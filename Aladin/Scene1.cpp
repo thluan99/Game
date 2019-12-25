@@ -324,7 +324,7 @@ void Scene1::Update(DWORD dt)
 						Bone* bone = new Bone();
 						bone->LoadResources(BONE);
 						bone->SetPosition(enemy2->x, enemy2->y);
-						objects.push_back(bone);
+						listBone.push_back(bone);
 					}
 					enemy2->trigger = 0;
 					enemy2->SetState(ENEMY2_STATE_DIE);
@@ -343,6 +343,11 @@ void Scene1::Update(DWORD dt)
 	//		//DebugOut(L"============ %d\n", listApples[i]->GetX());
 	//	}
 	//}
+
+	for (int i = listBone.size() - 1; i >= 0; i--)
+	{
+		listBone[i]->Update(dt);
+	}
 
 	for (int i = 0; i < listApples.size(); i++)
 	{
@@ -392,8 +397,13 @@ void Scene1::Render()
 			{
 				listApples[i]->Render();
 			}
+		}*/
+
+		for (int i = listBone.size() - 1; i >= 0; i--)
+		{
+			listBone[i]->Render();
 		}
-*/
+
 		grid->RenderObjectEx(camera, objects);
 
 		texSur->Render();
