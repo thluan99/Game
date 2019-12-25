@@ -26,11 +26,15 @@ void CBrick::LoadResources(int ID)
 		sprites->Add(40005, 155, 1770, 155 + 40, 1770 + 24, texBrick);
 
 		ani = new CAnimation(100);		// brick
-		ani->Add(40001);
+		ani->Add(40001, 750);
 		ani->Add(40002);
 		ani->Add(40003);
 		ani->Add(40004);
-		ani->Add(40005);
+		ani->Add(40005, 1500);
+		ani->Add(40004);
+		ani->Add(40003);
+		ani->Add(40002);
+		ani->Add(40001, 750);
 
 		animations->Add(601, ani);
 
@@ -72,6 +76,20 @@ void CBrick::LoadResources(int ID)
 		ani->Add(40018);
 		ani->Add(40019);
 		ani->Add(40020);
+		ani->Add(40019);
+		ani->Add(40018);
+		ani->Add(40017);
+		ani->Add(40016);
+		ani->Add(40015);
+		ani->Add(40014);
+		ani->Add(40013);
+		ani->Add(40012);
+		ani->Add(40011);
+		ani->Add(40010);
+		ani->Add(40009);
+		ani->Add(40008);
+		ani->Add(40007);
+		ani->Add(40006);
 
 		animations->Add(602, ani);
 
@@ -88,12 +106,17 @@ void CBrick::LoadResources(int ID)
 		sprites->Add(40026, 173, 1799, 173 + 49, 1799 + 35, texBrick_LINE);
 
 		ani = new CAnimation(100);
-		ani->Add(40021);
+		ani->Add(40021, 750);
 		ani->Add(40022);
 		ani->Add(40023);
 		ani->Add(40024);
 		ani->Add(40025);
-		ani->Add(40026);
+		ani->Add(40026, 1500);
+		ani->Add(40025);
+		ani->Add(40024);
+		ani->Add(40023);
+		ani->Add(40022);
+		ani->Add(40021, 750);
 
 		animations->Add(603, ani);
 		this->AddAnimation(603); //gai 
