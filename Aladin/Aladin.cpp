@@ -98,13 +98,47 @@ void CAladin::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 			if (e->obj->id == eType::ROPE)
 			{
 				isCollisonWithRope = true;
-				if (nx != 0 || ny != 0)
+				if ((nx != 0 || ny != 0) && CancelClimb == true)
 				{
-					x = x + dx;
-					y = y + dy;
-					xSetCollision = e->obj->GetX() - 5;
-				}
-				//DebugOut(L"[[][][][[][================");
+					x += e->t * dx;
+					y += e->t * dy;
+				}		
+				else if (CancelClimb == false)
+				{
+					xSetCollision = e->obj->GetX();
+					ySetCollision = e->obj->GetY();
+					y += e->t * dy;
+				}					
+			}
+			else
+			{
+				isCollisonWithRope = false;
+				CancelClimb = true;
+			}
+
+			if (e->obj->id == eType::ITEMPOT)
+			{
+				PositionPot *p = dynamic_cast<PositionPot*>(e->obj);
+				if (p->isActive == true)
+					p->SetState(POT_STATE_IDLE2);
+				else
+					p->SetState(POT_STATE_ACTIVE);
+			}
+			if (e->obj->id == eType::ITEMGENIE)
+			{
+				e->obj->SetState(GENIE_STATE_2);
+			}
+			if (e->obj->id == eType::ITEMAPPLE)
+			{
+				e->obj->SetState(APPLE_IT_COLLECTED);
+			}
+			if (e->obj->id == eType::ITEMRUBY)
+			{
+				e->obj->SetState(RUBY_IT_STATE_COLLECTED);
+			}
+			if (e->obj->id == eType::ITEMHEATH)
+			{
+				e->obj->SetState(HEATH_STATE_COLLECTED);
 			}
 		}
 		for (UINT i = 0; i < coEventsResult.size(); i++)
@@ -138,6 +172,7 @@ void CAladin::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 						x += e->t * dx;
 					}
 				}
+				
 				if (e->obj->GetId() == eType::ENEMY1 || e->obj->GetId() == eType::ENEMY2 || e->obj->GetId() == eType::ENEMY3
 					|| e->obj->GetId() == eType::BAT || e->obj->GetId() == eType::JAFAR)
 				{
@@ -234,9 +269,35 @@ void CAladin::Render()
 	if (state == ALADIN_STATE_TREO) // set state treo 
 	{
 		ani = ALADIN_ANI_TREO;
+		if (climbActiveUp == true)
+			vy = -0.2f;
+		else if (climbActiveDown == true)
+			vy = +0.2f;
+		else if (climbActiveDown == false && climbActiveUp == false)
+			vy = 0;
+
 		vx = 0;
-		SetX(xSetCollision);
 		animations[ani]->Render(x, y);
+	}
+	else if (state == ALADIN_STATE_TREO_NHAY)
+	{
+		int stt = 0;
+		ani = ALADIN_ANI_TREO_NHAY;
+		if (direction == -1)
+		{
+			vx = -0.06;
+			vy = -0.06;
+		}
+		else
+		{
+			vx = 0.06;
+			vy = -0.06;
+		}
+		animations[ani]->RenderAladin(stt, x, y, direction, alpha);
+		if (stt != 0)
+		{
+			SetState(ALADIN_STATE_ROI);
+		}
 	}
 	else if (isNhay == true)
 	{
@@ -546,6 +607,14 @@ void CAladin::SetState(int state)
 	case ALADIN_STATE_TREO:
 		vx = 0;
 		vy = 0;
+		break;
+
+	case ALADIN_STATE_TREO_NHAY:
+		vy = -0.04f;
+		break;
+
+	case ALADIN_STATE_TREO_NHAY_ROI:
+		vy = GRAVITY * dt;
 		break;
 	}
 }
@@ -1347,8 +1416,33 @@ void CAladin::LoadResources(int ID)
 	ani->Add(10541);
 	ani->Add(10512);
 	ani->Add(10511);
-
 	animations->Add(525, ani);
+
+	//-----------ALADIN TREO NHAY-------------//
+	sprites->Add(10550, 10, 1870, 34 + 10, 73 + 1870, texAladin);
+	sprites->Add(10551, 65, 1873, 25 + 65, 77 + 1873, texAladin);
+	sprites->Add(10552, 100, 1874, 36 + 100, 71 + 1874, texAladin);
+	sprites->Add(10553, 144, 1874, 48 + 144, 64 + 1874, texAladin);
+	sprites->Add(10554, 204, 1875, 59 + 204, 54 + 1875, texAladin);
+	sprites->Add(10555, 281, 1876, 59 + 281, 41 + 1876, texAladin);
+	sprites->Add(10556, 354, 1869, 52 + 354, 54 + 1869, texAladin);
+	sprites->Add(10557, 422, 1871, 47 + 422, 67 + 1871, texAladin);
+	sprites->Add(10558, 482, 1866, 45 + 482, 75 + 1866, texAladin);
+	ani = new CAnimation(90);
+	ani->Add(10550);
+	ani->Add(10551);
+	ani->Add(10552);
+	ani->Add(10553);
+	ani->Add(10554);
+	ani->Add(10555);
+	ani->Add(10556);
+	ani->Add(10557);
+	ani->Add(10558);
+	animations->Add(526, ani);
+	//-----------ALADIN TREO NHAY roi-------------//
+	ani = new CAnimation(90);
+	ani->Add(10558);
+	animations->Add(527, ani);
 
 	//---------------------------------------------------------
 	this->AddAnimation(400);		 // 0 đứng phải
@@ -1383,6 +1477,8 @@ void CAladin::LoadResources(int ID)
 	this->AddAnimation(523);		//	29 nhảy ném táo phải
 	this->AddAnimation(524);		//	30 nhảy ném táo trái
 	this->AddAnimation(525);		// 31 IDLE nem tao phai
+	this->AddAnimation(526);		// 32 treo day nhay
+	this->AddAnimation(527);		// 32 treo day nhay roi
 }
 
 void CAladin::GetBoundingBox(float &left, float &top, float &right, float &bottom)

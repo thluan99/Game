@@ -4,7 +4,7 @@
 
 void Apple::Render()
 {
-	int ani;
+	int ani = 0;
 
 	int alpha = 255;
 	if (state == APPLE_STATE_DIE)

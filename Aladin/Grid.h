@@ -32,7 +32,7 @@ typedef struct StructCell
 
 class Grid
 {
-private:
+public:
 
 	int rows, collums;
 	char * gridPathWrite;

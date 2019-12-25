@@ -9,6 +9,7 @@ void Enemy2::SetPosition(float x, float y)
 void Enemy2::Render()
 {
 	int alpha = 255;
+	int stt = 0;
 
 	if (state == ENEMY2_STATE_IDLE)
 	{
@@ -20,7 +21,13 @@ void Enemy2::Render()
 	}
 	else if (state == ENEMY2_STATE_DIE)
 	{
-
+		if (isDeath == false)
+		{
+			animations[ENEMY2_ANI_DIE]->RenderAladin(stt, x, y + ENEMY_BBOX_HEIGHT, direction, alpha);
+			if (stt != 0)
+				isDeath = true;
+		}
+		else animations[0]->RenderAladin(x, y, 1, 0);
 	}
 	
 }
@@ -48,7 +55,8 @@ void Enemy2::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	vector<LPCOLLISIONEVENT> coEventsResult;
 
 	coEvents.clear();
-
+	
+	if (HP <= 0) SetState(ENEMY2_STATE_DIE);
 	if (state != ENEMY2_STATE_DIE)
 		CalcPotentialCollisions(coObjects, coEvents);
 
@@ -65,6 +73,20 @@ void Enemy2::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 		// block 
 		x += min_tx * dx + nx * 0.4f;		// nx*0.4f : need to push out a bit to avoid overlapping next frame
 		y += min_ty * dy + ny * 0.4f;
+
+
+		for (UINT i = 0; i < coEventsResult.size(); i++)
+		{
+			LPCOLLISIONEVENT e = coEvents[i];
+			if (e->obj->GetId() == eType::ALADIN)
+			{
+				x += e->t*dx;
+			}
+			if (e->obj->GetId() == eType::APPLE)
+			{
+				HP = HP - 2;
+			}
+		}
 	}
 
 	// clean up collision events
@@ -81,13 +103,13 @@ void Enemy2::LoadResources(int ID)
 	textures = CTextures::GetInstance();
 	sprites = CSprites::GetInstance();
 
-	textures->Add(ID_TEX_ENEMY2, L"textures\\enemy2.png", D3DCOLOR_XRGB(255, 0, 255));
-	textures->Add(ID_TEX_ENEMY2_FLIP, L"textures\\enemy2_flip.png", D3DCOLOR_XRGB(255, 0, 255));
-
 	CAnimations *animations = CAnimations::GetInstance();
+
+	textures->Add(ID_TEX_ENEMY2, L"textures\\enemy2.png", D3DCOLOR_XRGB(255, 0, 255));
 
 	LPDIRECT3DTEXTURE9 textE2 = textures->Get(ID_TEX_ENEMY2);
 	LPDIRECT3DTEXTURE9 textE2_f = textures->Get(ID_TEX_ENEMY2_FLIP);
+	LPDIRECT3DTEXTURE9 textExplo = textures->Get(ID_TEX_EXPLOSION);
 
 	LPANIMATION ani;
 
@@ -185,16 +207,48 @@ void Enemy2::LoadResources(int ID)
 	animations->Add(102, ani);
 
 
+	// ENEMY DIE
+	sprites->Add(9990, 30, 30, 19 + 30, 15 + 30, textExplo);
+	sprites->Add(9991, 85, 5, 64 + 85, 43 + 5, textExplo);
+	sprites->Add(9992, 160, 5, 70 + 160, 44 + 5, textExplo);
+	sprites->Add(9993, 233, 3, 73 + 233, 46 + 3, textExplo);
+	sprites->Add(9994, 329, 16, 36 + 329, 33 + 16, textExplo);
+	sprites->Add(9995, 404, 15, 38 + 404, 34 + 15, textExplo);
+	sprites->Add(9996, 481, 17, 38 + 481, 33 + 17, textExplo);
+	sprites->Add(9997, 560, 18, 36 + 560, 32 + 18, textExplo);
+	sprites->Add(9998, 639, 19, 35 + 639, 31 + 19, textExplo);
+	sprites->Add(9999, 716, 19, 35 + 716, 31 + 19, textExplo);
+	ani = new CAnimation(100);
+	ani->Add(9990);
+	ani->Add(9991);
+	ani->Add(9992);
+	ani->Add(9993);
+	ani->Add(9994);
+	ani->Add(9995);
+	ani->Add(9996);
+	ani->Add(9997);
+	ani->Add(9998);
+	ani->Add(9999);
+	animations->Add(999, ani);
+
 	this->AddAnimation(101);//1
 	this->AddAnimation(102);//2
+	this->AddAnimation(999);		// die
 }
 
 void Enemy2::GetBoundingBox(float & l, float & t, float & r, float & b)
 {
-	l = x;
-	t = y;
-	r = x + ENEMY_BBOX_WIDTH;
-	b = y + ENEMY_BBOX_HEIGHT;
+	if (state != ENEMY2_STATE_DIE)
+	{
+		l = x;
+		t = y;
+		r = x + ENEMY_BBOX_WIDTH;
+		b = y + ENEMY_BBOX_HEIGHT;
+	}
+	else
+	{
+		l = t = r = b = 0;
+	}
 }
 
 void Enemy2::ReLoad()

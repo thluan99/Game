@@ -2,30 +2,84 @@
 
 void Enemy1::Render()
 {
-	int ani;
+	int ani = 0;
 	int alpha = 255;
-	if (state == ENEMY1_STATE_IDLE_LEFT)
-		ani = ENEMY1_ANI_IDLE_LEFT;
-	else if (state == ENEMY1_STATE_RUN_LEFT)
-		ani = ENEMY1_ANI_RUN_LEFT;
-	else if (state == ENEMY1_STATE_ATTACK_LEFT_MID)
-		ani = ENEMY1_ANI_ATTACK_LEFT_MID;
-	else if (state == ENEMY1_STATE_ATTACK_LEFT)
-		ani = ENEMY1_ANI_ATTACK_LEFT;
-	else if (state == ENEMY1_STATE_HIT_LEFT)
-		ani = ENEMY1_ANI_HIT_LEFT;
-	else if (state == ENEMY1_STATE_IDLE_RIGHT)
-		ani = ENEMY1_ANI_IDLE_RIGHT;
-	else if (state == ENEMY1_STATE_RUN_RIGHT)
-		ani = ENEMY1_ANI_RUN_RIGHT;
-	else if (state == ENEMY1_STATE_ATTACK_RIGHT_MID)
-		ani = ENEMY1_ANI_ATTACK_RIGHT_MID;
-	else if (state == ENEMY1_STATE_ATTACK_RIGHT)
-		ani = ENEMY1_ANI_ATTACK_RIGHT;
-	else if (state == ENEMY1_STATE_HIT_RIGHT)
-		ani = ENEMY1_ANI_HIT_RIGHT;
+	int stt = 0;
 
-	animations[ani]->RenderAladin(x, y + ENEMY_BBOX_HEIGHT, direction, alpha);
+	if (state == ENEMY1_STATE_DIE)
+	{
+		if (isDeath == false)
+		{
+			ani = ENEMY1_ANI_DIE;
+			animations[ani]->RenderAladin(stt, x, y + ENEMY_BBOX_HEIGHT, direction, alpha);
+			if (stt != 0)
+				isDeath = true;
+		}
+		else animations[0]->RenderAladin(x, y, 1, 0);
+	}
+	else if (state == ENEMY1_STATE_HIT_LEFT || state == ENEMY1_STATE_HIT_RIGHT)
+	{
+		if (direction == -1)
+		{
+			ani = ENEMY1_ANI_HIT_LEFT;
+			animations[ani]->RenderAladin(stt, x, y + ENEMY_BBOX_HEIGHT, direction, alpha);
+			if (stt != 0)
+				SetState(ENEMY1_STATE_ATTACK_LEFT);
+		}
+		else
+		{
+			ani = ENEMY1_ANI_HIT_RIGHT;
+			animations[ani]->RenderAladin(stt, x, y + ENEMY_BBOX_HEIGHT, direction, alpha);
+			if (stt != 0)
+				SetState(ENEMY1_STATE_ATTACK_RIGHT);
+		}
+	}
+	else if (state == ENEMY1_STATE_ATTACK_LEFT || state == ENEMY1_STATE_ATTACK_RIGHT)
+	{
+		if (direction == -1)
+		{
+			ani = ENEMY1_ANI_ATTACK_LEFT;
+			animations[ani]->RenderAladin(stt, x, y + ENEMY_BBOX_HEIGHT, direction, alpha);
+			if (stt != 0)
+				SetState(ENEMY1_STATE_ATTACK_LEFT_MID);
+		}
+		else
+		{
+			ani = ENEMY1_ANI_ATTACK_RIGHT;
+			animations[ani]->RenderAladin(stt, x, y + ENEMY_BBOX_HEIGHT, direction, alpha);
+			if (stt != 0)
+				SetState(ENEMY1_STATE_ATTACK_RIGHT_MID);
+		}
+	}
+	else if (state == ENEMY1_STATE_ATTACK_LEFT_MID || state == ENEMY1_STATE_ATTACK_RIGHT_MID)
+	{
+		if (direction == -1)
+		{
+			ani = ENEMY1_ANI_ATTACK_LEFT_MID;
+			animations[ani]->RenderAladin(stt, x, y + ENEMY_BBOX_HEIGHT, direction, alpha);
+			if (stt != 0)
+				SetState(ENEMY1_STATE_ATTACK_LEFT);
+		}
+		else
+		{
+			ani = ENEMY1_ANI_ATTACK_RIGHT_MID;
+			animations[ani]->RenderAladin(stt, x, y + ENEMY_BBOX_HEIGHT, direction, alpha);
+			if (stt != 0)
+				SetState(ENEMY1_STATE_ATTACK_RIGHT);
+		}
+	}
+	else
+	{
+		if (state == ENEMY1_STATE_IDLE_LEFT)
+			ani = ENEMY1_ANI_IDLE_LEFT;
+		else if (state == ENEMY1_STATE_RUN_LEFT)
+			ani = ENEMY1_ANI_RUN_LEFT;
+		else if (state == ENEMY1_STATE_IDLE_RIGHT)
+			ani = ENEMY1_ANI_IDLE_RIGHT;
+		else if (state == ENEMY1_STATE_RUN_RIGHT)
+			ani = ENEMY1_ANI_RUN_RIGHT;
+		animations[ani]->Render(x, y);
+	}
 }
 
 void Enemy1::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
@@ -39,7 +93,7 @@ void Enemy1::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	vector<LPCOLLISIONEVENT> coEventsResult;
 
 	coEvents.clear();
-
+	if (HP <= 0) SetState(ENEMY1_STATE_DIE);
 	if (state != ENEMY1_STATE_DIE)
 		CalcPotentialCollisions(coObjects, coEvents);
 
@@ -56,6 +110,29 @@ void Enemy1::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 		// block 
 		x += min_tx * dx + nx * 0.4f;		// nx*0.4f : need to push out a bit to avoid overlapping next frame
 		y += min_ty * dy + ny * 0.4f;
+
+		for (UINT i = 0; i < coEventsResult.size(); i++)
+		{
+			LPCOLLISIONEVENT e = coEvents[i];
+			if (e->obj->GetId() == eType::ALADIN)
+			{
+				x += e->t*dx;
+			}
+			if (e->obj->GetId() == eType::APPLE)
+			{
+				HP = HP - 1;
+				if (nx == -1)
+				{
+					SetState(ENEMY1_STATE_HIT_LEFT);
+					direction = -1;
+				}
+				else
+				{
+					SetState(ENEMY1_STATE_HIT_RIGHT);
+					direction = 1;
+				}
+			}
+		}
 	}
 
 	// clean up collision events
@@ -106,13 +183,11 @@ void Enemy1::LoadResources(int ID)
 	textures = CTextures::GetInstance();
 	sprites = CSprites::GetInstance();
 
-	textures->Add(ID_TEX_ENEMY1, L"textures\\enemy1.png", D3DCOLOR_XRGB(120, 193, 152));
-	textures->Add(ID_TEX_ENEMY1_FLIP, L"textures\\enemy1_flip.png", D3DCOLOR_XRGB(120, 193, 152));
-
 	CAnimations *animations = CAnimations::GetInstance();
 
 	LPDIRECT3DTEXTURE9 textE1 = textures->Get(ID_TEX_ENEMY1);
 	LPDIRECT3DTEXTURE9 textE1_f = textures->Get(ID_TEX_ENEMY1_FLIP);
+	LPDIRECT3DTEXTURE9 textExplo = textures->Get(ID_TEX_EXPLOSION);
 
 	LPANIMATION ani;
 	//----------IDLE LEFT ------------//
@@ -278,6 +353,30 @@ void Enemy1::LoadResources(int ID)
 	ani->Add(44056);
 	animations->Add(501, ani);
 
+	// ENEMY DIE
+	sprites->Add(9990, 30, 30, 19 + 30, 15 + 30, textExplo);
+	sprites->Add(9991, 85, 5, 64 + 85, 43 + 5, textExplo);
+	sprites->Add(9992, 160, 5, 70 + 160, 44 + 5, textExplo);
+	sprites->Add(9993, 233, 3, 73 + 233, 46 + 3, textExplo);
+	sprites->Add(9994, 329, 16, 36 + 329, 33 + 16, textExplo);
+	sprites->Add(9995, 404, 15, 38 + 404, 34 + 15, textExplo);
+	sprites->Add(9996, 481, 17, 38 + 481, 33 + 17, textExplo);
+	sprites->Add(9997, 560, 18, 36 + 560, 32 + 18, textExplo);
+	sprites->Add(9998, 639, 19, 35 + 639, 31 + 19, textExplo);
+	sprites->Add(9999, 716, 19, 35 + 716, 31 + 19, textExplo);
+	ani = new CAnimation(100);
+	ani->Add(9990);
+	ani->Add(9991);
+	ani->Add(9992);
+	ani->Add(9993);
+	ani->Add(9994);
+	ani->Add(9995);
+	ani->Add(9996);
+	ani->Add(9997);
+	ani->Add(9998);
+	ani->Add(9999);
+	animations->Add(999, ani);
+
 	this->AddAnimation(100);			// 0 idle left
 	this->AddAnimation(101);			// 1 idle right
 	this->AddAnimation(200);			// 2 run left
@@ -288,23 +387,22 @@ void Enemy1::LoadResources(int ID)
 	this->AddAnimation(401);			// 7 attack right
 	this->AddAnimation(500);			// 8 hit left
 	this->AddAnimation(501);			// 9 hit right
+	this->AddAnimation(999);			// 10 ani die
+
 }
 
 void Enemy1::GetBoundingBox(float & left, float & top, float & right, float & bottom)
 {
-	if (direction == 1)
+	if (state != ENEMY1_STATE_DIE)
 	{
 		left = x;
 		top = y;
 		right = x + ALADIN_BIG_BBOX_WIDTH;
 		bottom = y + ALADIN_BIG_BBOX_HEIGHT;
 	}
-	else
+	else 
 	{
-		left = x;
-		top = y;
-		right = x + ALADIN_BIG_BBOX_WIDTH;
-		bottom = y + ALADIN_BIG_BBOX_HEIGHT;
+		left = top = right = bottom = 0;
 	}
 }
 

@@ -95,6 +95,13 @@ void Scene1::CreateGrid(vector<CGameObject*>& objects)
 	textures->Add(ID_TEX_LAND, L"textures\\pixel.png", D3DCOLOR_XRGB(255, 255, 255));
 	textures->Add(ID_TEX_ITEM, L"textures\\item.png", D3DCOLOR_XRGB(248, 0, 248));
 	textures->Add(ID_TEX_SHOP, L"textures\\shop.png", D3DCOLOR_XRGB(255, 0, 255));
+	textures->Add(ID_TEX_EXgENIE, L"textures\\eDie.png", D3DCOLOR_XRGB(186, 254, 202));
+	textures->Add(ID_TEX_EXPLOSION, L"textures\\explosionE.png", BACKGROUND_COLOR);
+	textures->Add(ID_TEX_ENEMY1, L"textures\\enemy1.png", D3DCOLOR_XRGB(120, 193, 152));
+	textures->Add(ID_TEX_ENEMY1_FLIP, L"textures\\enemy1_flip.png", D3DCOLOR_XRGB(120, 193, 152));
+	textures->Add(ID_TEX_ENEMY2, L"textures\\enemy2.png", D3DCOLOR_XRGB(255, 0, 255));
+	textures->Add(ID_TEX_ENEMY2_FLIP, L"textures\\enemy2_flip.png", D3DCOLOR_XRGB(255, 0, 255));
+	textures->Add(ID_TEX_ITEM_COLLECT, L"textures\\item_collect.png", BACKGROUND_COLOR);
 
 	if (inFile.is_open())
 	{
@@ -165,6 +172,10 @@ void Scene1::LoadResources(vector<CGameObject*> &objects)
 	textures->Add(ID_TEX_APPLE, L"textures\\aladin.png", D3DCOLOR_XRGB(255, 0, 255));
 	textures->Add(ID_TEX_ENEMY2, L"textures\\enemy2.png", D3DCOLOR_XRGB(255, 0, 255));
 	textures->Add(ID_TEX_ENEMY2_FLIP, L"textures\\enemy2_flip.png", D3DCOLOR_XRGB(255, 0, 255));
+	textures->Add(ID_TEX_EXPLOSION, L"textures\\explosionE.png", BACKGROUND_COLOR);
+	textures->Add(ID_TEX_ENEMY1, L"textures\\enemy1.png", D3DCOLOR_XRGB(120, 193, 152));
+	textures->Add(ID_TEX_ENEMY1_FLIP, L"textures\\enemy1_flip.png", D3DCOLOR_XRGB(120, 193, 152));
+
 	CAnimations* animations = CAnimations::GetInstance();
 
 	LPDIRECT3DTEXTURE9 textAPPLE = textures->Get(ID_TEX_APPLE);
@@ -197,15 +208,60 @@ void Scene1::Resources()
 }
 
 void Scene1::Update(DWORD dt)
-{
-	vector<LPGAMEOBJECT> coObjects;
-
-	for (int i = 0; i < objects.size(); i++)
+{	
+	vector<Apple*> appList;
+	for (int i = 1; i < grid->cells.size(); i++)
 	{
-		coObjects.push_back(objects[i]);
-
-		
+		for (int j = 0; j < grid->cells[i]->listGameObject.size(); j++)
+		{
+			if (grid->cells[i]->listGameObject[j]->id == eType::APPLE)
+			{
+				Apple *app = new Apple();
+				app = dynamic_cast<Apple*>(grid->cells[i]->listGameObject[j]);
+				if (abs(app->staticX - app->GetX() > 1000))
+					grid->cells[i]->listGameObject.erase(grid->cells[i]->listGameObject.begin() + j);
+				else
+					appList.push_back(app);
+			}				
+		}
 	}
+
+	if (!appList.empty())
+	{
+		for (int i = 1; i < grid->cells.size(); i++)
+		{
+			for (int nApp = 0; nApp < appList.size(); nApp++)
+			{
+				if (grid->isInCell(appList[nApp], grid->cells[i]->x, grid->cells[i]->y))
+				{
+					int hApp = 0;
+					for (int j = 0; j < grid->cells[i]->listGameObject.size(); j++)
+					{
+						if ((grid->cells[i]->listGameObject[j]->GetId() == eType::APPLE))
+						{
+							hApp = 1;
+							break;
+						}
+					}
+					if (hApp == 0)
+					{
+						grid->cells[i]->listGameObject.push_back(appList[nApp]);
+					}
+				}
+				else
+				{
+					for (int j = 0; j < grid->cells[i]->listGameObject.size(); j++)
+					{
+						if (grid->cells[i]->listGameObject[j]->GetId() == eType::APPLE)
+						{
+							grid->cells[i]->listGameObject.erase(grid->cells[i]->listGameObject.begin() + j);
+						}
+					}
+				}
+			}		
+		}
+	}	
+
 	for (int i = 1; i < grid->cells.size(); i++)
 	{
 		for (int j = 0; j < grid->cells.at(i)->listGameObject.size(); j++)
@@ -213,6 +269,12 @@ void Scene1::Update(DWORD dt)
 			Bat* bat = dynamic_cast<Bat*>(grid->cells.at(i)->listGameObject[j]);
 			Enemy2* enemy2 = dynamic_cast<Enemy2*>(grid->cells.at(i)->listGameObject[j]);
 
+			if (grid->cells[i]->listGameObject[j]->id != eType::APPLE)
+			{
+				if (aladin->GetX() > grid->cells[i]->listGameObject[j]->GetX())
+					grid->cells[i]->listGameObject[j]->SetDirection(1);
+				else grid->cells[i]->listGameObject[j]->SetDirection(-1);
+			}
 			if (bat)
 			{
 
@@ -324,14 +386,14 @@ void Scene1::Render()
 			objects[i]->Render();*/
 		aladin->Render();
 
-		for (int i = listApples.size() - 1; i >= 0; i--)
+		/*for (int i = listApples.size() - 1; i >= 0; i--)
 		{
 			if (listApples[i]->getNem() == true)
 			{
 				listApples[i]->Render();
-				//DebugOut(L"============ %d\n", listApples[i]->GetX());
 			}
 		}
+*/
 		grid->RenderObjectEx(camera, objects);
 
 		texSur->Render();

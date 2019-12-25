@@ -186,15 +186,27 @@ void CSampleKeyHander::OnKeyDown(int KeyCode)
 		if (scene->aladin->getEnableKey() == true) {
 			if (scene->aladin->isCollisonWithRope == true)
 			{
-				scene->aladin->SetState(ALADIN_ANI_TREO);
+				scene->aladin->SetState(ALADIN_STATE_TREO);
+				scene->aladin->CancelClimb = false;				
+				scene->aladin->climbActiveUp = true;
+				scene->aladin->climbActiveDown = false;
+				scene->aladin->vy = -0.2f;
 			}
 			else
 				scene->aladin->SetState(ALADIN_STATE_NGUOC_LEN);
-			}
-		else {
+		}		
+		else
+		{
 			if (scene->aladin->isCollisonWithRope == true)
-				scene->aladin->SetState(ALADIN_STATE_TREO);
+			{
+				if (scene->aladin->GetState() == ALADIN_STATE_IDLE || scene->aladin->GetState() == ALADIN_STATE_NGUOC_LEN ||
+					scene->aladin->GetState() == ALADIN_STATE_NGUOC_LEN_TRAI)
+				{
+					scene->aladin->SetState(ALADIN_STATE_TREO);
+				}
+			}
 		}
+
 		break;
 	case DIK_DOWN:
 		if (scene->aladin->getEnableKey() == true) {
@@ -207,7 +219,7 @@ void CSampleKeyHander::OnKeyDown(int KeyCode)
 		}
 		break;
 	case DIK_X:
-		if (scene->aladin->getEnableKey() == true && scene->aladin->GetState()!=ALADIN_STATE_NGOI) {
+		if (scene->aladin->getEnableKey() == true && scene->aladin->GetState() != ALADIN_STATE_NGOI) {
 			scene->aladin->setNhay(true);
 		}
 		break;
@@ -222,7 +234,7 @@ void CSampleKeyHander::OnKeyDown(int KeyCode)
 				scene->apple->SetPosition(scene->aladin->x + 10, scene->aladin->y + 20);
 			}
 			else
-			{
+			{ 
 				scene->apple->SetPosition(scene->aladin->x + 10, scene->aladin->y);
 			}
 			//DebugOut(L"aladin x: %d \n apple x: %d \n", scene->aladin->x + 10, scene->apple->x);
@@ -232,8 +244,13 @@ void CSampleKeyHander::OnKeyDown(int KeyCode)
 			else scene->apple->direction = -1;
 			
 			scene->listApples.push_back(scene->apple);
-
-			scene->objects.push_back(scene->apple);
+			for (int i = 1; i < scene->grid->cells.size(); i++)
+			{
+				if (scene->grid->isInCell(scene->apple, scene->grid->cells[i]->x, scene->grid->cells[i]->y))
+				{
+					scene->grid->cells[i]->listGameObject.push_back(scene->apple);
+				}
+			}
 		}
 		break;
 	
@@ -300,11 +317,32 @@ void CSampleKeyHander::OnKeyUp(int KeyCode)
 		break;
 	case DIK_UP:
 		if (scene->aladin->getEnableKey() == true)
-		scene->aladin->SetState(ALADIN_STATE_IDLE);
+		{
+			if (scene->aladin->isCollisonWithRope == true)
+			{
+				scene->aladin->SetState(ALADIN_STATE_TREO);
+				scene->aladin->vy = 0;
+				scene->aladin->CancelClimb = false;
+				scene->aladin->climbActiveUp = false;
+			}			
+			else
+				scene->aladin->SetState(ALADIN_STATE_IDLE);
+		}
+		else
+		{
+			scene->aladin->SetState(ALADIN_STATE_TREO);
+			scene->aladin->vy = 0;
+			scene->aladin->CancelClimb = false;
+			scene->aladin->climbActiveUp = false;
+		}			
 		break;
 	case DIK_DOWN:
 		if (scene->aladin->getEnableKey() == true)
-		scene->aladin->SetState(ALADIN_STATE_IDLE);
+		{
+			scene->aladin->climbActiveDown = false;
+			scene->aladin->SetState(ALADIN_STATE_IDLE);
+		}
+		else scene->aladin->climbActiveDown = false;
 		break;
 	case DIK_C:
 		if (scene->aladin->getEnableKey() == true){ 
@@ -343,8 +381,7 @@ void CSampleKeyHander::KeyState(BYTE* states)
 		else if (game->IsKeyDown(DIK_DOWN))
 		{
 			scene->aladin->SetState(ALADIN_STATE_NGOI);
-		}
-		
+		}		
 	}
 	/*else
 	{

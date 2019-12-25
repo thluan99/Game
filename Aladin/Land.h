@@ -8,8 +8,6 @@
 #define LAND3_BBOX_WIDTH  16
 #define LANDEX_BBOX_WIDTH 32
 
-#define ID_TEX_LAND			99
-
 
 class CLand : public CGameObject
 {

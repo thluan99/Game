@@ -4,6 +4,7 @@
 
 PositionPot::PositionPot()
 {
+	SetState(POT_STATE_IDLE);
 }
 
 void PositionPot::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
@@ -27,12 +28,22 @@ void PositionPot::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 void PositionPot::Render()
 {
 	int ani = 1;
+	int stt = 0;
 	if (state == POT_STATE_IDLE)
-		ani = POT_ANI_IDLE;
+		animations[POT_ANI_IDLE]->RenderAladin(x, y + IT_POT_BBOX_HEIGHT, 1, 255);
+	else if (state == POT_STATE_IDLE2)
+		animations[POT_ANI_IDLE2]->RenderAladin(x, y + IT_POT_BBOX_HEIGHT, 1, 255);
 	else if (state == POT_STATE_ACTIVE)
-		ani = POT_ANI_ACTIVE;
+		animations[POT_ANI_ACTIVE]->RenderAladin(stt, x, y + IT_POT_BBOX_HEIGHT, 1, 255);
 
-	animations[ani]->RenderAladin(x, y + IT_POT_BBOX_HEIGHT, 1);
+	if (stt != 0)
+	{
+		if (state == POT_STATE_ACTIVE)
+		{
+			isActive = true;
+			state = POT_STATE_IDLE2;
+		}
+	}
 }
 
 void PositionPot::LoadResources(int ID)
@@ -84,10 +95,17 @@ void PositionPot::LoadResources(int ID)
 
 void PositionPot::GetBoundingBox(float & l, float & t, float & r, float & b)
 {
-	l = x;
-	t = y;
-	r = x + IT_POT_BBOX_WIDTH;	
-	b = y + IT_POT_BBOX_HEIGHT;
+	if (state == POT_STATE_IDLE)
+	{
+		l = x;
+		t = y;
+		r = x + IT_POT_BBOX_WIDTH;
+		b = y + IT_POT_BBOX_HEIGHT;
+	}
+	else
+	{
+		l = t = r = b = 0;
+	}
 }
 
 void PositionPot::ReLoad()

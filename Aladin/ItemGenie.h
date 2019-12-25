@@ -13,7 +13,10 @@
 class ItemGenie : public CGameObject
 {
 public:
+	bool isActive = false;
+
 	ItemGenie();
+	void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects);
 	virtual void Render();
 	virtual void LoadResources(int ID);
 	virtual void GetBoundingBox(float &l, float &t, float &r, float &b);

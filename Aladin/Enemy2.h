@@ -11,8 +11,6 @@
 
 #define ENEMY_BBOX_WIDTH	47
 #define ENEMY_BBOX_HEIGHT	52	
-#define ID_TEX_ENEMY2		55
-#define ID_TEX_ENEMY2_FLIP	56
 
 #define ENEMY2_STATE_IDLE	00	
 #define ENEMY2_STATE_IDLE_LEFT	01	
@@ -21,6 +19,7 @@
 
 #define ENEMY2_ANI_IDLE 0
 #define ENEMY2_ANI_ACTIVE 1
+#define ENEMY2_ANI_DIE 3
 
 class Enemy2 : public CGameObject
 {
@@ -39,6 +38,7 @@ public:
 		id = eType::ENEMY2;
 		direction = 1;
 		SetState(ENEMY2_STATE_IDLE);
+		HP = 2;
 	};
 	virtual void GetBoundingBox(float &l, float &t, float &r, float &b);
 	virtual void ReLoad();

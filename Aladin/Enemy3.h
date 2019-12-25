@@ -29,6 +29,7 @@
 #define ENEMY3_ANI_ATTACK_RIGHT	5
 #define ENEMY3_ANI_HIT_LEFT		6
 #define ENEMY3_ANI_HIT_RIGHT	7
+#define ENEMY3_ANI_DIE			8
 
 class Enemy3 : public CGameObject
 {
@@ -43,7 +44,8 @@ public:
 	{
 		id = eType::ENEMY3;
 		state = ENEMY3_STATE_IDLE_LEFT;
-		direction = 1;
+		direction = -1;
+		HP = 3;
 	};
 	virtual void GetBoundingBox(float &l, float &t, float &r, float &b);
 	virtual void ReLoad();

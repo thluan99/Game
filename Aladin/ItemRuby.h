@@ -1,8 +1,14 @@
 #pragma once
 #include "GameObject.h"
 
-#define IT_RUBY_BBOX_WIDTH  15
-#define IT_RUBY_BBOX_HEIGHT 15
+#define IT_RUBY_BBOX_WIDTH		15
+#define IT_RUBY_BBOX_HEIGHT		15
+
+#define RUBY_IT_STATE_IDLE		01
+#define RUBY_IT_STATE_COLLECTED 02
+
+#define RUBY_IT_ANI_IDLE		0
+#define RUBY_IT_ANI_COLLECTED	1
 
 class ItemRuby : public CGameObject
 {

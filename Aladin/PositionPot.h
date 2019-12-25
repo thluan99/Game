@@ -15,6 +15,8 @@
 class PositionPot : public CGameObject
 {
 public:
+	bool isActive = false;
+
 	PositionPot();
 	void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects);
 	virtual void Render();

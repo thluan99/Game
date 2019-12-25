@@ -1,7 +1,12 @@
 ﻿#pragma once
 #include "GameObject.h"
 #include "FireAttack.h"
+#include "PositionPot.h"
+#include "ItemGenie.h"
 #include "Star.h"
+#include "ItemApple.h"
+#include "ItemRuby.h"
+#include "ItemsExHeath.h"
 
 #define ALADIN_WALKING_SPEED				0.15f 
 //0.1f
@@ -37,6 +42,8 @@
 #define ALADIN_STATE_NGOI_NEM_TAO			24
 #define ALADIN_STATE_NHAY_NEM_TAO			25
 #define ALADIN_STATE_IDLE_TAO				26
+#define ALADIN_STATE_TREO_NHAY				27
+#define ALADIN_STATE_TREO_NHAY_ROI			28
 #define ALADIN_STATE_DIE                    100
 
 
@@ -72,6 +79,8 @@
 #define ALADIN_ANI_NHAY_NEM_TAO_PHAI		29
 #define ALADIN_ANI_NHAY_NEM_TAO_TRAI		30
 #define ALADIN_ANI_IDLE_APPLE_RIGHT			31
+#define ALADIN_ANI_TREO_NHAY				32
+#define ALADIN_ANI_TREO_NHAY_ROI			33
 #define ALADIN_ANI_DIE					    100
 
 
@@ -94,9 +103,16 @@ public:
 	int timeIDLE;
 	int countTiming;
 	bool isStopAnimation;
-	bool isCollisonWithRope = false;
 	bool isPushingWall;
+
+	bool isCollisonWithRope = false;
+	bool isClimbingRope = false;
 	int xSetCollision;
+	int ySetCollision;
+	bool climbActiveUp = false;
+	bool climbActiveDown = false;
+	
+	bool CancelClimb = true;
 	CAladin() {
 		id = eType::ALADIN;
 		state = ALADIN_STATE_IDLE;
