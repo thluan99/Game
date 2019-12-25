@@ -343,10 +343,12 @@ void Scene1::Update(DWORD dt)
 	//		//DebugOut(L"============ %d\n", listApples[i]->GetX());
 	//	}
 	//}
+	vector<LPGAMEOBJECT>* l_aladin = new vector<LPGAMEOBJECT>();
+	l_aladin->push_back(aladin);
 
 	for (int i = listBone.size() - 1; i >= 0; i--)
 	{
-		listBone[i]->Update(dt);
+		listBone[i]->Update(dt, l_aladin);
 	}
 
 	for (int i = 0; i < listApples.size(); i++)

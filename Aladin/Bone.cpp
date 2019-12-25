@@ -19,15 +19,26 @@ void Bone::CalculateVeloc()
 
 void Bone::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
+	this->dt = dt;
+	dx = vx * dt;
+	dy = vy * dt;
 
-	x += (vx * dt);
-	y += (vy * dt);
+	x += dx;
+	y += dy;
 
 	vy += 0.01f;
 
-	if (this->x > activeRange.right || this->x < activeRange.left || this->y > activeRange.top || this->y < activeRange.bottom)
+	for (UINT i = 0; i < coObjects->size(); i++)
 	{
+		LPCOLLISIONEVENT e = SweptAABBEx(coObjects->at(i));
 
+		if (e->t > 0 && e->t <= 1.0f)
+		{
+			e->obj->HP -= 2;
+			DebugOut(L"HP ---\n");
+		}
+		else
+			delete e;
 	}
 }
 
