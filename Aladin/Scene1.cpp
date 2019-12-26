@@ -391,7 +391,6 @@ void Scene1::Render()
 
 		/*for (int i = 0; i < objects.size(); i++)
 			objects[i]->Render();*/
-		aladin->Render();
 
 		/*for (int i = listApples.size() - 1; i >= 0; i--)
 		{
@@ -407,7 +406,7 @@ void Scene1::Render()
 		}
 
 		grid->RenderObjectEx(camera, objects);
-
+		aladin->Render();
 		texSur->Render();
 
 		spriteHandler->End();
