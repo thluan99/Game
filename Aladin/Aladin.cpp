@@ -57,7 +57,6 @@ void CAladin::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 		{
 			if (isRoi == true)
 			{
-				state = ALADIN_STATE_IDLE;
 				enableKey = true;
 			}
 			isRoi = false;
