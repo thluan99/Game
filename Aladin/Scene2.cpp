@@ -5,6 +5,7 @@
 Scene2::Scene2()
 {
 	objects.clear();
+	grid->ClearGrid();
 }
 
 Scene2::Scene2(vector<LPGAMEOBJECT> objects, dxGraphics * dx_graphics,
@@ -188,19 +189,10 @@ void Scene2::Update(DWORD dt)
 	if (aladin->x < limitLeft) aladin->x = limitLeft;
 	if (aladin->x > limitRight) aladin->x = limitRight;
 	// HP > BIEN HINH && HP < BIEN HINH
-	if (jafar->HP > jafar->henshinState)
-	{          
-		if (jafar->GetX() > aladin->GetX())
-			jafar->SetState(JAFAR_STATE_ATTACK_L);
-		else jafar->SetState(JAFAR_STATE_ATTACK_R);
-	}
-	else if (jafar->HP <= jafar->henshinState)
-	{
-		if (jafar->GetX() >= aladin->GetX())
-			jafar->SetState(JAFAR_STATE_SNAKE_AT_L);
-		else jafar->SetState(JAFAR_STATE_SNAKE_AT_R);
-	}
-
+	if (jafar->GetX() > aladin->GetX())
+		jafar->direction = -1;
+	else jafar->direction = 1;
+	
 	for (int i = 0; i < listApples.size(); i++)
 	{
 		if (abs(listApples[i]->staticX - listApples[i]->GetX()) > 1000)
@@ -217,10 +209,28 @@ void Scene2::Update(DWORD dt)
 	for (int i = 0; i < objects.size(); i++)
 		if (objects[i]->id == eType::STAR)
 		{
-			if (aladin->x > objects[i]->x) objects[i]->x = objects[i]->x + 2.8f;
-			if (aladin->x < objects[i]->x) objects[i]->x = objects[i]->x - 2.8f;
-			if (aladin->y > objects[i]->y) objects[i]->y = objects[i]->y + 2.8f;
-			if (aladin->y < objects[i]->y) objects[i]->y = objects[i]->y - 2.8f;
+			if (jafar->GetState() == JAFAR_STATE_CB_ATTACK_L || jafar->GetState() == JAFAR_STATE_CB_ATTACK_R)
+			{
+				if (abs(objects[i]->GetX() - jafar->GetX()) < 50)
+				{
+					objects[i]->SetX(jafar->GetX());
+					objects[i]->SetY(jafar->GetY());
+				}		
+				else
+				{
+					if (aladin->x > objects[i]->x) objects[i]->x = objects[i]->x + 2.8f;
+					if (aladin->x < objects[i]->x) objects[i]->x = objects[i]->x - 2.8f;
+					if (aladin->y > objects[i]->y) objects[i]->y = objects[i]->y + 2.8f;
+					if (aladin->y < objects[i]->y) objects[i]->y = objects[i]->y - 2.8f;
+				}
+			}
+			else
+			{
+				if (aladin->x > objects[i]->x) objects[i]->x = objects[i]->x + 2.8f;
+				if (aladin->x < objects[i]->x) objects[i]->x = objects[i]->x - 2.8f;
+				if (aladin->y > objects[i]->y) objects[i]->y = objects[i]->y + 2.8f;
+				if (aladin->y < objects[i]->y) objects[i]->y = objects[i]->y - 2.8f;
+			}
 		}
 	// TAO FIREATTACK VA SAO
 	for (int i = 0; i < objects.size(); i++)
@@ -270,15 +280,15 @@ void Scene2::Update(DWORD dt)
 				if (objects[i]->GetState() == STAR_STATE_DESTROY)
 				{
 					Star *s = dynamic_cast<Star*>(objects[i]);
+
 					if (aladin->GetX() < jafar->GetX())
-						aladin->vx = +0.1f;
-					else aladin->vx = -0.1f;
+						aladin->vx = +0.12f;
+					else aladin->vx = -0.12f;
 					objects.erase(objects.begin() + i);
 					DebugOut(L"Xoa star============");
 				}
 			}
 		}
-
 	}
 
 	// THEM SAO KHI DI VE BEN PHAI
@@ -310,7 +320,9 @@ void Scene2::Update(DWORD dt)
 			{
 				objects[i]->SetState(STAR_STATE_DESTROY);
 				DebugOut(L"Out put aladin == star");
+				aladin->isSildeBoss = true;
 			}
+			else aladin->isSildeBoss = false;
 		}
 
 	//-----

@@ -31,7 +31,7 @@ public:
 	int henshinState = 15;
 	float jafarX = 400;
 	float jafarY = 280;
-	Jafar() { SetState(JAFAR_STATE_ATTACK_L);
+	Jafar() { SetState(JAFAR_STATE_CB_ATTACK_L);
 	HP = 30;
 	}
 	virtual void Render();

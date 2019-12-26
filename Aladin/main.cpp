@@ -242,15 +242,18 @@ void CSampleKeyHander::OnKeyDown(int KeyCode)
 			if (scene->aladin->direction == 1)
 				scene->apple->direction = 1;
 			else scene->apple->direction = -1;
-			
+			scene->objects.push_back(scene->apple);
 			scene->listApples.push_back(scene->apple);
-			for (int i = 1; i < scene->grid->cells.size(); i++)
+			if (currentScene == 1)
 			{
-				if (scene->grid->isInCell(scene->apple, scene->grid->cells[i]->x, scene->grid->cells[i]->y))
+				for (int i = 1; i < scene->grid->cells.size(); i++)
 				{
-					scene->grid->cells[i]->listGameObject.push_back(scene->apple);
+					if (scene->grid->isInCell(scene->apple, scene->grid->cells[i]->x, scene->grid->cells[i]->y))
+					{
+						scene->grid->cells[i]->listGameObject.push_back(scene->apple);
+					}
 				}
-			}
+			}		
 		}
 		break;
 	

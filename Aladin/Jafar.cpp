@@ -4,25 +4,65 @@ void Jafar::Render()
 {
 	int ani = 0;
 	int alpha = 255;
-	
-	if (state == JAFAR_STATE_IDLE_R)
+	int stt = 0;
+
+	if (HP <= henshinState)
+	{
+		if (direction == -1)
+			SetState(JAFAR_STATE_SNAKE_AT_L);
+		else SetState(JAFAR_STATE_SNAKE_AT_R);
+
+		if (state == JAFAR_STATE_SNAKE_AT_R)
+			ani = JAFAR_ANI_SNAKE_AT_R;
+		else if (state == JAFAR_STATE_SNAKE_AT_L)
+			ani = JAFAR_ANI_SNAKE_AT_L;
+
+		animations[ani]->RenderAladin(stt, x, y + JAFAR_BBOX_HEIGHT, direction);
+	}
+
+
+	if (HP > henshinState)
+	{
+		if (state == JAFAR_STATE_CB_ATTACK_L || state == JAFAR_STATE_CB_ATTACK_R)
+		{
+			if (direction == -1)
+			{
+				ani = JAFAR_ANI_CB_ATTACK_L;
+				animations[ani]->RenderAladin(stt, x, y + JAFAR_BBOX_HEIGHT, direction);
+				if (stt != 0)
+					SetState(JAFAR_STATE_ATTACK_L);
+			}
+			else
+			{
+				ani = JAFAR_ANI_CB_ATTACK_R;
+				animations[ani]->RenderAladin(stt, x, y + JAFAR_BBOX_HEIGHT, direction);
+				if (stt != 0)
+					SetState(JAFAR_STATE_ATTACK_R);
+			}
+		}
+		else if (state == JAFAR_STATE_ATTACK_L || state == JAFAR_STATE_ATTACK_R)
+		{
+			if (direction == -1)
+			{
+				ani = JAFAR_ANI_ATTACK_L;
+				animations[ani]->RenderAladin(stt, x, y + JAFAR_BBOX_HEIGHT, direction);
+				if (stt != 0)
+					SetState(JAFAR_STATE_CB_ATTACK_L);
+			}
+			else
+			{
+				ani = JAFAR_ANI_ATTACK_R;
+				animations[ani]->RenderAladin(stt, x, y + JAFAR_BBOX_HEIGHT, direction);
+				if (stt != 0)
+					SetState(JAFAR_STATE_CB_ATTACK_R);
+			}
+		}
+	}
+
+	/*if (state == JAFAR_STATE_IDLE_R)
 		ani = JAFAR_ANI_IDLE_R;
 	else if (state == JAFAR_STATE_IDLE_L)
-		ani = JAFAR_ANI_IDLE_L;
-	else if (state == JAFAR_STATE_ATTACK_R)
-		ani = JAFAR_ANI_ATTACK_R;
-	else if (state == JAFAR_STATE_ATTACK_L)
-		ani = JAFAR_ANI_ATTACK_L;
-	else if (state == JAFAR_STATE_SNAKE_AT_R)
-		ani = JAFAR_ANI_SNAKE_AT_R;
-	else if (state == JAFAR_STATE_SNAKE_AT_L)
-		ani = JAFAR_ANI_SNAKE_AT_L;
-	else if (state == JAFAR_STATE_CB_ATTACK_L)
-		ani = JAFAR_ANI_CB_ATTACK_L;
-	else if (state == JAFAR_STATE_CB_ATTACK_R)
-		ani = JAFAR_ANI_CB_ATTACK_R;
-
-	animations[ani]->RenderAladin(x, y + JAFAR_BBOX_HEIGHT, nx, alpha);
+		ani = JAFAR_ANI_IDLE_L;*/
 }
 
 void Jafar::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
@@ -222,12 +262,12 @@ void Jafar::LoadResources(int ID)
 	animations->Add(105, ani);
 
 	sprites->Add(48006, 440, 11, 85 + 440, 69 + 11, textEJafar); // attack right
-	ani = new CAnimation(1000);
+	ani = new CAnimation(2000);
 	ani->Add(48006);
 	animations->Add(106, ani);
 
 	sprites->Add(48056, 338, 11, 85 + 338, 69 + 11, textEJafar_f);
-	ani = new CAnimation(1000);
+	ani = new CAnimation(2000);
 	ani->Add(48056);
 	animations->Add(107, ani);
 

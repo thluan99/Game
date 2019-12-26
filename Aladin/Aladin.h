@@ -113,6 +113,8 @@ public:
 	bool climbActiveDown = false;
 	
 	bool CancelClimb = true;
+
+	bool isSildeBoss = false;
 	CAladin() {
 		id = eType::ALADIN;
 		state = ALADIN_STATE_IDLE;
