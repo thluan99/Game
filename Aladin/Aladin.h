@@ -109,6 +109,7 @@ public:
 	bool isClimbingRope = false;
 	int xSetCollision;
 	int ySetCollision;
+	int climDirection;
 	bool climbActiveUp = false;
 	bool climbActiveDown = false;
 	
@@ -127,6 +128,7 @@ public:
 		countTiming = 0;
 		isStopAnimation = false;
 		isPushingWall = false;
+		climDirection = 0;
 	};
 	virtual void Update(DWORD dt, vector<LPGAMEOBJECT>* colliable_objects = NULL);
 	virtual void Render();
