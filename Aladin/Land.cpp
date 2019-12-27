@@ -72,6 +72,13 @@ void CLand::GetBoundingBox(float &l, float &t, float &r, float &b)
 		r = x + LAND3_BBOX_WIDTH;
 		b = y + LAND3_BBOX_HEIGHT;
 	}
+	else if (id == eType::ROPE_TRIGGER)
+	{
+		l = x;
+		t = y;
+		r = x + 1;
+		b = y + 1;
+	}
 }
 
 void CLand::ReLoad()

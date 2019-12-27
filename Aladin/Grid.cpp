@@ -109,6 +109,9 @@ CGameObject * GetNewObject(int ID)
 
 	case eType::ROPE:
 		return new CLand();
+
+	case eType::ROPE_TRIGGER:
+		return new CLand();
 	}
 	return NULL;
 }

@@ -71,6 +71,7 @@ enum eType
 	LAND2 = 91,
 	LAND3 = 92,
 	ROPE  = 93,
+	ROPE_TRIGGER = 999,
 
 	TEXSURFACE = 100,
 	BACKGROUND2 = 200,

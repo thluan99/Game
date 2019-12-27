@@ -217,6 +217,10 @@ void CSampleKeyHander::OnKeyDown(int KeyCode)
 		break;
 	case DIK_X:
 		if (scene->aladin->getEnableKey() == true && scene->aladin->GetState() != ALADIN_STATE_NGOI) {
+			if (scene->aladin->GetState() == ALADIN_STATE_TREO)
+			{
+				scene->aladin->SetState(ALADIN_STATE_TREO_NHAY);
+			}
 			scene->aladin->setNhay(true);
 		}
 		break;
