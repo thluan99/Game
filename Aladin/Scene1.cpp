@@ -58,6 +58,9 @@ CGameObject * Scene1::GetNewObjectEx(int ID)
 	case eType::ROPE:
 		return new CLand();
 
+	case eType::ROPE_TRIGGER:
+		return new CLand();
+
 	case eType::ITEMAPPLE:
 		return new ItemApple ();
 

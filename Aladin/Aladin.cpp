@@ -7,7 +7,7 @@
 
 void CAladin::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 {
-	DebugOut(L"Aladin %f\n", vy);
+	//DebugOut(L"Aladin %s\n", isCollisonWithRope ? L"true" : L"false");
 	// Calculate dx, dy 
 	CGameObject::Update(dt);
 	// Simple fall down
@@ -22,14 +22,14 @@ void CAladin::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 	}
 	else if (vx != 0 || vy != 0)
 	{
-		timeIDLE = 1;
+		timeIDLE = 0;
+		isPushingWall = false;
 	}
 	
 	if (timeIDLE >= 300)
 	{
 		SetState(ALADIN_STATE_IDLE_TAO);
-	}
-	
+	}	
 
 	if (state != ALADIN_STATE_TREO) 
 		vy += ALADIN_GRAVITY*dt;
@@ -67,8 +67,7 @@ void CAladin::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 		{
 			state = ALADIN_STATE_ROT ;
 		}
-		else state = ALADIN_STATE_IDLE;*/
-		
+		else state = ALADIN_STATE_IDLE;*/	
 	}
 	else
 	{		
@@ -76,21 +75,26 @@ void CAladin::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 
 		FilterCollision(coEvents, coEventsResult, min_tx, min_ty, nx, ny);
 
+
+
 		// block
 		if (state != ALADIN_STATE_TREO)
 		{
 			if (nx != 0) vx = 0;
 			if (ny == -1) vy = 0;
+
+			x += min_tx * dx + nx * 0.4f;	// nx*0.4f : need to push out a bit to avoid overlapping next frame
+			y += min_ty * dy + ny * 0.4f;
 		}
 
 		bool hasWall = false;
 
-		// Collision logic with Goombas
 		bool isRope = false;
+		// Collision logic with Goombas
 		for (UINT i = 0; i < coEventsResult.size(); i++)
 		{
 			LPCOLLISIONEVENT e = coEvents[i];
-
+			bool isCon = false;
 			if (e->obj->id == eType::FIREATTACK)
 			{
 				HP--;
@@ -99,8 +103,11 @@ void CAladin::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 
 			if (e->obj->GetId() == eType::ROPE)
 			{
+				DebugOut(L"LOL\n");
 				isRope = true;
 				this->xSetCollision = e->obj->x;
+				this->ySetCollision = e->obj->y;
+
 				x += e->t * dx;
 				y += e->t * dy;
 			}
@@ -112,6 +119,7 @@ void CAladin::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 					p->SetState(POT_STATE_IDLE2);
 				else
 					p->SetState(POT_STATE_ACTIVE);
+
 			}
 
 			if (e->obj->id == eType::ITEMGENIE)
@@ -133,15 +141,19 @@ void CAladin::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 			{
 				e->obj->SetState(HEATH_STATE_COLLECTED);
 			}
+
 		}
 
 		if (this->isCollisonWithRope != isRope) this->isCollisonWithRope = isRope;
 
 		for (UINT i = 0; i < coEventsResult.size(); i++)
 		{
+
 			LPCOLLISIONEVENT e = coEvents[i];
 			if (e->obj->GetId() == eType::LAND3)
 			{
+
+
 				hasWall = true;
 				if (nx != 0)
 				{
@@ -155,6 +167,7 @@ void CAladin::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 		{
 			for (UINT i = 0; i < coEventsResult.size(); i++)
 			{
+				bool isCon = false;
 				LPCOLLISIONEVENT e = coEventsResult[i];
 				if (e->obj->GetId() == eType::LAND || e->obj->GetId() == eType::LAND1 || e->obj->GetId() == eType::LAND2)
 				{
@@ -166,6 +179,7 @@ void CAladin::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 					{
 						x += e->t * dx;
 					}
+
 				}
 
 				if (e->obj->GetId() == eType::ENEMY1 || e->obj->GetId() == eType::ENEMY2 || e->obj->GetId() == eType::ENEMY3
@@ -176,11 +190,23 @@ void CAladin::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 						x += e->t * dx;
 					}
 				}
+
+				if (e->obj->GetId() == eType::ROPE_TRIGGER)
+				{
+					x += e->t * dx;
+					y += e->t * dy;
+				}
+
+				if (e->obj->GetId() == eType::BRICK)
+				{
+					if (nx != 0)
+						x += e->t * dx;
+					if (ny != -1)
+						y += e->t * dy;
+
+				}
 			}
 		}
-
-		x += min_tx * dx + nx * 0.4f;	// nx*0.4f : need to push out a bit to avoid overlapping next frame
-		y += min_ty * dy + ny * 0.4f;
 	}
 	// clean up collision events
 	for (UINT i = 0; i < coEvents.size(); i++) delete coEvents[i];
@@ -193,6 +219,10 @@ void CAladin::Render()
 
 	switch (state)
 	{
+	case ALADIN_STATE_TREO_NHAY_ROI:
+		ani = ALADIN_ANI_TREO_NHAY_ROI;
+		break;
+
 	case ALADIN_STATE_IDLE:
 		ani = ALADIN_ANI_IDLE_PHAI;
 		break;
@@ -281,60 +311,63 @@ void CAladin::Render()
 		ani = ALADIN_ANI_TREO_NHAY;
 		if (direction == -1)
 		{
-			vx = -0.06;
-			vy = -0.06;
+			vx = -0.08;
+			vy = -0.1;
 		}
 		else
 		{
-			vx = 0.06;
-			vy = -0.06;
+			vx = 0.08;
+			vy = -0.1;
 		}
 		animations[ani]->RenderAladin(stt, x, y, direction, alpha);
 		if (stt != 0)
 		{
-			SetState(ALADIN_STATE_ROI);
+			SetState(ALADIN_STATE_TREO_NHAY_ROI);
 		}
 	}
 	else if (isNhay == true)
 	{
 		switch(state)
 		{
-			case ALADIN_STATE_NGUOC_LEN:
-			case ALADIN_STATE_IDLE:
+		case ALADIN_STATE_TREO:
+			vy = -ALADIN_JUMP_SPEED_Y - 0.03f;
+			break;
+		case ALADIN_STATE_NGUOC_LEN:
+		case ALADIN_STATE_IDLE:
 
-				vy = -ALADIN_JUMP_SPEED_Y - 0.03f;
-				ani = ALADIN_ANI_NHAY;
-				break;
+			vy = -ALADIN_JUMP_SPEED_Y - 0.03f;
+			ani = ALADIN_ANI_NHAY;
+			break;
 
-			case ALADIN_STATE_DI:
-				if (GetAnimation()[curr_ani] == animations[ALADIN_ANI_NHAY_PHAI] || GetAnimation()[curr_ani] == animations[ALADIN_ANI_NHAY_TRAI])
+		case ALADIN_STATE_DI:
+			if (GetAnimation()[curr_ani] == animations[ALADIN_ANI_NHAY_PHAI] || GetAnimation()[curr_ani] == animations[ALADIN_ANI_NHAY_TRAI])
+			{
+				if (GetAnimation()[curr_ani]->GetCurrentFrame() == 7)
 				{
-					if (GetAnimation()[curr_ani]->GetCurrentFrame() == 7)
-					{
-						vy = 0.00f;
-					}
+					vy = 0.00f;
+				}
+			}
+			else
+			{
+				vy = -ALADIN_JUMP_SPEED_Y - 0.3f;
+				if (direction == 1)
+				{
+					vx = ALADIN_WALKING_SPEED + 0.1f;
 				}
 				else
 				{
-					vy = -ALADIN_JUMP_SPEED_Y - 0.3f;
-					if (direction == 1)
-					{
-						vx = ALADIN_WALKING_SPEED + 0.1f;
-					}
-					else
-					{
-						vx = -ALADIN_WALKING_SPEED - 0.1f;
-					}
+					vx = -ALADIN_WALKING_SPEED - 0.1f;
 				}
-
-			if (direction == 1)
-				ani = ALADIN_ANI_NHAY_PHAI;
-			else
-			{
-				ani = ALADIN_ANI_NHAY_TRAI;
 			}
-			break;
+
+		if (direction == 1)
+			ani = ALADIN_ANI_NHAY_PHAI;
+		else
+		{
+			ani = ALADIN_ANI_NHAY_TRAI;
 		}
+		break;
+	}
 
 		animations[ani]->RenderAladin(stt, x, y + ALADIN_BIG_BBOX_HEIGHT, this->direction, alpha);
 		curr_ani = ani;
