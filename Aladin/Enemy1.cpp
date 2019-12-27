@@ -132,6 +132,21 @@ void Enemy1::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 					direction = 1;
 				}
 			}
+			if (e->obj->GetId() == eType::SWORD)
+			{
+				HP = HP - 1;
+				if (nx == -1)
+				{
+					SetState(ENEMY1_STATE_HIT_LEFT);
+					direction = -1;
+				}
+				else
+				{
+					SetState(ENEMY1_STATE_HIT_RIGHT);
+					direction = 1;
+				}
+				DebugOut(L"[info] : sword !!!!!!");
+			}
 		}
 	}
 

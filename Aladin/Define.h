@@ -73,5 +73,6 @@ enum eType
 	ROPE  = 93,
 
 	TEXSURFACE = 100,
+	SWORD		= 150,
 	BACKGROUND2 = 200,
 };

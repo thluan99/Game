@@ -38,7 +38,6 @@
     <ClCompile Include="texSurface.cpp">
       <Filter>Map</Filter>
     </ClCompile>
-    <ClCompile Include="Apple.cpp" />
     <ClCompile Include="Scene.cpp">
       <Filter>Scene</Filter>
     </ClCompile>
@@ -99,6 +98,12 @@
     <ClCompile Include="Textures.cpp">
       <Filter>Game</Filter>
     </ClCompile>
+    <ClCompile Include="Apple.cpp">
+      <Filter>weep</Filter>
+    </ClCompile>
+    <ClCompile Include="Sword.cpp">
+      <Filter>weep</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Brick.h">
@@ -134,7 +139,6 @@
     <ClInclude Include="texSurface.h">
       <Filter>Map</Filter>
     </ClInclude>
-    <ClInclude Include="Apple.h" />
     <ClInclude Include="Scene.h">
       <Filter>Scene</Filter>
     </ClInclude>
@@ -200,6 +204,12 @@
     <ClInclude Include="Textures.h">
       <Filter>Game</Filter>
     </ClInclude>
+    <ClInclude Include="Apple.h">
+      <Filter>weep</Filter>
+    </ClInclude>
+    <ClInclude Include="Sword.h">
+      <Filter>weep</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Map">
@@ -225,6 +235,9 @@
     </Filter>
     <Filter Include="Game">
       <UniqueIdentifier>{88474ff6-c3c8-4c80-98b9-abac16e0057b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="weep">
+      <UniqueIdentifier>{c986161f-4313-4c72-8ade-17b54fef8b0a}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

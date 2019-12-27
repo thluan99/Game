@@ -27,12 +27,14 @@
 #include "ItemsExHeath.h"
 #include "PositionPot.h"
 #include "Shop.h"
+#include "Sword.h"
 
 class Scene
 {
 public:
 	TileMap *tileMap;
 	Apple *apple;
+	Sword *sword;
 	vector<LPGAMEOBJECT> objects;
 	CAladin *aladin;
 	TextSurface *texSur;

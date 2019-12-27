@@ -7,6 +7,7 @@
 #include "ItemApple.h"
 #include "ItemRuby.h"
 #include "ItemsExHeath.h"
+#include "Sword.h"
 
 #define ALADIN_WALKING_SPEED				0.15f 
 //0.1f

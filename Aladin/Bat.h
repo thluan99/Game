@@ -16,12 +16,15 @@
 #define BAT_STATE_IDLE	01
 #define BAT_STATE_WAKEUP	10
 #define	BAT_STATE_FLY	11
+#define	BAT_STATE_FLYING	12
+#define	BAT_STATE_RE_FLYING	13
 
 #define BAT_ANI_IDLE	0
 #define BAT_ANI_WAKEUP	1
-#define	BAT_ANI_FLY	2
+#define	BAT_ANI_FLY		2
 #define	BAT_ANI_RE_FLYING	3
 #define	BAT_ANI_FLYING		4
+#define	BAT_ANI_DIE		5
 
 
 class Bat : public CGameObject
@@ -41,6 +44,7 @@ public:
 		id = eType::BAT;
 		direction = 1;
 		SetState(BAT_STATE_IDLE);
+		HP = 1;
 	};
 	virtual void GetBoundingBox(float &l, float &t, float &r, float &b);
 	virtual void ReLoad();

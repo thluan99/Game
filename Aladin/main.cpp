@@ -216,6 +216,21 @@ void CSampleKeyHander::OnKeyDown(int KeyCode)
 	case DIK_C:
 		if (scene->aladin->getEnableKey() == true) {
 			scene->aladin->setChem(true);
+			scene->sword = new Sword();
+			scene->sword->LoadResources(eType::SWORD);
+			
+			if (scene->aladin->direction == 1)
+				scene->sword->SetPosition(scene->aladin->x - 20, scene->aladin->y - 20);
+			else scene->sword->SetPosition(scene->aladin->x + ALADIN_BIG_BBOX_WIDTH/2 + 20, scene->aladin->y - 20);
+
+			scene->objects.push_back(scene->sword);
+			if (currentScene == 1)
+				for (int i = 1; i < scene->grid->cells.size(); i++)
+					if (scene->grid->isInCell(scene->sword, scene->grid->cells[i]->x, scene->grid->cells[i]->y))
+					{
+						scene->grid->cells[i]->listGameObject.push_back(scene->sword);
+						//DebugOut(L"[info] : aaaaaaaaaaaaaaaaaaaaaa");
+					}					
 		}
 		break;
 	case DIK_X:
@@ -439,10 +454,10 @@ void Update(DWORD dt)
 	if (scene1->aladin->GetX() > nextSceneX && scene1->aladin->GetY() > nextSceneY && scene1->aladin->GetY() < nextSceneYx)
 	{
 		nextSceneX = nextSceneY = nextSceneYx = -128;
-		currentScene = 2;
 		scene1->Clear();
 		scene1->objects.clear();
 		objects.clear();
+		currentScene = 2;
 		//scene2->CreateGrid(objects);
 		scene2->LoadResources(objects);
 		scene = scene2;

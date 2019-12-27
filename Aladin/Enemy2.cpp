@@ -86,6 +86,10 @@ void Enemy2::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 			{
 				HP = HP - 2;
 			}
+			if (e->obj->GetId() == eType::SWORD)
+			{
+				HP = HP - 2;
+			}
 		}
 	}
 

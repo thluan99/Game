@@ -10,7 +10,7 @@ void CAladin::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 	// Calculate dx, dy 
 	CGameObject::Update(dt);
 	// Simple fall down
-
+	
 	if (GetState() == ALADIN_STATE_DI)
 	{
 		countTiming += 1;
@@ -561,8 +561,7 @@ void CAladin::SetState(int state)
 		{
 			vx = -ALADIN_WALKING_SPEED;
 		}
-		
-		
+				
 		break;
 	case ALADIN_STATE_DUNG_CHAY_PHAI:
 		vx = 0.07f;

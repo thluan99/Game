@@ -99,9 +99,9 @@ void Scene1::CreateGrid(vector<CGameObject*>& objects)
 	textures->Add(ID_TEX_EXPLOSION, L"textures\\explosionE.png", BACKGROUND_COLOR);
 	textures->Add(ID_TEX_ENEMY1, L"textures\\enemy1.png", D3DCOLOR_XRGB(120, 193, 152));
 	textures->Add(ID_TEX_ENEMY1_FLIP, L"textures\\enemy1_flip.png", D3DCOLOR_XRGB(120, 193, 152));
+	textures->Add(ID_TEX_ITEM_COLLECT, L"textures\\item_collect.png", BACKGROUND_COLOR);
 	textures->Add(ID_TEX_ENEMY2, L"textures\\enemy2.png", D3DCOLOR_XRGB(255, 0, 255));
 	textures->Add(ID_TEX_ENEMY2_FLIP, L"textures\\enemy2_flip.png", D3DCOLOR_XRGB(255, 0, 255));
-	textures->Add(ID_TEX_ITEM_COLLECT, L"textures\\item_collect.png", BACKGROUND_COLOR);
 
 	if (inFile.is_open())
 	{
@@ -168,13 +168,7 @@ void Scene1::LoadResources(vector<CGameObject*> &objects)
 	CTextures* textures = CTextures::GetInstance();
 	CSprites* sprites = CSprites::GetInstance();
 
-	textures->Add(ID_TEX_LAND, L"textures\\pixel.png", D3DCOLOR_XRGB(255, 255, 245));
 	textures->Add(ID_TEX_APPLE, L"textures\\aladin.png", D3DCOLOR_XRGB(255, 0, 255));
-	textures->Add(ID_TEX_ENEMY2, L"textures\\enemy2.png", D3DCOLOR_XRGB(255, 0, 255));
-	textures->Add(ID_TEX_ENEMY2_FLIP, L"textures\\enemy2_flip.png", D3DCOLOR_XRGB(255, 0, 255));
-	textures->Add(ID_TEX_EXPLOSION, L"textures\\explosionE.png", BACKGROUND_COLOR);
-	textures->Add(ID_TEX_ENEMY1, L"textures\\enemy1.png", D3DCOLOR_XRGB(120, 193, 152));
-	textures->Add(ID_TEX_ENEMY1_FLIP, L"textures\\enemy1_flip.png", D3DCOLOR_XRGB(120, 193, 152));
 
 	CAnimations* animations = CAnimations::GetInstance();
 
@@ -208,61 +202,76 @@ void Scene1::Resources()
 }
 
 void Scene1::Update(DWORD dt)
-{	
-	vector<Apple*> appList;
-	for (int i = 1; i < grid->cells.size(); i++)
+{
+	// ---------- update apple----///
+	Apple *app = new Apple();
+	int isAppNull = 1;
+	for (int i = 1; i <= grid->cells.size(); i++)
 	{
 		for (int j = 0; j < grid->cells[i]->listGameObject.size(); j++)
 		{
 			if (grid->cells[i]->listGameObject[j]->id == eType::APPLE)
 			{
-				Apple *app = new Apple();
 				app = dynamic_cast<Apple*>(grid->cells[i]->listGameObject[j]);
 				if (abs(app->staticX - app->GetX() > 1000))
 					grid->cells[i]->listGameObject.erase(grid->cells[i]->listGameObject.begin() + j);
-				else
-					appList.push_back(app);
-			}				
+				else isAppNull = 0;
+			}
 		}
 	}
 
-	if (!appList.empty())
+	if (isAppNull == 0)
 	{
-		for (int i = 1; i < grid->cells.size(); i++)
+		for (int i = 1; i <= grid->cells.size(); i++)
 		{
-			for (int nApp = 0; nApp < appList.size(); nApp++)
+			if (grid->isInCell(app, grid->cells[i]->x, grid->cells[i]->y))
 			{
-				if (grid->isInCell(appList[nApp], grid->cells[i]->x, grid->cells[i]->y))
+				int hApp = 0;
+				for (int j = 0; j < grid->cells[i]->listGameObject.size(); j++)
 				{
-					int hApp = 0;
-					for (int j = 0; j < grid->cells[i]->listGameObject.size(); j++)
+					if ((grid->cells[i]->listGameObject[j]->GetId() == eType::APPLE))
 					{
-						if ((grid->cells[i]->listGameObject[j]->GetId() == eType::APPLE))
-						{
-							hApp = 1;
-							break;
-						}
-					}
-					if (hApp == 0)
-					{
-						grid->cells[i]->listGameObject.push_back(appList[nApp]);
+						hApp = 1;
+						break;
 					}
 				}
-				else
-				{
-					for (int j = 0; j < grid->cells[i]->listGameObject.size(); j++)
-					{
-						if (grid->cells[i]->listGameObject[j]->GetId() == eType::APPLE)
-						{
-							grid->cells[i]->listGameObject.erase(grid->cells[i]->listGameObject.begin() + j);
-						}
-					}
-				}
-			}		
-		}
-	}	
+				if (hApp == 0)
+					grid->cells[i]->listGameObject.push_back(app);
+			}
+			else
+			{
+				for (int j = 0; j < grid->cells[i]->listGameObject.size(); j++)
+					if (grid->cells[i]->listGameObject[j]->GetId() == eType::APPLE)
+						grid->cells[i]->listGameObject.erase(grid->cells[i]->listGameObject.begin() + j);
+			}
 
-	for (int i = 1; i < grid->cells.size(); i++)
+		}
+	}
+	//-----------------
+	Sword * so = new Sword();
+	int isNull = 1;
+	for (int i = 1; i <= grid->cells.size(); i++)
+	{
+		for (int j = 0; j < grid->cells[i]->listGameObject.size(); j++)
+			if (grid->cells[i]->listGameObject[j]->GetId() == eType::SWORD)
+			{
+				so = dynamic_cast<Sword*>(grid->cells[i]->listGameObject[j]);
+				isNull = 0;
+			}				
+	}
+	if (isNull == 0)
+	{
+		for (int i = 1; i <= grid->cells.size(); i++)
+		{
+			if (grid->isInCell(so, grid->cells[i]->x, grid->cells[i]->y))
+				grid->cells[i]->listGameObject.push_back(so);
+			else
+				for (int j = 0; j < grid->cells[i]->listGameObject.size(); j++)
+					if (grid->cells[i]->listGameObject[j]->GetId() == eType::SWORD)
+						grid->cells[i]->listGameObject.erase(grid->cells[i]->listGameObject.begin() + j);
+		}
+	}
+	for (int i = 1; i <= grid->cells.size(); i++)
 	{
 		for (int j = 0; j < grid->cells.at(i)->listGameObject.size(); j++)
 		{
@@ -275,37 +284,57 @@ void Scene1::Update(DWORD dt)
 					grid->cells[i]->listGameObject[j]->SetDirection(1);
 				else grid->cells[i]->listGameObject[j]->SetDirection(-1);
 			}
-			if (bat)
-			{
 
-				if ((aladin->x >= bat->GetActiveRange().left && aladin->x <= bat->GetActiveRange().right)
-					&& (aladin->y >= bat->GetActiveRange().top && aladin->y <= bat->GetActiveRange().bottom))
+			if (grid->cells[i]->listGameObject[j]->id == eType::SWORD)
+			{
+				if (aladin->direction == 1)
 				{
-					bat->SetState(BAT_STATE_WAKEUP);
+					sword->SetDirection(1);
+					if (grid->cells[i]->listGameObject[j]->x > aladin->x + ALADIN_BIG_BBOX_WIDTH * 1.5)
+						grid->cells[i]->listGameObject.erase(grid->cells[i]->listGameObject.begin() + j);
 				}
 				else
 				{
-					if (bat->GetState() != BAT_STATE_IDLE)
+					sword->SetDirection(-1);
+					if (grid->cells[i]->listGameObject[j]->x < aladin->x - ALADIN_BIG_BBOX_WIDTH)
+						grid->cells[i]->listGameObject.erase(grid->cells[i]->listGameObject.begin() + j);
+				}
+			}
+
+			if (bat)
+			{
+				if (bat->isDeath == false)
+				{
+
+					if ((aladin->x >= bat->GetActiveRange().left && aladin->x <= bat->GetActiveRange().right)
+						&& (aladin->y >= bat->GetActiveRange().top && aladin->y <= bat->GetActiveRange().bottom))
 					{
-						bat->SetState(BAT_STATE_FLY);
-						//bat->SetPosition(bat->x_default, bat->y_default);
-						if (abs(bat->x_default - bat->x) <= 5.0f && abs(bat->y_default - bat->y) <= 5.0f)
+						bat->SetState(BAT_STATE_WAKEUP);
+					}
+					else
+					{
+						if (bat->GetState() != BAT_STATE_IDLE)
 						{
-							bat->SetPosition(bat->x_default, bat->y_default);
-							bat->SetState(BAT_STATE_IDLE);
+							bat->SetState(BAT_STATE_FLY);
+							//bat->SetPosition(bat->x_default, bat->y_default);
+							if (abs(bat->x_default - bat->x) <= 5.0f && abs(bat->y_default - bat->y) <= 5.0f)
+							{
+								bat->SetPosition(bat->x_default, bat->y_default);
+								bat->SetState(BAT_STATE_IDLE);
+							}
 						}
+
 					}
 
-				}
-
-				if (bat->GetState() == BAT_STATE_WAKEUP)
-				{
-					//GoToXY(x, y, coObjects->at(i)->x, coObjects->at(i)->y);
-					bat->GoToXY(bat->x, bat->y, aladin->x, aladin->y);
-				}
-				else if (bat->GetState() == BAT_STATE_FLY)
-				{
-					bat->GoToXY(bat->x, bat->y, bat->x_default, bat->y_default);
+					if (bat->GetState() == BAT_STATE_WAKEUP)
+					{
+						//GoToXY(x, y, coObjects->at(i)->x, coObjects->at(i)->y);
+						bat->GoToXY(bat->x, bat->y, aladin->x, aladin->y);
+					}
+					else if (bat->GetState() == BAT_STATE_FLY)
+					{
+						bat->GoToXY(bat->x, bat->y, bat->x_default, bat->y_default);
+					}
 				}
 			}
 			if (enemy2)
