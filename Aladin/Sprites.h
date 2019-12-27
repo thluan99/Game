@@ -67,11 +67,13 @@ class CAnimation
 	int currentFrame;
 public:
 	vector<LPANIMATION_FRAME> frames;
+	
 	CAnimation(int defaultTime) { this->defaultTime = defaultTime; lastFrameTime = -1; currentFrame = -1; }
 	void Add(int spriteId, DWORD time = 0);
 	void Render(float x, float y, int alpha = 255);
 	int RenderJustOne(float x, float y, int alpha = 255);
 	void RenderAladin(float x, float y, int direct, int alpha = 255);
+	void RenderAladinSpecial(float x, float y, int direct, int status, int alpha = 255);
 	void RenderAladinF1(float x, float y, int alpha = 255);
 	void RenderAladinF_1(float x, float y, int alpha = 255);
 	void RenderAladin(int&,float x, float y, int direct, int alpha = 255);

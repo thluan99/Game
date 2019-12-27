@@ -184,33 +184,30 @@ void CSampleKeyHander::OnKeyDown(int KeyCode)
 		break;
 	case DIK_UP:
 		if (scene->aladin->getEnableKey() == true) {
-			if (scene->aladin->isCollisonWithRope == true)
+			if (scene->aladin->isCollisonWithRope || scene->aladin->GetState() == ALADIN_STATE_TREO)
 			{
 				scene->aladin->SetState(ALADIN_STATE_TREO);
-				scene->aladin->CancelClimb = false;				
-				scene->aladin->climbActiveUp = true;
-				scene->aladin->climbActiveDown = false;
-				scene->aladin->vy = -0.2f;
+				scene->aladin->vy = -0.1f;
+				scene->aladin->x = scene->aladin->xSetCollision;
+				scene->aladin->climDirection = 1;
 			}
 			else
 				scene->aladin->SetState(ALADIN_STATE_NGUOC_LEN);
 		}		
-		else
-		{
-			if (scene->aladin->isCollisonWithRope == true)
-			{
-				if (scene->aladin->GetState() == ALADIN_STATE_IDLE || scene->aladin->GetState() == ALADIN_STATE_NGUOC_LEN ||
-					scene->aladin->GetState() == ALADIN_STATE_NGUOC_LEN_TRAI)
-				{
-					scene->aladin->SetState(ALADIN_STATE_TREO);
-				}
-			}
-		}
-
 		break;
 	case DIK_DOWN:
 		if (scene->aladin->getEnableKey() == true) {
-			scene->aladin->SetState(ALADIN_STATE_NGOI);
+			if (scene->aladin->isCollisonWithRope || scene->aladin->GetState() == ALADIN_STATE_TREO)
+			{
+				scene->aladin->SetState(ALADIN_STATE_TREO);
+				scene->aladin->vy = 0.1f;
+				scene->aladin->x = scene->aladin->xSetCollision;
+				scene->aladin->climDirection = -1;
+			}
+			else
+			{
+				scene->aladin->SetState(ALADIN_STATE_NGOI);
+			}
 		}
 		break;
 	case DIK_C:
@@ -334,32 +331,30 @@ void CSampleKeyHander::OnKeyUp(int KeyCode)
 
 		break;
 	case DIK_UP:
-		scene->aladin->CancelClimb = false;
 		if (scene->aladin->getEnableKey() == true)
 		{
-			if (scene->aladin->isCollisonWithRope == true && scene->aladin->CancelClimb == false)
+			if (scene->aladin->isCollisonWithRope == true)
 			{
 				scene->aladin->SetState(ALADIN_STATE_TREO);
 				scene->aladin->vy = 0;
-				scene->aladin->climbActiveUp = false;
+				scene->aladin->climDirection = 0;
 			}			
 			else
 				scene->aladin->SetState(ALADIN_STATE_IDLE);
-		}
-		else
-		{
-			scene->aladin->SetState(ALADIN_STATE_TREO);
-			scene->aladin->vy = 0;
-			scene->aladin->climbActiveUp = false;
-		}			
+		}		
 		break;
 	case DIK_DOWN:
 		if (scene->aladin->getEnableKey() == true)
 		{
-			scene->aladin->climbActiveDown = false;
-			scene->aladin->SetState(ALADIN_STATE_IDLE);
+			if (scene->aladin->isCollisonWithRope == true)
+			{
+				scene->aladin->SetState(ALADIN_STATE_TREO);
+				scene->aladin->vy = 0;
+				scene->aladin->climDirection = 0;
+			}
+			else
+				scene->aladin->SetState(ALADIN_STATE_IDLE);
 		}
-		else scene->aladin->climbActiveDown = false;
 		break;
 	case DIK_C:
 		if (scene->aladin->getEnableKey() == true){ 
@@ -393,10 +388,26 @@ void CSampleKeyHander::KeyState(BYTE* states)
 		}
 		else if (game->IsKeyDown(DIK_UP))
 		{
+			if (scene->aladin->isCollisonWithRope)
+			{
+				scene->aladin->SetState(ALADIN_STATE_TREO);
+				scene->aladin->vy = -0.1f;
+				scene->aladin->x = scene->aladin->xSetCollision;
+				scene->aladin->climDirection = 1;
+			}
+			else
 			scene->aladin->SetState(ALADIN_STATE_NGUOC_LEN);
 		}
 		else if (game->IsKeyDown(DIK_DOWN))
 		{
+			if (scene->aladin->isCollisonWithRope)
+			{
+				scene->aladin->SetState(ALADIN_STATE_TREO);
+				scene->aladin->vy = 0.1f;
+				scene->aladin->x = scene->aladin->xSetCollision;
+				scene->aladin->climDirection = -1;
+			}
+			else
 			scene->aladin->SetState(ALADIN_STATE_NGOI);
 		}		
 	}

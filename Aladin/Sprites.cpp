@@ -135,8 +135,49 @@ void CAnimation::RenderAladin( float x, float y, int direct, int alpha)
 		frames[currentFrame]->GetSprite()->Draw(x, y - hei, alpha);
 	else if (direct == -1)
 		frames[currentFrame]->GetSprite()->Draw(x - w / 2, y - hei, alpha);
-
 }
+
+void CAnimation::RenderAladinSpecial(float x, float y, int direct, int status,  int alpha)
+{
+	DWORD now = GetTickCount();
+	if (currentFrame == -1)
+	{
+		currentFrame = frames.size() - 1;
+		lastFrameTime = now;
+	}
+	else
+	{
+		DWORD t = frames[currentFrame]->GetTime();
+		if (now - lastFrameTime > t)
+		{
+			if (status == 1)
+				currentFrame++;
+			else if (status == -1)
+			{
+				currentFrame--;
+			}
+
+			lastFrameTime = now;
+			if (currentFrame == frames.size()) {
+				currentFrame = 0;
+			}
+			if (currentFrame == -1)
+			{
+				currentFrame = frames.size() - 1;
+			}
+		}
+
+	}
+	int hei = frames[currentFrame]->GetSprite()->GetHeight();
+	int w = frames[currentFrame]->GetSprite()->GetWidth();
+
+	if (direct == 1)
+		frames[currentFrame]->GetSprite()->Draw(x, y - hei, alpha);
+	else if (direct == -1)
+		frames[currentFrame]->GetSprite()->Draw(x - w / 2, y - hei, alpha);
+}
+
+
 
 //Truyền BBox X và BBox Y vào
 void CAnimation::RenderAladinF1(float x, float y, int alpha)
