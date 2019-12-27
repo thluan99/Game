@@ -164,6 +164,9 @@ void Scene1::LoadResources(vector<CGameObject*> &objects)
 	aladin->SetPosition(50.f, 1000.0f);
 	objects.push_back(aladin);
 
+	ui = UI::GetInstance(aladin);
+	ui->LoadResources();
+
 	texSur = new TextSurface();
 	texSur->LoadResources(eType::TEXSURFACE);
 
@@ -399,6 +402,8 @@ void Scene1::Update(DWORD dt)
 		aladin->SetX(MAP_LIMIT_RIGHT - 50);
 	if (aladin->GetX() < 0) aladin->SetX(0);
 	if (aladin->GetY() < 0) aladin->SetY(0);
+
+	ui->Update(dt);
 }
 
 void Scene1::Render()
@@ -440,6 +445,7 @@ void Scene1::Render()
 		grid->RenderObjectEx(camera, objects);
 		aladin->Render();
 		texSur->Render();
+		ui->Render();
 
 		spriteHandler->End();
 		d3ddv->EndScene();

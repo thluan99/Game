@@ -100,6 +100,7 @@ class CAladin : public CGameObject
 	bool isNem;
 	bool isRoi;
 public:
+	int coins, lifes, scores, apples;
 	float velJ;
 	int timeIDLE;
 	int countTiming;
@@ -126,6 +127,10 @@ public:
 		enableKey = true;
 		SetDirection(1);
 		HP = 10;
+		coins = 0;
+		lifes = 3;
+		scores = 00000;
+		apples = 90;
 		velJ = 0.0f;
 		timeIDLE = 0;
 		countTiming = 0;

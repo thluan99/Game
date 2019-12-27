@@ -125,21 +125,27 @@ void CAladin::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 			if (e->obj->id == eType::ITEMGENIE)
 			{
 				e->obj->SetState(GENIE_STATE_2);
+				scores += 250;
 			}
 
 			if (e->obj->id == eType::ITEMAPPLE)
 			{
 				e->obj->SetState(APPLE_IT_COLLECTED);
+				this->apples++;
 			}
 
 			if (e->obj->id == eType::ITEMRUBY)
 			{
 				e->obj->SetState(RUBY_IT_STATE_COLLECTED);
+				scores += 150;
+				coins += 1;
 			}
 
 			if (e->obj->id == eType::ITEMHEATH)
 			{
 				e->obj->SetState(HEATH_STATE_COLLECTED);
+				scores += 150;
+				HP += 3;
 			}
 
 		}

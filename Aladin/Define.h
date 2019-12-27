@@ -28,6 +28,8 @@ using namespace std;
 #define ID_TEX_SHOP				16
 #define ID_TEX_EXPLOSION		17
 #define ID_TEX_EXgENIE			18
+#define ID_TEX_UI				19
+#define ID_TEX_UI_FONT_SCORE	20
 #define ID_TEX_LAND			99
 #define ID_TEX_ENEMY1		50
 #define ID_TEX_ENEMY1_FLIP	51
