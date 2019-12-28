@@ -105,6 +105,10 @@
       <Filter>weep</Filter>
     </ClCompile>
     <ClCompile Include="UI.cpp" />
+    <ClCompile Include="SceneChange.cpp">
+      <Filter>Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="MonKey.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Brick.h">
@@ -212,6 +216,10 @@
       <Filter>weep</Filter>
     </ClInclude>
     <ClInclude Include="UI.h" />
+    <ClInclude Include="SceneChange.h">
+      <Filter>Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="MonKey.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Map">
