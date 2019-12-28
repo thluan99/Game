@@ -45,6 +45,7 @@
 #include "Scene1.h"
 #include "Scene2.h"
 #include "SceneChange.h"
+#include "Scene_Death.h"
 #include "UI.h"
 
 CGame *game;
@@ -60,6 +61,7 @@ Scene1 * scene1;
 Scene2 * scene2;
 SceneChange *sceneC;
 SceneChange *sceneC2;
+Scene_Death* scene_death;
 Scene *scene;
 
 int currentScene = 1;
@@ -472,7 +474,10 @@ void CreateGrid(vector <CGameObject *> &objects)
 {
 	if (currentScene == 1)
 		scene1->CreateGrid(objects);
-	else scene2->CreateGrid(objects);
+	else if (currentScene == 2)
+		scene2->CreateGrid(objects);
+	else if (currentScene == 5)
+		scene_death->CreateGrid(objects);
 }
 
 void Resources()
@@ -486,11 +491,13 @@ void LoadResources()
 	if (currentScene == 1)
 		scene1->LoadResources(objects);
 	else if (currentScene == 2)
-		scene2->LoadResources(objects);
+		scene2->LoadResources(objects);D
 	else if (currentScene == 3)
 		sceneC->LoadResources(objects);
 	else if (currentScene == 9)
 		sceneC2->LoadResources(objects);
+	else if (currentScene == 5)
+		scene_death->LoadResources(objects); 
 }
 
 void Update(DWORD dt)
@@ -501,11 +508,18 @@ void Update(DWORD dt)
 		scene1->Clear();
 		scene1->objects.clear();
 		objects.clear();
-
+		
 		currentScene = 3;
 		sceneC->LoadResources(objects);
 		scene = sceneC;
 		checkChange = 1;
+	}
+	
+	if (scene->aladin->lifes <= 0 && scene->aladin->HP <= 0)
+	{
+		currentScene = 5;
+		scene_death->LoadResources(objects);
+		scene = scene_death;
 	}
 	if (checkChange == 1)
 	{
@@ -534,6 +548,8 @@ void Update(DWORD dt)
 		sceneC->Update(dt);
 	else if (currentScene == 9)
 		sceneC2->Update(dt);
+	else if (currentScene == 5)
+		scene_death->Update(dt);
 }
 
 /*
@@ -549,6 +565,10 @@ void Render()
 		sceneC->Render();
 	else if (currentScene == 9)
 		sceneC2->Render();
+	else if (currentScene == 2)
+		scene2->Render();
+	else if (currentScene == 5)
+		scene_death->Render();
 }
 
 HWND CreateGameWindow(HINSTANCE hInstance, int nCmdShow, int ScreenWidth, int ScreenHeight)
@@ -655,6 +675,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	scene2 = new Scene2(objects, dx_graphics, camera, game);
 	sceneC = new SceneChange(objects, dx_graphics, camera, game);
 	sceneC2 = new SceneChange(objects, dx_graphics, camera, game);
+	scene_death = new Scene_Death(objects, dx_graphics, camera, game);
 
 	scene = scene1;
 

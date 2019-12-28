@@ -7,7 +7,7 @@
 
 void CAladin::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 {
-	//DebugOut(L"Aladin %s\n", isCollisonWithRope ? L"true" : L"false");
+	//DebugOut(L"Aladin %d\n", xReborn);
 	// Calculate dx, dy 
 	CGameObject::Update(dt);
 	// Simple fall down
@@ -55,6 +55,11 @@ void CAladin::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 		untouchable = 0;
 	}
 
+	if (state == ALADIN_STATE_REBORN)
+	{
+		vx = 0;
+	}
+
 	if (state != ALADIN_STATE_TREO) 
 		vy += ALADIN_GRAVITY*dt;
 
@@ -71,6 +76,24 @@ void CAladin::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 	// turn off collision when die 
 	if (state!=ALADIN_STATE_DIE)
 		CalcPotentialCollisions(coObjects, coEvents);
+
+
+	if (HP <= 0)
+	{
+		if (lifes - 1 < 0)
+		{
+			this->SetState(ALADIN_STATE_DIE);
+			return;
+		}
+		else
+		{
+			lifes--;
+			HP = 10;
+			this->x = this->xReborn;
+			this->y = this->yReborn - ALADIN_BIG_BBOX_HEIGHT;
+			this->SetState(ALADIN_STATE_REBORN);
+		}
+	}
 
 	// No collision occured, proceed normally
 	if (coEvents.size()==0)
@@ -148,6 +171,8 @@ void CAladin::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 				else
 					p->SetState(POT_STATE_ACTIVE);
 
+				xReborn = p->x;
+				yReborn = p->y;
 			}
 
 			if (e->obj->id == eType::ITEMGENIE)
@@ -350,7 +375,21 @@ void CAladin::Render()
 		break;
 	}
 	 
-	if (state == ALADIN_STATE_TREO)
+	if (state == ALADIN_STATE_REBORN)
+	{
+		ani = ALADIN_ANI_REBORN;
+		animations[ani]->RenderAladinGap(stt, x, y + ALADIN_BIG_BBOX_HEIGHT, this->direction);
+		if (stt == 0)
+			enableKey = false;
+		else
+		{
+			enableKey = true;
+			state = ALADIN_STATE_IDLE;
+			vx = 0;
+			isNhay = false;
+		}
+	}
+	else if (state == ALADIN_STATE_TREO)
 	{
 		ani = ALADIN_ANI_TREO;
 		animations[ani]->RenderAladinSpecial(x, y + ALADIN_BIG_BBOX_HEIGHT, this->direction, climDirection);
@@ -359,16 +398,7 @@ void CAladin::Render()
 	{
 		int stt = 0;
 		ani = ALADIN_ANI_TREO_NHAY;
-		if (direction == -1)
-		{
-			vx = -0.08;
-			vy = -0.1;
-		}
-		else
-		{
-			vx = 0.08;
-			vy = -0.1;
-		}
+		vy = -ALADIN_JUMP_SPEED_Y - 0.03f;
 		animations[ani]->RenderAladin(stt, x, y, direction, alpha);
 		if (stt != 0)
 		{
@@ -791,7 +821,7 @@ void CAladin::LoadResources(int ID)
 	sprites->Add(10012, 611, 1219, 611 + 55, 1219 + 55, texAladin);
 	sprites->Add(10013, 679, 1218, 679 + 44, 1218 + 57, texAladin);
 
-	ani = new CAnimation(100);	// walk right big
+	ani = new CAnimation(80);	// walk right big
 	ani->Add(10003);
 	ani->Add(10004);
 	ani->Add(10005);
@@ -818,7 +848,7 @@ void CAladin::LoadResources(int ID)
 	sprites->Add(10062, 398, 1218, 398 + 44, 1219 + 57, texAladin_f);
 
 
-	ani = new CAnimation(100);	// // walk left big
+	ani = new CAnimation(80);	// // walk left big
 	ani->Add(10051);
 	ani->Add(10052);
 	ani->Add(10053);
@@ -1595,20 +1625,20 @@ void CAladin::LoadResources(int ID)
 	animations->Add(528, ani);
 
 	//______________________ALADIN_____REBORN___________________//
-	sprites->Add(10593, 2, 2472, 2 + 64, 2472 + 69, texAladin);
-	sprites->Add(10594, 79, 2475, 79 + 56, 2475 + 66, texAladin);
-	sprites->Add(10595, 143, 2508, 143 + 20, 2508 + 33, texAladin);
-	sprites->Add(10596, 173, 2503, 173 + 23, 2503 + 38, texAladin);
-	sprites->Add(10597, 205, 2495, 205 + 25, 2495 + 46, texAladin);
-	sprites->Add(10598, 243, 2483, 243 + 27, 2483 + 58, texAladin);
-	sprites->Add(10599, 278, 2474, 278 + 38, 2474 + 67, texAladin);
-	sprites->Add(10600, 333, 2460, 333 + 37, 2460 + 81, texAladin);
-	sprites->Add(10601, 382, 2460, 282 + 42, 2460 + 84, texAladin);
-	sprites->Add(10602, 442, 2454, 442 + 53, 2454 + 87, texAladin);
-	sprites->Add(10603, 510, 2441, 510 + 43, 2441 + 100, texAladin);
-	sprites->Add(10604, 563, 2426, 563 + 50, 2426 + 115, texAladin);
-	sprites->Add(10605, 623, 2407, 623 + 45, 2407 + 134, texAladin);
-	sprites->Add(10606, 682, 2400, 682 + 40, 2400 + 141, texAladin);
+	sprites->Add(10593, 2, 2472, 2 + 64, 2472 + 69, 30,  texAladin);
+	sprites->Add(10594, 79, 2475, 79 + 56, 2475 + 66, 30,  texAladin);
+	sprites->Add(10595, 143, 2508, 143 + 20, 2508 + 33, 10, texAladin);
+	sprites->Add(10596, 173, 2503, 173 + 23, 2503 + 38, 10, texAladin);
+	sprites->Add(10597, 205, 2495, 205 + 25, 2495 + 46, 10, texAladin);
+	sprites->Add(10598, 243, 2483, 243 + 27, 2483 + 58, 16, texAladin);
+	sprites->Add(10599, 278, 2474, 278 + 38, 2474 + 67, 21, texAladin);
+	sprites->Add(10600, 333, 2460, 333 + 37, 2460 + 81, 17, texAladin);
+	sprites->Add(10601, 382, 2460, 382 + 42, 2460 + 84, 23, texAladin);
+	sprites->Add(10602, 442, 2454, 442 + 53, 2454 + 87, 18, texAladin);
+	sprites->Add(10603, 510, 2441, 510 + 43, 2441 + 100,28, texAladin);
+	sprites->Add(10604, 563, 2426, 563 + 50, 2426 + 115,40, texAladin);
+	sprites->Add(10605, 623, 2407, 623 + 45, 2407 + 134,35, texAladin);
+	sprites->Add(10606, 682, 2400, 682 + 40, 2400 + 141,31, texAladin);
 	ani = new CAnimation(90);
 	ani->Add(10593);
 	ani->Add(10594);

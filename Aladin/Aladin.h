@@ -45,6 +45,7 @@
 #define ALADIN_STATE_IDLE_TAO				26
 #define ALADIN_STATE_TREO_NHAY				27
 #define ALADIN_STATE_TREO_NHAY_ROI			28
+#define ALADIN_STATE_REBORN					29
 #define ALADIN_STATE_DIE                    100
 
 
@@ -119,6 +120,8 @@ public:
 	bool isClimbingRope = false;
 	int xSetCollision;
 	int ySetCollision;
+	int xReborn;
+	int yReborn;
 	int climDirection;
 	bool climbActiveUp = false;
 	bool climbActiveDown = false;

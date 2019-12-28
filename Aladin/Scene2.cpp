@@ -108,6 +108,8 @@ void Scene2::LoadResources(vector<CGameObject*> &objects)
 	aladin = new CAladin();
 	aladin->LoadResources(eType::ALADIN);
 	aladin->SetPosition(50.f, 100.0f);
+	aladin->xReborn = aladin->x;
+	aladin->yReborn = aladin->y;
 	objects.push_back(aladin);
 
 	ui = UI::GetInstance(aladin);

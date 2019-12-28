@@ -36,7 +36,7 @@ void MonKey::LoadResources(int ID)
 	sprites->Add(90001, 86, 25, 57 + 86, 36 + 25, texMon);
 	sprites->Add(90002, 152, 17, 57 + 152, 44 + 17, texMon);
 	sprites->Add(90003, 218, 7, 58 + 218, 54 + 7, texMon);
-	sprites->Add(90004, 258, 8, 51 + 258, 53 + 8, texMon);
+	sprites->Add(90004, 285, 8, 51 + 285, 53 + 8, texMon);
 	sprites->Add(90005, 350, 13, 63 + 350, 48 + 13, texMon);
 
 	ani = new CAnimation(100);
