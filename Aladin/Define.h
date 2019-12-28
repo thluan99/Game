@@ -62,7 +62,6 @@ enum eType
 	FIREATTACK = 37,
 	STAR	= 38,
 	BONE    = 39,
-	MONKEY  = 40,
 
 	// ITEMS
 	ITEMAPPLE = 50,

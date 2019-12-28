@@ -491,7 +491,7 @@ void LoadResources()
 	if (currentScene == 1)
 		scene1->LoadResources(objects);
 	else if (currentScene == 2)
-		scene2->LoadResources(objects);D
+		scene2->LoadResources(objects);
 	else if (currentScene == 3)
 		sceneC->LoadResources(objects);
 	else if (currentScene == 9)
@@ -540,6 +540,7 @@ void Update(DWORD dt)
 			scene = sceneC2;
 		}
 	}
+
 	if (currentScene == 1)
 		scene1->Update(dt);
 	else if (currentScene == 2)
@@ -679,7 +680,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 
 	scene = scene1;
 
-	if (currentScene == 1 || currentScene == 2)
+	if (currentScene == 1 || currentScene == 2 || currentScene == 5)
 		CreateGrid(objects);
 	LoadResources();
 

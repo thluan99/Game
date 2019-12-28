@@ -95,7 +95,7 @@
 #define ID_TEX_ALADIN			0
 #define ID_TEX_ALADIN_F			01
 
-#define ALADIN_UNTOUCHABLE_TIME 3000
+#define ALADIN_UNTOUCHABLE_TIME 1000
 
 
 class CAladin : public CGameObject
@@ -139,7 +139,7 @@ public:
 		SetDirection(1);
 		HP = 10;
 		coins = 0;
-		lifes = 5;
+		lifes = 1;
 		scores = 00000;
 		apples = 90;
 		velJ = 0.0f;
