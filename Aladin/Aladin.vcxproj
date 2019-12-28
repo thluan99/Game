@@ -162,6 +162,7 @@
     <ClInclude Include="Scene2.h" />
     <ClInclude Include="SceneChange.h" />
     <ClInclude Include="Scene_Death.h" />
+    <ClInclude Include="Scene_Menu.h" />
     <ClInclude Include="Shop.h" />
     <ClInclude Include="Sprites.h" />
     <ClInclude Include="Star.h" />
@@ -203,6 +204,7 @@
     <ClCompile Include="Scene2.cpp" />
     <ClCompile Include="SceneChange.cpp" />
     <ClCompile Include="Scene_Death.cpp" />
+    <ClCompile Include="Scene_Menu.cpp" />
     <ClCompile Include="Shop.cpp" />
     <ClCompile Include="Sprites.cpp" />
     <ClCompile Include="Star.cpp" />

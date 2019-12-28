@@ -13,6 +13,7 @@ Scene1::Scene1(vector<LPGAMEOBJECT> objects, dxGraphics * dx_graphics,
 	this->dx_graphics = dx_graphics;
 	this->camera = camera;
 	this->game = game;
+	this->aladin = new CAladin();
 }
 
 CGameObject * Scene1::GetNewObjectEx(int ID)

@@ -1,21 +1,26 @@
 #pragma once
 #include "Scene.h"
 #include "Define.h"
-#include "MonKey.h"
-#include <Windows.h>
 
+#define BACKGROUND_ 90900
+#define START 90901
+#define START_C 90902
+#define EXIT  90903
+#define EXIT_C 90904
 
-class Scene_Death :
+class Scene_Menu :
 	public Scene
 {
-	
-
-public:
 	int stt_scene;
-	MonKey* monkey;
+public:
+	int start_;
+	int exit_;
 
-	Scene_Death() { stt_scene = 0; }
-	Scene_Death(
+	CTextures* textures;
+	CSprites* sprites;
+
+	Scene_Menu() { stt_scene = 0; }
+	Scene_Menu(
 		vector<LPGAMEOBJECT> objects,
 		dxGraphics* dx_graphics,
 		Camera* camera,

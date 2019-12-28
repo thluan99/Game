@@ -2,8 +2,8 @@
 
 using namespace std;
 
-#define SCREEN_WIDTH 600
-#define SCREEN_HEIGHT 400
+#define SCREEN_WIDTH 320
+#define SCREEN_HEIGHT 256
 #define BACKGROUND_COLOR D3DCOLOR_XRGB(0, 0, 0)
 #define BACKGROUND_CHANGE_SCENE D3DCOLOR_XRGB(0, 0, 32)
 #define MAP_LIMIT_RIGHT 32*71
@@ -31,6 +31,8 @@ using namespace std;
 #define ID_TEX_EXgENIE			18
 #define ID_TEX_UI				19
 #define ID_TEX_UI_FONT_SCORE	20
+#define ID_TEX_MENU				21
+#define ID_TEX_MENU_UI			22
 #define ID_TEX_LAND			99
 #define ID_TEX_ENEMY1		50
 #define ID_TEX_ENEMY1_FLIP	51

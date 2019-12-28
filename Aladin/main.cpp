@@ -45,6 +45,7 @@
 #include "Scene1.h"
 #include "Scene2.h"
 #include "Scene_Death.h"
+#include "Scene_Menu.h"
 #include "UI.h"
 
 CGame *game;
@@ -59,9 +60,10 @@ vector<LPGAMEOBJECT> objects;
 Scene1 * scene1;
 Scene2 * scene2;
 Scene_Death* scene_death;
+Scene_Menu* scene_menu;
 Scene *scene;
 
-int currentScene = 1;
+int currentScene = 0;
 int nextSceneX = 2176;
 int nextSceneY = 64, nextSceneYx = 64 + 128;
 //---------------KeyBoard -------------------------
@@ -422,6 +424,7 @@ void CSampleKeyHander::KeyState(BYTE* states)
 				}
 				else
 					scene->aladin->SetState(ALADIN_STATE_NGUOC_LEN);
+
 			}
 			else if (game->IsKeyDown(DIK_DOWN))
 			{
@@ -440,6 +443,65 @@ void CSampleKeyHander::KeyState(BYTE* states)
 		{
 			aladin->SetState(ALADIN_STATE_IDLE);
 		}*/
+	}
+	if (currentScene == 0)
+	{
+		if (game->IsKeyDown(DIK_UP))
+		{
+			if (scene_menu->start_ == 0)
+				{
+					scene_menu->start_ = 1;
+				}
+			else
+				{
+					scene_menu->start_ = 0;
+				}
+
+			if (scene_menu->exit_ == 0)
+				{
+					scene_menu->exit_ = 1;
+				}
+				else
+				{
+					scene_menu->exit_ = 0;
+				}
+		}
+
+		else if (game->IsKeyDown(DIK_DOWN))
+		{
+
+			if (scene_menu->start_ == 0)
+			{
+				scene_menu->start_ = 1;
+			}
+			else
+			{
+				scene_menu->start_ = 0;
+			}
+
+			if (scene_menu->exit_ == 0)
+			{
+				scene_menu->exit_ = 1;
+			}
+			else
+			{
+				scene_menu->exit_ = 0;
+			}
+		}
+		else if (game->IsKeyDown(DIK_SPACE))
+		{
+			if (scene_menu->start_ == 1)
+			{
+				scene = scene1;
+				currentScene = 1;
+				scene1->CreateGrid(objects);
+				scene1->LoadResources(objects);
+			}
+			else 
+			{
+				exit(0);
+			}
+		}
 	}
 }
 #pragma endregion
@@ -473,6 +535,8 @@ void CreateGrid(vector <CGameObject *> &objects)
 		scene2->CreateGrid(objects);
 	else if (currentScene == 5)
 		scene_death->CreateGrid(objects);
+	else if (currentScene == 0)
+		scene_menu->CreateGrid(objects);
 }
 
 void Resources()
@@ -489,28 +553,37 @@ void LoadResources()
 		scene2->LoadResources(objects);
 	else if (currentScene == 5)
 		scene_death->LoadResources(objects);
+	else if (currentScene == 0)
+		scene_menu->LoadResources(objects);
 
 }
 
 void Update(DWORD dt)
 {
-	if (scene1->aladin->GetX() > nextSceneX && scene1->aladin->GetY() > nextSceneY && scene1->aladin->GetY() < nextSceneYx)
+
+	if (currentScene == 1 || currentScene == 2)
 	{
-		nextSceneX = nextSceneY = nextSceneYx = -128;
-		scene1->Clear();
-		scene1->objects.clear();
-		objects.clear();
-		currentScene = 2;
-		//scene2->CreateGrid(objects);
-		scene2->LoadResources(objects);
-		scene = scene2;
+		if (scene1->aladin->GetX() > nextSceneX&& scene1->aladin->GetY() > nextSceneY&& scene1->aladin->GetY() < nextSceneYx)
+		{
+			nextSceneX = nextSceneY = nextSceneYx = -128;
+			scene1->Clear();
+			scene1->objects.clear();
+			objects.clear();
+			currentScene = 2;
+			//scene2->CreateGrid(objects);
+			scene2->LoadResources(objects);
+			scene = scene2;
+		}
 	}
 	
-	if (scene->aladin->lifes <= 0 && scene->aladin->HP <= 0)
+	if (currentScene == 1 || currentScene == 2)
 	{
-		currentScene = 5;
-		scene_death->LoadResources(objects);
-		scene = scene_death;
+		if (scene->aladin->lifes <= 0 && scene->aladin->HP <= 0)
+		{
+			currentScene = 5;
+			scene_death->LoadResources(objects);
+			scene = scene_death;
+		}
 	}
 
 	if (currentScene == 1)
@@ -519,7 +592,18 @@ void Update(DWORD dt)
 		scene2->Update(dt);
 	else if (currentScene == 5)
 		scene_death->Update(dt);
+	else if (currentScene == 0)
+		scene_menu->Update(dt);
 
+	if (currentScene == 5)
+	{
+		if (scene_death->stt_scene == 1)
+		{
+			currentScene = 0;
+			scene = scene_menu;
+			scene_menu->LoadResources(objects);
+		}
+	}
 }
 
 /*
@@ -534,6 +618,8 @@ void Render()
 		scene2->Render();
 	else if (currentScene == 5)
 		scene_death->Render();
+	else if (currentScene == 0)
+		scene_menu->Render();
 }
 
 HWND CreateGameWindow(HINSTANCE hInstance, int nCmdShow, int ScreenWidth, int ScreenHeight)
@@ -639,10 +725,11 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	scene1 = new Scene1(objects, dx_graphics, camera, game);
 	scene2 = new Scene2(objects, dx_graphics, camera, game);
 	scene_death = new Scene_Death(objects, dx_graphics, camera, game);
+	scene_menu = new Scene_Menu(objects, dx_graphics, camera, game);
 
-	scene = scene1;
+	scene = scene_menu;
 
-	CreateGrid(objects);
+	//CreateGrid(objects);
 	LoadResources();
 
 	keyHandler = new CSampleKeyHander();

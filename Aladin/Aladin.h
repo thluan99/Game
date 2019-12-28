@@ -133,7 +133,7 @@ public:
 		SetDirection(1);
 		HP = 10;
 		coins = 0;
-		lifes = 0;
+		lifes = 1;
 		scores = 00000;
 		apples = 90;
 		velJ = 0.0f;
