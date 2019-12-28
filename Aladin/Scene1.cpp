@@ -28,6 +28,9 @@ CGameObject * Scene1::GetNewObjectEx(int ID)
 	case eType::BRICKLINE:
 		return new CBrick();
 
+	case eType::BRICKv2:
+		return new CBrick();
+
 	case eType::ENEMY1:
 		return new Enemy1();
 
@@ -274,6 +277,8 @@ void Scene1::Update(DWORD dt)
 						grid->cells[i]->listGameObject.erase(grid->cells[i]->listGameObject.begin() + j);
 		}
 	}
+
+
 	for (int i = 1; i <= grid->cells.size(); i++)
 	{
 		for (int j = 0; j < grid->cells.at(i)->listGameObject.size(); j++)
@@ -299,7 +304,7 @@ void Scene1::Update(DWORD dt)
 				else
 				{
 					sword->SetDirection(-1);
-					if (grid->cells[i]->listGameObject[j]->x < aladin->x - ALADIN_BIG_BBOX_WIDTH)
+					if (grid->cells[i]->listGameObject[j]->x < aladin->x - ALADIN_BIG_BBOX_WIDTH * 1.5)
 						grid->cells[i]->listGameObject.erase(grid->cells[i]->listGameObject.begin() + j);
 				}
 			}
@@ -337,6 +342,10 @@ void Scene1::Update(DWORD dt)
 					else if (bat->GetState() == BAT_STATE_FLY)
 					{
 						bat->GoToXY(bat->x, bat->y, bat->x_default, bat->y_default);
+					}
+					else if (bat->GetState() == BAT_STATE_DIE || bat->GetState() == BAT_STATE_FLYING)
+					{
+						bat->vx = 0;
 					}
 				}
 			}

@@ -6,24 +6,30 @@ void Bat::Render()
 	int alpha = 255;
 	int stt = 0;
 
-	if (state == BAT_STATE_DIE)
+	if (state == BAT_STATE_DIE || state == BAT_STATE_FLYING)
 	{
-		ani = BAT_ANI_DIE;
-		animations[ani]->RenderAladin(stt, x, y + BAT_BBOX_HEIGHT, direction, alpha);
-		if (stt != 0)
+		if (isFall == false)
 		{
-			isDeath = true;
-			animations[0]->RenderAladin(x, y, 1, 0);
-		}	
-	}
-	else if (state == BAT_ANI_FLYING)
-	{
-		ani = BAT_ANI_FLYING;
-		animations[ani]->RenderAladin(stt, x, y + BAT_BBOX_HEIGHT, direction, alpha);
-		if (stt != 0)
+			if (isDeath == false)
+			{
+				ani = BAT_ANI_DIE;
+				animations[ani]->RenderAladin(stt, x, y + BAT_BBOX_HEIGHT, direction, alpha);
+				if (stt != 0)
+					isDeath = true;
+			}
+			else animations[0]->RenderAladin(x, y, 1, 0);
+		}
+		else
 		{
-			isDeath = true;
-			animations[0]->RenderAladin(x, y, 1, 0);
+			if (isDeath == false)
+			{
+				ani = BAT_ANI_FLYING;
+				animations[ani]->RenderAladin(stt, x, y + BAT_BBOX_HEIGHT, direction, alpha);
+				if (stt != 0)
+					isDeath = true;
+			}
+			else
+				animations[0]->RenderAladin(x, y, 1, 0);
 		}
 	}
 	else
@@ -59,6 +65,13 @@ void Bat::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	vector<LPCOLLISIONEVENT> coEventsResult;
 
 	coEvents.clear();
+	if (HP <= 0)
+	{
+		vx = 0;
+		if (isFall == false)
+			SetState(BAT_STATE_DIE);
+		else SetState(BAT_STATE_FLYING);
+	}
 	if (state != BAT_STATE_DIE && state != BAT_STATE_FLYING)
 		CalcPotentialCollisions(coObjects, coEvents);
 
@@ -94,15 +107,12 @@ void Bat::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 			if (e->obj->GetId() == eType::APPLE)
 			{
 				HP = HP - 1;
-				SetState(BAT_STATE_FLYING);
-				isDeath = true;
+				isFall = true;
 			}
 			if (e->obj->GetId() == eType::SWORD)
 			{
 				HP = HP - 1;
-				SetState(BAT_STATE_DIE);
 				DebugOut(L"[info] : sword !!!!!!");
-				isDeath = true;
 			}
 		}
 	}

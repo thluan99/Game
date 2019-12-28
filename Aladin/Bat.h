@@ -30,6 +30,7 @@
 class Bat : public CGameObject
 {
 	int HP;
+	bool isFall = false;
 	ActiveRange activeRange;
 
 public:

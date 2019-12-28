@@ -16,7 +16,7 @@ void CBrick::LoadResources(int ID)
 	
 	this->id = ID;
 
-	if (this->id == eType::BRICK)
+	if (this->id == eType::BRICK || this->id == eType::BRICKv2)
 	{
 		LPDIRECT3DTEXTURE9 texBrick = textures->Get(ID_TEX_MAP);
 		sprites->Add(40001, 1, 1770, 1 + 31, 1770 + 15, texBrick);
@@ -24,21 +24,37 @@ void CBrick::LoadResources(int ID)
 		sprites->Add(40003, 73, 1770, 73 + 34, 1770 + 17, texBrick);
 		sprites->Add(40004, 112, 1770, 112 + 38, 1770 + 21, texBrick);
 		sprites->Add(40005, 155, 1770, 155 + 40, 1770 + 24, texBrick);
-
-		ani = new CAnimation(100);		// brick
-		ani->Add(40001, 750);
-		ani->Add(40002);
-		ani->Add(40003);
-		ani->Add(40004);
-		ani->Add(40005, 1500);
-		ani->Add(40004);
-		ani->Add(40003);
-		ani->Add(40002);
-		ani->Add(40001, 750);
-
-		animations->Add(601, ani);
-
-		this->AddAnimation(601);
+		if (this->id == BRICK)
+		{
+			ani = new CAnimation(100);		// brick
+			ani->Add(40001);
+			ani->Add(40002);
+			ani->Add(40003);
+			ani->Add(40004);
+			ani->Add(40005, 1800);
+			ani->Add(40004);
+			ani->Add(40003);
+			ani->Add(40002);
+			ani->Add(40001, 1800);
+			animations->Add(601, ani);
+			this->AddAnimation(601);
+		}
+		else 
+		{
+			ani = new CAnimation(100);		// brick
+			ani->Add(40005);
+			ani->Add(40004);
+			ani->Add(40003);
+			ani->Add(40002);
+			ani->Add(40001, 1800);
+			ani->Add(40002);
+			ani->Add(40003);
+			ani->Add(40004);
+			ani->Add(40005, 1800);
+			animations->Add(601, ani);
+			this->AddAnimation(601);
+		}
+		
 	}
 	else if (this->id == eType::BRICK2)
 	{
@@ -106,7 +122,7 @@ void CBrick::LoadResources(int ID)
 		sprites->Add(40026, 173, 1799, 173 + 49, 1799 + 35, texBrick_LINE);
 
 		ani = new CAnimation(100);
-		ani->Add(40021, 750);
+		ani->Add(40021, 1500);
 		ani->Add(40022);
 		ani->Add(40023);
 		ani->Add(40024);
@@ -116,7 +132,7 @@ void CBrick::LoadResources(int ID)
 		ani->Add(40024);
 		ani->Add(40023);
 		ani->Add(40022);
-		ani->Add(40021, 750);
+		ani->Add(40021, 1500);
 
 		animations->Add(603, ani);
 		this->AddAnimation(603); //gai 
@@ -129,7 +145,26 @@ void CBrick::GetBoundingBox(float &l, float &t, float &r, float &b)
 	if (id == eType::BRICK)
 	{
 		int curr_f = GetAnimation()[0]->GetCurrentFrame();
-		if (curr_f >= 3)
+		if (curr_f >= 0 && curr_f <= 4)
+		{
+			l = x;
+			t = y;
+			r = l + (animations[0]->frames[curr_f]->GetSprite()->GetWidth());
+			b = t + (animations[0]->frames[curr_f]->GetSprite()->GetHeight());
+		}
+		else
+		{
+			l = 0;
+			t = 0;
+			r = 0;
+			b = 0;
+		}
+	}
+	else if (id == eType::BRICKv2)
+	{
+
+		int curr_f = GetAnimation()[0]->GetCurrentFrame();
+		if (curr_f >= 5)
 		{
 			l = x;
 			t = y;
@@ -165,7 +200,7 @@ void CBrick::GetBoundingBox(float &l, float &t, float &r, float &b)
 	else if (id == eType::BRICKLINE)
 	{
 		int curr_f = GetAnimation()[0]->GetCurrentFrame();
-		if (curr_f >= 2)
+		if (curr_f >= 2 && curr_f <= 5)
 		{
 			l = x;
 			t = y;

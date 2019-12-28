@@ -45,6 +45,7 @@ enum eType
 	BRICK = 10,
 	BRICK2 = 11,
 	BRICKLINE = 12,
+	BRICKv2 = 13,
 	GOOMBA = 20,
 	ENEMY1 = 30,
 	ENEMY2 = 31,

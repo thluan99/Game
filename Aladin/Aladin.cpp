@@ -197,13 +197,18 @@ void CAladin::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 					y += e->t * dy;
 				}
 
-				if (e->obj->GetId() == eType::BRICK)
+				if (e->obj->GetId() == eType::BRICK || e->obj->GetId() == eType::BRICKv2)
 				{
 					if (nx != 0)
 						x += e->t * dx;
 					if (ny != -1)
 						y += e->t * dy;
 
+				}
+				if (e->obj->GetId() == eType::BRICKLINE || e->obj->GetId() == eType::BRICK2)
+				{
+					if (nx != 0)
+						x += e->t * dx;
 				}
 			}
 		}

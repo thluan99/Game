@@ -218,7 +218,7 @@ void CSampleKeyHander::OnKeyDown(int KeyCode)
 			
 			if (scene->aladin->direction == 1)
 				scene->sword->SetPosition(scene->aladin->x - 20, scene->aladin->y - 20);
-			else scene->sword->SetPosition(scene->aladin->x + ALADIN_BIG_BBOX_WIDTH/2 + 20, scene->aladin->y - 20);
+			else scene->sword->SetPosition(scene->aladin->x + ALADIN_BIG_BBOX_WIDTH + 20, scene->aladin->y - 20);
 
 			scene->objects.push_back(scene->sword);
 			if (currentScene == 1)

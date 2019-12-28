@@ -239,7 +239,7 @@ void Scene2::Update(DWORD dt)
 		{
 			if (objects[i]->id == eType::FIREATTACK && objects[i]->fireFlag == false)
 			{
-				if (abs(jafar->GetX() - objects[i]->GetX()) > 200)
+				if (abs(jafar->GetX() - objects[i]->GetX()) > 250)
 				{
 					FireAttack *freAttack = new FireAttack();
 					freAttack->LoadResources(eType::FIREATTACK);
@@ -253,7 +253,7 @@ void Scene2::Update(DWORD dt)
 				}
 			}
 			if (objects[i]->id == eType::FIREATTACK &&
-				(abs(jafar->GetX() - objects[i]->GetX()) > 300))
+				(abs(jafar->GetX() - objects[i]->GetX()) > 350))
 			{
 				objects.erase(objects.begin() + i);
 				DebugOut(L"Xoa lua!");

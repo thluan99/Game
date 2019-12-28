@@ -68,14 +68,23 @@ void Enemy1::Render()
 				SetState(ENEMY1_STATE_ATTACK_RIGHT);
 		}
 	}
+	else if (state == ENEMY1_STATE_IDLE_LEFT || state == ENEMY1_STATE_IDLE_RIGHT)
+	{
+		if (direction == -1)
+		{
+			ani = ENEMY1_ANI_IDLE_LEFT;
+			animations[ani]->RenderAladin(x, y + ENEMY_BBOX_HEIGHT, direction);
+		}
+		else
+		{
+			ani = ENEMY1_ANI_IDLE_RIGHT;
+			animations[ani]->RenderAladin(x, y + ENEMY_BBOX_HEIGHT, direction);
+		}
+	}
 	else
 	{
-		if (state == ENEMY1_STATE_IDLE_LEFT)
-			ani = ENEMY1_ANI_IDLE_LEFT;
-		else if (state == ENEMY1_STATE_RUN_LEFT)
+		if (state == ENEMY1_STATE_RUN_LEFT)
 			ani = ENEMY1_ANI_RUN_LEFT;
-		else if (state == ENEMY1_STATE_IDLE_RIGHT)
-			ani = ENEMY1_ANI_IDLE_RIGHT;
 		else if (state == ENEMY1_STATE_RUN_RIGHT)
 			ani = ENEMY1_ANI_RUN_RIGHT;
 		animations[ani]->Render(x, y);
