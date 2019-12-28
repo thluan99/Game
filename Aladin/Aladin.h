@@ -82,7 +82,9 @@
 #define ALADIN_ANI_IDLE_APPLE_RIGHT			31
 #define ALADIN_ANI_TREO_NHAY				32
 #define ALADIN_ANI_TREO_NHAY_ROI			33
-#define ALADIN_ANI_DIE					    100
+#define ALADIN_ANI_DIE					    34
+#define ALADIN_ANI_REBORN					35
+#define ALADIN_ANI_WALKING_PASSING			36
 
 
 #define	ALADIN_LEVEL_BIG					2

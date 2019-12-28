@@ -200,7 +200,7 @@ void Enemy3::LoadResources(int ID)
 	sprites->Add(59999, 444, 175, 44 + 444, 58 + 175, textE3_f);
 	ani = new CAnimation(100);
 	ani->Add(59999);
-	animations->Add(999, ani);
+	animations->Add(101, ani);
 
 	//----------RUN LEFT ------------//
 	sprites->Add(50001, 2, 9, 45 + 2, 67 + 9, textE3);

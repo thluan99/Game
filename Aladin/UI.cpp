@@ -347,7 +347,7 @@ void UI::LoadResources()
 	sprites->Add(99103, 143, 33, 143 + 16, 33 + 20, tex_UI_font); // 3
 	sprites->Add(99104, 176, 32, 176 + 17, 32 + 20, tex_UI_font); // 4
 	sprites->Add(99105, 208, 32, 208 + 14, 32 + 21, tex_UI_font); // 5
-	sprites->Add(99106, 238, 34, 238 + 14, 34 + 17, tex_UI_font); // 6
+	sprites->Add(99106, 237, 34, 237 + 14, 34 + 17, tex_UI_font); // 6
 	sprites->Add(99107, 266, 32, 266 + 17, 32 + 25, tex_UI_font);//7
 	sprites->Add(99108, 299, 34, 299 + 12, 34 + 17, tex_UI_font);//8
 	sprites->Add(99109, 327, 32, 327 + 14, 32 + 22, tex_UI_font);//9
