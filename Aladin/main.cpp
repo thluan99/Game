@@ -496,6 +496,7 @@ void CSampleKeyHander::KeyState(BYTE* states)
 				currentScene = 1;
 				scene1->CreateGrid(objects);
 				scene1->LoadResources(objects);
+				scene1->ui = UI::GetInstance(scene1->aladin);
 			}
 			else 
 			{
