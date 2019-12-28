@@ -5,6 +5,7 @@ using namespace std;
 #define SCREEN_WIDTH 600
 #define SCREEN_HEIGHT 400
 #define BACKGROUND_COLOR D3DCOLOR_XRGB(0, 0, 0)
+#define BACKGROUND_CHANGE_SCENE D3DCOLOR_XRGB(0, 0, 32)
 #define MAP_LIMIT_RIGHT 32*71
 #define MAP_LIMIT_BOT 32*36
 #define MAP2_LIMIT_RIGHT 32*26
@@ -36,7 +37,7 @@ using namespace std;
 #define ID_TEX_ENEMY2		55
 #define ID_TEX_ENEMY2_FLIP	56
 #define ID_TEX_ITEM_COLLECT 60
-
+#define ID_TEX_MONKEY		70
 #define del 8 // sai số tỉ đối
 // ID object
 enum eType

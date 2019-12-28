@@ -78,358 +78,368 @@ void CSampleKeyHander::OnKeyDown(int KeyCode)
 {
 	DebugOut(L"[INFO] KeyDown: %d\n", KeyCode);
 	//---------------test--------------------//
-	switch (KeyCode)
+	if (currentScene == 1 || currentScene == 2)
 	{
-	case DIK_5:
-		for (int i = 1; i < scene->grid->cells.size(); i++)
-			for (int j = 0; j < scene->grid->cells[i]->listGameObject.size(); j++)
-				if (scene->grid->cells[i]->listGameObject[j]->id == eType::ENEMY1)
-					scene->grid->cells[i]->listGameObject[j]->SetState(ENEMY1_STATE_ATTACK_LEFT);
-		break;
-	case DIK_1:
-		for (int i = 1; i < scene->grid->cells.size(); i++)
-			for (int j = 0; j < scene->grid->cells[i]->listGameObject.size(); j++)
-				if (scene->grid->cells[i]->listGameObject[j]->id == eType::ENEMY1)
-					scene->grid->cells[i]->listGameObject[j]->SetState(ENEMY1_STATE_ATTACK_RIGHT_MID);
-		break;
-	case DIK_2:
-		for (int i = 1; i < scene->grid->cells.size(); i++)
-			for (int j = 0; j < scene->grid->cells[i]->listGameObject.size(); j++)
-				if (scene->grid->cells[i]->listGameObject[j]->id == eType::ENEMY1)
-					scene->grid->cells[i]->listGameObject[j]->SetState(ENEMY1_STATE_HIT_LEFT);
-		break;
-	case DIK_3:
-		for (int i = 1; i < scene->grid->cells.size(); i++)
-			for (int j = 0; j < scene->grid->cells[i]->listGameObject.size(); j++)
-				if (scene->grid->cells[i]->listGameObject[j]->id == eType::ENEMY1)
-					scene->grid->cells[i]->listGameObject[j]->SetState(ENEMY1_STATE_IDLE_RIGHT);
-		break;
-	case DIK_4:
-		for (int i = 1; i < scene->grid->cells.size(); i++)
-			for (int j = 0; j < scene->grid->cells[i]->listGameObject.size(); j++)
-				if (scene->grid->cells[i]->listGameObject[j]->id == eType::ENEMY1)
-					scene->grid->cells[i]->listGameObject[j]->SetState(ENEMY1_STATE_RUN_LEFT);
-		break;
-		//---------hack ??? ---------//
-	// ---- ĐÂY LÀ PHẦN PHỤC VỤ CHO TEST VÀ GHI FILE --------------//
-	case DIK_HOME:
-		scene->aladin->SetX(scene->aladin->GetX() + 50);
-		break;
-	case DIK_END:
-		scene->aladin->SetX(scene->aladin->GetX() - 50);
-		break;
-	case DIK_8:
-		scene->aladin->SetPosition(2100, 50);
-		break;
-	//case DIK_9:
-	//	if (currentScene == 1)
-	//	{
-	//		scene1->grid->InitWriteGrid(scene1->objects);
-	//		DebugOut(L"[INFO] : Rewrite file gridWrite.txt\n");
-	//	}break;
-	//case DIK_0:
-	//	if (currentScene == 1)
-	//	{
-	//		ofstream ofs;
-	//		ofs.open("textures\\gridWrite.txt", ofstream::out | ofstream::trunc);
-	//		ofs.close();
-	//		DebugOut(L"[INFO] : Clear file gridWrite.txt\n");
-	//	}break;
-	
-	//---------end test------------//
-	}
-	//------------------end test ----------------------//
 
-	switch (KeyCode)
-	{
-	case DIK_A:
-		scene->aladin->SetState(ALADIN_STATE_IDLE);
-		if (currentScene == 1)
-			scene->aladin->SetPosition(500.0f, 1000.0f);
-		scene->aladin->setEnableKey(true);
-		scene->aladin->SetSpeed(0, 0);
-		break;
-	case DIK_RIGHT:
-		if (scene->aladin->getEnableKey() == true) {
-			scene->aladin->SetDirection(1);
-			scene->aladin->SetState(ALADIN_STATE_DI);
+		switch (KeyCode)
+		{
+		case DIK_5:
+			for (int i = 1; i < scene->grid->cells.size(); i++)
+				for (int j = 0; j < scene->grid->cells[i]->listGameObject.size(); j++)
+					if (scene->grid->cells[i]->listGameObject[j]->id == eType::ENEMY1)
+						scene->grid->cells[i]->listGameObject[j]->SetState(ENEMY1_STATE_ATTACK_LEFT);
+			break;
+		case DIK_1:
+			for (int i = 1; i < scene->grid->cells.size(); i++)
+				for (int j = 0; j < scene->grid->cells[i]->listGameObject.size(); j++)
+					if (scene->grid->cells[i]->listGameObject[j]->id == eType::ENEMY1)
+						scene->grid->cells[i]->listGameObject[j]->SetState(ENEMY1_STATE_ATTACK_RIGHT_MID);
+			break;
+		case DIK_2:
+			for (int i = 1; i < scene->grid->cells.size(); i++)
+				for (int j = 0; j < scene->grid->cells[i]->listGameObject.size(); j++)
+					if (scene->grid->cells[i]->listGameObject[j]->id == eType::ENEMY1)
+						scene->grid->cells[i]->listGameObject[j]->SetState(ENEMY1_STATE_HIT_LEFT);
+			break;
+		case DIK_3:
+			for (int i = 1; i < scene->grid->cells.size(); i++)
+				for (int j = 0; j < scene->grid->cells[i]->listGameObject.size(); j++)
+					if (scene->grid->cells[i]->listGameObject[j]->id == eType::ENEMY1)
+						scene->grid->cells[i]->listGameObject[j]->SetState(ENEMY1_STATE_IDLE_RIGHT);
+			break;
+		case DIK_4:
+			for (int i = 1; i < scene->grid->cells.size(); i++)
+				for (int j = 0; j < scene->grid->cells[i]->listGameObject.size(); j++)
+					if (scene->grid->cells[i]->listGameObject[j]->id == eType::ENEMY1)
+						scene->grid->cells[i]->listGameObject[j]->SetState(ENEMY1_STATE_RUN_LEFT);
+			break;
+			//---------hack ??? ---------//
+		// ---- ĐÂY LÀ PHẦN PHỤC VỤ CHO TEST VÀ GHI FILE --------------//
+		case DIK_HOME:
+			scene->aladin->SetX(scene->aladin->GetX() + 50);
+			break;
+		case DIK_END:
+			scene->aladin->SetX(scene->aladin->GetX() - 50);
+			break;
+		case DIK_8:
+			scene->aladin->SetPosition(2100, 50);
+			break;
+			//case DIK_9:
+			//	if (currentScene == 1)
+			//	{
+			//		scene1->grid->InitWriteGrid(scene1->objects);
+			//		DebugOut(L"[INFO] : Rewrite file gridWrite.txt\n");
+			//	}break;
+			//case DIK_0:
+			//	if (currentScene == 1)
+			//	{
+			//		ofstream ofs;
+			//		ofs.open("textures\\gridWrite.txt", ofstream::out | ofstream::trunc);
+			//		ofs.close();
+			//		DebugOut(L"[INFO] : Clear file gridWrite.txt\n");
+			//	}break;
 
-			if (scene->aladin->isStopAnimation == true)
-			{
-				scene->aladin->isStopAnimation = false;
-				scene->aladin->countTiming = 0;
-			}
+			//---------end test------------//
 		}
-		else {
-			if (scene->aladin->getNhay()==true)
-				scene->aladin->vx=  ALADIN_WALKING_SPEED;			
-		}
-		scene->aladin->isStopAnimation = false;
-		break;
-	case DIK_LEFT:
-		if (scene->aladin->getEnableKey() == true) {
-			scene->aladin->SetDirection(-1);
-			scene->aladin->SetState(ALADIN_STATE_DI);
+		//------------------end test ----------------------//
 
-			if (scene->aladin->isStopAnimation == true)
-			{
-				scene->aladin->isStopAnimation = false;
-				scene->aladin->countTiming = 0;
-			}
-		}
-		else {
-			if (scene->aladin->getNhay() == true)
-				scene->aladin->vx = -ALADIN_WALKING_SPEED;
-
-		}
-		scene->aladin->isStopAnimation = false;
-		break;
-	case DIK_UP:
-		if (scene->aladin->getEnableKey() == true) {
-			if (scene->aladin->isCollisonWithRope || scene->aladin->GetState() == ALADIN_STATE_TREO)
-			{
-				scene->aladin->SetState(ALADIN_STATE_TREO);
-				scene->aladin->vy = -0.1f;
-				scene->aladin->x = scene->aladin->xSetCollision;
-				scene->aladin->climDirection = 1;
-			}
-			else
-				scene->aladin->SetState(ALADIN_STATE_NGUOC_LEN);
-		}		
-		break;
-	case DIK_DOWN:
-		if (scene->aladin->getEnableKey() == true) {
-			if (scene->aladin->isCollisonWithRope || scene->aladin->GetState() == ALADIN_STATE_TREO)
-			{
-				scene->aladin->SetState(ALADIN_STATE_TREO);
-				scene->aladin->vy = 0.1f;
-				scene->aladin->x = scene->aladin->xSetCollision;
-				scene->aladin->climDirection = -1;
-			}
-			else
-			{
-				scene->aladin->SetState(ALADIN_STATE_NGOI);
-			}
-		}
-		break;
-	case DIK_C:
-		if (scene->aladin->getEnableKey() == true) {
-			scene->aladin->setChem(true);
-			scene->aladin->timeIDLE = 0;
-			scene->sword = new Sword();
-			scene->sword->LoadResources(eType::SWORD);
-			
-			if (scene->aladin->direction == 1)
-				scene->sword->SetPosition(scene->aladin->x - 20, scene->aladin->y - 20);
-			else scene->sword->SetPosition(scene->aladin->x + ALADIN_BIG_BBOX_WIDTH + 20, scene->aladin->y - 20);
-
-			scene->objects.push_back(scene->sword);
+		switch (KeyCode)
+		{
+		case DIK_A:
+			scene->aladin->SetState(ALADIN_STATE_IDLE);
 			if (currentScene == 1)
-				for (int i = 1; i < scene->grid->cells.size(); i++)
-					if (scene->grid->isInCell(scene->sword, scene->grid->cells[i]->x, scene->grid->cells[i]->y))
-					{
-						scene->grid->cells[i]->listGameObject.push_back(scene->sword);
-						//DebugOut(L"[info] : aaaaaaaaaaaaaaaaaaaaaa");
-					}					
-		}
-		break;
-	case DIK_X:
-		if (scene->aladin->getEnableKey() == true && scene->aladin->GetState() != ALADIN_STATE_NGOI) {
-			if (scene->aladin->GetState() == ALADIN_STATE_TREO)
-			{
-				scene->aladin->SetState(ALADIN_STATE_TREO_NHAY);
-			}
-			scene->aladin->setNhay(true);
-		}
-		break;
-	case DIK_Z:
-		if (scene->aladin->getEnableKey() == true ) {
-			scene->aladin->setNem(true);
-			
-			scene->aladin->timeIDLE = 0;
-			if (scene->aladin->apples > 0)
-			{
-				scene->aladin->apples--;
-				scene->apple = new Apple();
-				scene->apple->LoadResources(eType::APPLE);
-				//apple = new Apple(scene->aladin->x + 20, scene->aladin->y);
-				if (scene->aladin->state == ALADIN_STATE_NGOI)
+				scene->aladin->SetPosition(500.0f, 1000.0f);
+			scene->aladin->setEnableKey(true);
+			scene->aladin->SetSpeed(0, 0);
+			break;
+		case DIK_RIGHT:
+			if (scene->aladin->getEnableKey() == true) {
+				scene->aladin->SetDirection(1);
+				scene->aladin->SetState(ALADIN_STATE_DI);
+
+				if (scene->aladin->isStopAnimation == true)
 				{
-					scene->apple->SetPosition(scene->aladin->x + 10, scene->aladin->y + 20);
+					scene->aladin->isStopAnimation = false;
+					scene->aladin->countTiming = 0;
+				}
+			}
+			else {
+				if (scene->aladin->getNhay() == true)
+					scene->aladin->vx = ALADIN_WALKING_SPEED;
+			}
+			scene->aladin->isStopAnimation = false;
+			break;
+		case DIK_LEFT:
+			if (scene->aladin->getEnableKey() == true) {
+				scene->aladin->SetDirection(-1);
+				scene->aladin->SetState(ALADIN_STATE_DI);
+
+				if (scene->aladin->isStopAnimation == true)
+				{
+					scene->aladin->isStopAnimation = false;
+					scene->aladin->countTiming = 0;
+				}
+			}
+			else {
+				if (scene->aladin->getNhay() == true)
+					scene->aladin->vx = -ALADIN_WALKING_SPEED;
+
+			}
+			scene->aladin->isStopAnimation = false;
+			break;
+		case DIK_UP:
+			if (scene->aladin->getEnableKey() == true) {
+				if (scene->aladin->isCollisonWithRope || scene->aladin->GetState() == ALADIN_STATE_TREO)
+				{
+					scene->aladin->SetState(ALADIN_STATE_TREO);
+					scene->aladin->vy = -0.1f;
+					scene->aladin->x = scene->aladin->xSetCollision;
+					scene->aladin->climDirection = 1;
+				}
+				else
+					scene->aladin->SetState(ALADIN_STATE_NGUOC_LEN);
+			}
+			break;
+		case DIK_DOWN:
+			if (scene->aladin->getEnableKey() == true) {
+				if (scene->aladin->isCollisonWithRope || scene->aladin->GetState() == ALADIN_STATE_TREO)
+				{
+					scene->aladin->SetState(ALADIN_STATE_TREO);
+					scene->aladin->vy = 0.1f;
+					scene->aladin->x = scene->aladin->xSetCollision;
+					scene->aladin->climDirection = -1;
 				}
 				else
 				{
-					scene->apple->SetPosition(scene->aladin->x + 10, scene->aladin->y);
+					scene->aladin->SetState(ALADIN_STATE_NGOI);
 				}
-				//DebugOut(L"aladin x: %d \n apple x: %d \n", scene->aladin->x + 10, scene->apple->x);
-				scene->apple->setNem(true);
+			}
+			break;
+		case DIK_C:
+			if (scene->aladin->getEnableKey() == true) {
+				scene->aladin->setChem(true);
+				scene->aladin->timeIDLE = 0;
+				scene->sword = new Sword();
+				scene->sword->LoadResources(eType::SWORD);
+
 				if (scene->aladin->direction == 1)
-					scene->apple->direction = 1;
-				else scene->apple->direction = -1;
-				scene->objects.push_back(scene->apple);
-				scene->listApples.push_back(scene->apple);
+					scene->sword->SetPosition(scene->aladin->x - 20, scene->aladin->y - 20);
+				else scene->sword->SetPosition(scene->aladin->x + ALADIN_BIG_BBOX_WIDTH + 20, scene->aladin->y - 20);
+
+				scene->objects.push_back(scene->sword);
 				if (currentScene == 1)
-				{
 					for (int i = 1; i < scene->grid->cells.size(); i++)
-					{
-						if (scene->grid->isInCell(scene->apple, scene->grid->cells[i]->x, scene->grid->cells[i]->y))
+						if (scene->grid->isInCell(scene->sword, scene->grid->cells[i]->x, scene->grid->cells[i]->y))
 						{
-							scene->grid->cells[i]->listGameObject.push_back(scene->apple);
+							scene->grid->cells[i]->listGameObject.push_back(scene->sword);
+							//DebugOut(L"[info] : aaaaaaaaaaaaaaaaaaaaaa");
+						}
+			}
+			break;
+		case DIK_X:
+			if (scene->aladin->getEnableKey() == true && scene->aladin->GetState() != ALADIN_STATE_NGOI) {
+				if (scene->aladin->GetState() == ALADIN_STATE_TREO)
+				{
+					scene->aladin->SetState(ALADIN_STATE_TREO_NHAY);
+				}
+				scene->aladin->setNhay(true);
+			}
+			break;
+		case DIK_Z:
+			if (scene->aladin->getEnableKey() == true) {
+				scene->aladin->setNem(true);
+
+				scene->aladin->timeIDLE = 0;
+				if (scene->aladin->apples > 0)
+				{
+					scene->aladin->apples--;
+					scene->apple = new Apple();
+					scene->apple->LoadResources(eType::APPLE);
+					//apple = new Apple(scene->aladin->x + 20, scene->aladin->y);
+					if (scene->aladin->state == ALADIN_STATE_NGOI)
+					{
+						scene->apple->SetPosition(scene->aladin->x + 10, scene->aladin->y + 20);
+					}
+					else
+					{
+						scene->apple->SetPosition(scene->aladin->x + 10, scene->aladin->y);
+					}
+					//DebugOut(L"aladin x: %d \n apple x: %d \n", scene->aladin->x + 10, scene->apple->x);
+					scene->apple->setNem(true);
+					if (scene->aladin->direction == 1)
+						scene->apple->direction = 1;
+					else scene->apple->direction = -1;
+					scene->objects.push_back(scene->apple);
+					scene->listApples.push_back(scene->apple);
+					if (currentScene == 1)
+					{
+						for (int i = 1; i < scene->grid->cells.size(); i++)
+						{
+							if (scene->grid->isInCell(scene->apple, scene->grid->cells[i]->x, scene->grid->cells[i]->y))
+							{
+								scene->grid->cells[i]->listGameObject.push_back(scene->apple);
+							}
 						}
 					}
 				}
 			}
+			break;
+
+		case DIK_Q:
+			scene->aladin->setEnableKey(true);
+			break;
+		default:
+			break;
 		}
-		break;
-	
-	case DIK_Q:
-		scene->aladin->setEnableKey(true);
-		break;
-	default:
-		break;
 	}
 }
 
 void CSampleKeyHander::OnKeyUp(int KeyCode)
 {
-	switch (KeyCode)
-	{	
-	case DIK_RIGHT:
-		if (scene->aladin->getEnableKey() == true)
-			//	if(scene->aladin->GetState()==ALADIN_STATE_DI && scene->aladin->getChem()==false && scene->aladin->getNem() == false && scene->aladin->getNem() == false)
+	if (currentScene == 1 || currentScene == 2)
+	{
+
+		switch (KeyCode)
 		{
-			scene->aladin->SetState(ALADIN_STATE_IDLE);
-			if (scene->aladin->countTiming >= 100)
+		case DIK_RIGHT:
+			if (scene->aladin->getEnableKey() == true)
+				//	if(scene->aladin->GetState()==ALADIN_STATE_DI && scene->aladin->getChem()==false && scene->aladin->getNem() == false && scene->aladin->getNem() == false)
 			{
-				scene->aladin->isStopAnimation = true;
-				scene->aladin->SetState(ALADIN_STATE_DUNG_CHAY_PHAI);
-				//DebugOut(L"Timing came");
-				scene->aladin->countTiming = 0;
-			}
-			else scene->aladin->isStopAnimation = false;
-
-			if (scene->aladin->isPushingWall == true)
-			{
-				scene->aladin->isPushingWall = false;
 				scene->aladin->SetState(ALADIN_STATE_IDLE);
+				if (scene->aladin->countTiming >= 100)
+				{
+					scene->aladin->isStopAnimation = true;
+					scene->aladin->SetState(ALADIN_STATE_DUNG_CHAY_PHAI);
+					//DebugOut(L"Timing came");
+					scene->aladin->countTiming = 0;
+				}
+				else scene->aladin->isStopAnimation = false;
+
+				if (scene->aladin->isPushingWall == true)
+				{
+					scene->aladin->isPushingWall = false;
+					scene->aladin->SetState(ALADIN_STATE_IDLE);
+				}
 			}
+			scene->aladin->countTiming = 0;
+			scene->aladin->timeIDLE = 0;
+
+			break;
+		case DIK_LEFT:
+			if (scene->aladin->getEnableKey() == true)
+				//	if (scene->aladin->GetState() == ALADIN_STATE_DI && scene->aladin->getChem() == false && scene->aladin->getNem() == false && scene->aladin->getNem() == false)
+			{
+				scene->aladin->SetState(ALADIN_STATE_IDLE);
+
+				if (scene->aladin->countTiming >= 100)
+				{
+					scene->aladin->isStopAnimation = true;
+					scene->aladin->SetState(ALADIN_STATE_DUNG_CHAY_TRAI);
+					//DebugOut(L"Timing came");
+					scene->aladin->countTiming = 0;
+				}
+				else scene->aladin->isStopAnimation = false;
+
+				if (scene->aladin->isPushingWall == true)
+				{
+					scene->aladin->isPushingWall = false;
+					scene->aladin->SetState(ALADIN_STATE_IDLE);
+				}
+			}
+			scene->aladin->countTiming = 0;
+			scene->aladin->timeIDLE = 0;
+
+			break;
+		case DIK_UP:
+			if (scene->aladin->getEnableKey() == true)
+			{
+				if (scene->aladin->isCollisonWithRope == true)
+				{
+					scene->aladin->SetState(ALADIN_STATE_TREO);
+					scene->aladin->vy = 0;
+					scene->aladin->climDirection = 0;
+				}
+				else
+					scene->aladin->SetState(ALADIN_STATE_IDLE);
+			}
+			break;
+		case DIK_DOWN:
+			if (scene->aladin->getEnableKey() == true)
+			{
+				if (scene->aladin->isCollisonWithRope == true)
+				{
+					scene->aladin->SetState(ALADIN_STATE_TREO);
+					scene->aladin->vy = 0;
+					scene->aladin->climDirection = 0;
+				}
+				else
+					scene->aladin->SetState(ALADIN_STATE_IDLE);
+			}
+			break;
+		case DIK_C:
+			if (scene->aladin->getEnableKey() == true) {
+				if (game->IsKeyDown(DIK_DOWN))
+					scene->aladin->SetState(ALADIN_STATE_NGOI);
+				else
+					scene->aladin->SetState(ALADIN_STATE_IDLE);
+			}
+
+			break;
+		case DIK_X:
+			scene->aladin->timeIDLE = 0;
+			break;
 		}
-		scene->aladin->countTiming = 0;
-		scene->aladin->timeIDLE = 0;
-
-		break;
-	case DIK_LEFT:		
-		if (scene->aladin->getEnableKey() == true)
-			//	if (scene->aladin->GetState() == ALADIN_STATE_DI && scene->aladin->getChem() == false && scene->aladin->getNem() == false && scene->aladin->getNem() == false)
-		{
-			scene->aladin->SetState(ALADIN_STATE_IDLE);
-
-			if (scene->aladin->countTiming >= 100)
-			{
-				scene->aladin->isStopAnimation = true;
-				scene->aladin->SetState(ALADIN_STATE_DUNG_CHAY_TRAI);
-				//DebugOut(L"Timing came");
-				scene->aladin->countTiming = 0;
-			}
-			else scene->aladin->isStopAnimation = false;
-
-			if (scene->aladin->isPushingWall == true)
-			{
-				scene->aladin->isPushingWall = false;
-				scene->aladin->SetState(ALADIN_STATE_IDLE);
-			}
-		}
-		scene->aladin->countTiming = 0;
-		scene->aladin->timeIDLE = 0;
-
-		break;
-	case DIK_UP:
-		if (scene->aladin->getEnableKey() == true)
-		{
-			if (scene->aladin->isCollisonWithRope == true)
-			{
-				scene->aladin->SetState(ALADIN_STATE_TREO);
-				scene->aladin->vy = 0;
-				scene->aladin->climDirection = 0;
-			}			
-			else
-				scene->aladin->SetState(ALADIN_STATE_IDLE);
-		}		
-		break;
-	case DIK_DOWN:
-		if (scene->aladin->getEnableKey() == true)
-		{
-			if (scene->aladin->isCollisonWithRope == true)
-			{
-				scene->aladin->SetState(ALADIN_STATE_TREO);
-				scene->aladin->vy = 0;
-				scene->aladin->climDirection = 0;
-			}
-			else
-				scene->aladin->SetState(ALADIN_STATE_IDLE);
-		}
-		break;
-	case DIK_C:
-		if (scene->aladin->getEnableKey() == true){ 
-			if(game->IsKeyDown(DIK_DOWN))
-				scene->aladin->SetState(ALADIN_STATE_NGOI); 
-			else 
-				scene->aladin->SetState(ALADIN_STATE_IDLE);
-		}
-			
-		break;
-	case DIK_X:
-		scene->aladin->timeIDLE = 0;
-		break;
 	}
 }
 void CSampleKeyHander::KeyState(BYTE* states)
 {
-	// disable control key when scene->aladin die 
-	if (scene->aladin->GetState() == ALADIN_STATE_DIE) return;
-	if (scene->aladin->getEnableKey() == true)
+	if (currentScene == 1 || currentScene == 2)
 	{
-		if (game->IsKeyDown(DIK_RIGHT))
+		// disable control key when scene->aladin die 
+		if (scene->aladin->GetState() == ALADIN_STATE_DIE) return;
+		if (scene->aladin->getEnableKey() == true)
 		{
-			scene->aladin->SetDirection(1);
-			scene->aladin->SetState(ALADIN_STATE_DI);
-		}
-		else if (game->IsKeyDown(DIK_LEFT))
-		{
-			scene->aladin->SetDirection(-1);
-			scene->aladin->SetState(ALADIN_STATE_DI);
-		}
-		else if (game->IsKeyDown(DIK_UP))
-		{
-			if (scene->aladin->isCollisonWithRope)
+			if (game->IsKeyDown(DIK_RIGHT))
 			{
-				scene->aladin->SetState(ALADIN_STATE_TREO);
-				scene->aladin->vy = -0.1f;
-				scene->aladin->x = scene->aladin->xSetCollision;
-				scene->aladin->climDirection = 1;
+				scene->aladin->SetDirection(1);
+				scene->aladin->SetState(ALADIN_STATE_DI);
 			}
-			else
-			scene->aladin->SetState(ALADIN_STATE_NGUOC_LEN);
-		}
-		else if (game->IsKeyDown(DIK_DOWN))
-		{
-			if (scene->aladin->isCollisonWithRope)
+			else if (game->IsKeyDown(DIK_LEFT))
 			{
-				scene->aladin->SetState(ALADIN_STATE_TREO);
-				scene->aladin->vy = 0.1f;
-				scene->aladin->x = scene->aladin->xSetCollision;
-				scene->aladin->climDirection = -1;
+				scene->aladin->SetDirection(-1);
+				scene->aladin->SetState(ALADIN_STATE_DI);
 			}
-			else
-			scene->aladin->SetState(ALADIN_STATE_NGOI);
-		}		
+			else if (game->IsKeyDown(DIK_UP))
+			{
+				if (scene->aladin->isCollisonWithRope)
+				{
+					scene->aladin->SetState(ALADIN_STATE_TREO);
+					scene->aladin->vy = -0.1f;
+					scene->aladin->x = scene->aladin->xSetCollision;
+					scene->aladin->climDirection = 1;
+				}
+				else
+					scene->aladin->SetState(ALADIN_STATE_NGUOC_LEN);
+			}
+			else if (game->IsKeyDown(DIK_DOWN))
+			{
+				if (scene->aladin->isCollisonWithRope)
+				{
+					scene->aladin->SetState(ALADIN_STATE_TREO);
+					scene->aladin->vy = 0.1f;
+					scene->aladin->x = scene->aladin->xSetCollision;
+					scene->aladin->climDirection = -1;
+				}
+				else
+					scene->aladin->SetState(ALADIN_STATE_NGOI);
+			}
+		}
+		/*else
+		{
+			aladin->SetState(ALADIN_STATE_IDLE);
+		}*/
 	}
-	/*else
-	{
-		aladin->SetState(ALADIN_STATE_IDLE);
-	}*/
 }
-
 #pragma endregion
 //----------------EndKeyBoard----------------------
 
