@@ -52,7 +52,7 @@ void ItemApple::LoadResources(int ID)
 	sprites->Add(70000, 341, 17, 11 + 341, 12 + 17, texITApple);
 	ani = new CAnimation(100);
 	ani->Add(70000);
-	animations->Add(100, ani);
+	animations->Add(10099, ani);
 
 	sprites->Add(9970, 13, 19, 6 + 13, 6 + 19, texITCollect);
 	sprites->Add(9971, 55, 13, 10 + 55, 16 + 13, texITCollect);
@@ -77,11 +77,11 @@ void ItemApple::LoadResources(int ID)
 	ani->Add(9978);
 	ani->Add(9979);
 	ani->Add(9980);
-	animations->Add(101, ani);
+	animations->Add(10199, ani);
 
 
-	this->AddAnimation(100);
-	this->AddAnimation(101);
+	this->AddAnimation(10099);
+	this->AddAnimation(10199);
 }
 
 void ItemApple::GetBoundingBox(float & l, float & t, float & r, float & b)

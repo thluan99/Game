@@ -28,6 +28,7 @@
 #include "PositionPot.h"
 #include "Shop.h"
 #include "Sword.h"
+#include "UI.h"
 
 class Scene
 {
@@ -43,6 +44,7 @@ public:
 	CGame *game;
 	Grid *grid;
 	vector<Apple*> listApples;
+	UI* ui;
 public:
 	Scene();
 	virtual void CreateGrid(vector <CGameObject *> &objects) = 0;

@@ -44,9 +44,11 @@
 #include "Scene.h"
 #include "Scene1.h"
 #include "Scene2.h"
+#include "UI.h"
 
 CGame *game;
 Camera *camera;
+UI* ui;
 
 Grid *grid;
 
@@ -213,6 +215,7 @@ void CSampleKeyHander::OnKeyDown(int KeyCode)
 	case DIK_C:
 		if (scene->aladin->getEnableKey() == true) {
 			scene->aladin->setChem(true);
+			scene->aladin->timeIDLE = 0;
 			scene->sword = new Sword();
 			scene->sword->LoadResources(eType::SWORD);
 			
@@ -242,34 +245,40 @@ void CSampleKeyHander::OnKeyDown(int KeyCode)
 	case DIK_Z:
 		if (scene->aladin->getEnableKey() == true ) {
 			scene->aladin->setNem(true);
-			scene->apple = new Apple();
-			scene->apple->LoadResources(eType::APPLE);
-			//apple = new Apple(scene->aladin->x + 20, scene->aladin->y);
-			if (scene->aladin->state == ALADIN_STATE_NGOI)
+			
+			scene->aladin->timeIDLE = 0;
+			if (scene->aladin->apples > 0)
 			{
-				scene->apple->SetPosition(scene->aladin->x + 10, scene->aladin->y + 20);
-			}
-			else
-			{ 
-				scene->apple->SetPosition(scene->aladin->x + 10, scene->aladin->y);
-			}
-			//DebugOut(L"aladin x: %d \n apple x: %d \n", scene->aladin->x + 10, scene->apple->x);
-			scene->apple->setNem(true);
-			if (scene->aladin->direction == 1)
-				scene->apple->direction = 1;
-			else scene->apple->direction = -1;
-			scene->objects.push_back(scene->apple);
-			scene->listApples.push_back(scene->apple);
-			if (currentScene == 1)
-			{
-				for (int i = 1; i < scene->grid->cells.size(); i++)
+				scene->aladin->apples--;
+				scene->apple = new Apple();
+				scene->apple->LoadResources(eType::APPLE);
+				//apple = new Apple(scene->aladin->x + 20, scene->aladin->y);
+				if (scene->aladin->state == ALADIN_STATE_NGOI)
 				{
-					if (scene->grid->isInCell(scene->apple, scene->grid->cells[i]->x, scene->grid->cells[i]->y))
+					scene->apple->SetPosition(scene->aladin->x + 10, scene->aladin->y + 20);
+				}
+				else
+				{
+					scene->apple->SetPosition(scene->aladin->x + 10, scene->aladin->y);
+				}
+				//DebugOut(L"aladin x: %d \n apple x: %d \n", scene->aladin->x + 10, scene->apple->x);
+				scene->apple->setNem(true);
+				if (scene->aladin->direction == 1)
+					scene->apple->direction = 1;
+				else scene->apple->direction = -1;
+				scene->objects.push_back(scene->apple);
+				scene->listApples.push_back(scene->apple);
+				if (currentScene == 1)
+				{
+					for (int i = 1; i < scene->grid->cells.size(); i++)
 					{
-						scene->grid->cells[i]->listGameObject.push_back(scene->apple);
+						if (scene->grid->isInCell(scene->apple, scene->grid->cells[i]->x, scene->grid->cells[i]->y))
+						{
+							scene->grid->cells[i]->listGameObject.push_back(scene->apple);
+						}
 					}
 				}
-			}		
+			}
 		}
 		break;
 	
@@ -462,6 +471,8 @@ void LoadResources()
 	if (currentScene == 1)
 		scene1->LoadResources(objects);
 	else scene2->LoadResources(objects);
+
+
 }
 
 void Update(DWORD dt)
@@ -481,7 +492,6 @@ void Update(DWORD dt)
 	if (currentScene == 1)
 		scene1->Update(dt);
 	else scene2->Update(dt);
-
 }
 
 /*
@@ -589,6 +599,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 
 	game = CGame::GetInstance();
 	game->Init(hWnd);
+
 
 	camera = Camera::GetInstance();
 

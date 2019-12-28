@@ -110,6 +110,9 @@ void Scene2::LoadResources(vector<CGameObject*> &objects)
 	aladin->SetPosition(50.f, 100.0f);
 	objects.push_back(aladin);
 
+	ui = UI::GetInstance(aladin);
+	ui->LoadResources();
+
 	jafar = new Jafar();
 	jafar->LoadResources(eType::JAFAR);
 	jafar->SetPosition(400.0f, 280.0f);
@@ -357,6 +360,8 @@ void Scene2::Update(DWORD dt)
 		aladin->SetX(MAP2_LIMIT_RIGHT - 50);
 	if (aladin->GetX() < 0) aladin->SetX(0);
 	if (aladin->GetY() < 0) aladin->SetY(0);
+
+	ui->Update(dt);
 }
 
 void Scene2::Render()
@@ -405,6 +410,7 @@ void Scene2::Render()
 			objects[i]->Render();
 		}	
 		aladin->Render();
+		ui->Render();
 		spriteHandler->End();
 		d3ddv->EndScene();
 	}

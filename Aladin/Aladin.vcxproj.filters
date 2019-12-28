@@ -104,6 +104,7 @@
     <ClCompile Include="Sword.cpp">
       <Filter>weep</Filter>
     </ClCompile>
+    <ClCompile Include="UI.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Brick.h">
@@ -210,6 +211,7 @@
     <ClInclude Include="Sword.h">
       <Filter>weep</Filter>
     </ClInclude>
+    <ClInclude Include="UI.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Map">
