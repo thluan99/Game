@@ -41,10 +41,15 @@ void Camera::Update(int currentScene)
 		right = MAP_LIMIT_RIGHT;
 		bot = MAP_LIMIT_BOT;
 	}
-	else
+	else if (currentScene == 2)
 	{
 		right = MAP2_LIMIT_RIGHT;
 		bot = MAP2_LIMIT_BOT;
+	}
+	else if (currentScene == 3)
+	{
+		right = SCREEN_WIDTH;
+		bot = SCREEN_HEIGHT;
 	}
 	//cameraX = width / 2, cameraY = height / 2;
 

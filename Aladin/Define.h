@@ -10,6 +10,7 @@ using namespace std;
 #define MAP_LIMIT_BOT 32*36
 #define MAP2_LIMIT_RIGHT 32*26
 #define MAP2_LIMIT_BOT 32*15
+
 #define GRAVITY 0.002f
 
 #define WINDOW_CLASS_NAME L"SampleWindow"
@@ -38,6 +39,7 @@ using namespace std;
 #define ID_TEX_ENEMY2_FLIP	56
 #define ID_TEX_ITEM_COLLECT 60
 #define ID_TEX_MONKEY		70
+#define ID_TEX_LVCOMLT		71
 #define del 8 // sai số tỉ đối
 // ID object
 enum eType
@@ -80,4 +82,6 @@ enum eType
 	TEXSURFACE = 100,
 	SWORD		= 150,
 	BACKGROUND2 = 200,
+	LV_COMPLT	= 210,
+	MONKEY		= 211,
 };

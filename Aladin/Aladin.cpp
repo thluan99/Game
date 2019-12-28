@@ -49,6 +49,12 @@ void CAladin::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 		HP = 0;
 	}
 
+	if (GetTickCount() - untouchable_start > ALADIN_UNTOUCHABLE_TIME)
+	{
+		untouchable_start = 0;
+		untouchable = 0;
+	}
+
 	if (state != ALADIN_STATE_TREO) 
 		vy += ALADIN_GRAVITY*dt;
 
@@ -114,9 +120,13 @@ void CAladin::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 			LPCOLLISIONEVENT e = coEvents[i];
 			bool isCon = false;
 			if (e->obj->id == eType::FIREATTACK)
-			{
-				HP--;
-				DebugOut(L"[INFO]: Aladin HP-- %d ", HP);
+			{			
+				if (untouchable == 0)
+				{
+					HP--;
+					StartUntouchable();
+					DebugOut(L"[INFO]: Aladin HP-- %d ", HP);
+				}				
 			}	
 
 			if (e->obj->GetId() == eType::ROPE)
@@ -176,8 +186,6 @@ void CAladin::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 			LPCOLLISIONEVENT e = coEvents[i];
 			if (e->obj->GetId() == eType::LAND3)
 			{
-
-
 				hasWall = true;
 				if (nx != 0)
 				{
@@ -207,11 +215,18 @@ void CAladin::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 				}
 
 				if (e->obj->GetId() == eType::ENEMY1 || e->obj->GetId() == eType::ENEMY2 || e->obj->GetId() == eType::ENEMY3
-					|| e->obj->GetId() == eType::BAT || e->obj->GetId() == eType::JAFAR)
+					|| e->obj->GetId() == eType::BAT || e->obj->GetId() == eType::JAFAR || e->obj->GetId() == eType::BRICK2
+					|| e->obj->GetId() == eType::BRICKLINE)
 				{
 					if (ny != 0.0f || nx != 0.0f)
 					{
 						x += e->t * dx;
+						
+						if (untouchable == 0)
+						{
+							HP--;
+							StartUntouchable();
+						}							
 					}
 				}
 
@@ -219,6 +234,11 @@ void CAladin::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 				{
 					x += e->t * dx;
 					y += e->t * dy;
+				}
+
+				if (e->obj->GetId() == SWORD)
+				{
+					x += e->t*dx;
 				}
 
 				if (e->obj->GetId() == eType::BRICK || e->obj->GetId() == eType::BRICKv2)
@@ -229,11 +249,11 @@ void CAladin::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 						y += e->t * dy;
 
 				}
-				if (e->obj->GetId() == eType::BRICKLINE || e->obj->GetId() == eType::BRICK2)
-				{
-					if (nx != 0)
-						x += e->t * dx;
-				}
+				//if (e->obj->GetId() == eType::BRICKLINE || e->obj->GetId() == eType::BRICK2)
+				//{
+				//	if (nx != 0)
+				//		x += e->t * dx;
+				//}
 			}
 		}
 	}
@@ -245,6 +265,9 @@ void CAladin::Render()
 {
 	int ani = 0;
 	int stt = 0;
+	int alpha = 255;
+	if (untouchable) alpha = 0;
+
 
 	switch (state)
 	{
@@ -326,8 +349,6 @@ void CAladin::Render()
 		}
 		break;
 	}
-
-	int alpha = 255;
 	 
 	if (state == ALADIN_STATE_TREO)
 	{
@@ -602,7 +623,7 @@ void CAladin::Render()
 		animations[ani]->RenderAladin(x, y + ALADIN_BIG_BBOX_HEIGHT, this->direction, alpha);
 		curr_ani = ani;
 	}
-	//RenderBoundingBox();
+	//RenderBoundingBox()
 }
 
 void CAladin::SetState(int state)

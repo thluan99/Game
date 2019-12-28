@@ -94,6 +94,9 @@
 #define ID_TEX_ALADIN			0
 #define ID_TEX_ALADIN_F			01
 
+#define ALADIN_UNTOUCHABLE_TIME 3000
+
+
 class CAladin : public CGameObject
 {
 	bool enableKey;
@@ -101,6 +104,9 @@ class CAladin : public CGameObject
 	bool isChem;
 	bool isNem;
 	bool isRoi;
+
+	int untouchable;
+	DWORD untouchable_start;
 public:
 	int coins, lifes, scores, apples;
 	float velJ;
@@ -130,7 +136,7 @@ public:
 		SetDirection(1);
 		HP = 10;
 		coins = 0;
-		lifes = 3;
+		lifes = 5;
 		scores = 00000;
 		apples = 90;
 		velJ = 0.0f;
@@ -139,6 +145,8 @@ public:
 		isStopAnimation = false;
 		isPushingWall = false;
 		climDirection = 0;
+
+		untouchable = 0;
 	};
 	virtual void Update(DWORD dt, vector<LPGAMEOBJECT>* colliable_objects = NULL);
 	virtual void Render();
@@ -146,6 +154,7 @@ public:
 	virtual void LoadResources(int ID);
 	virtual void GetBoundingBox(float& left, float& top, float& right, float& bottom);
 	virtual void ReLoad();
+	void StartUntouchable() { untouchable = 1; untouchable_start = GetTickCount(); }
 
 	void setNhay(bool x) {
 		isNhay = x;

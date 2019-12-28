@@ -10,6 +10,7 @@
 
 class Scene2 : public Scene
 {
+public:
 	FireAngry *angFire;
 	Jafar *jafar;
 	FireAttack *fireAttack;

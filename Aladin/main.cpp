@@ -44,6 +44,7 @@
 #include "Scene.h"
 #include "Scene1.h"
 #include "Scene2.h"
+#include "SceneChange.h"
 #include "UI.h"
 
 CGame *game;
@@ -57,11 +58,15 @@ vector<LPGAMEOBJECT> objects;
 
 Scene1 * scene1;
 Scene2 * scene2;
+SceneChange *sceneC;
+SceneChange *sceneC2;
 Scene *scene;
 
 int currentScene = 1;
 int nextSceneX = 2176;
 int nextSceneY = 64, nextSceneYx = 64 + 128;
+
+int checkChange = 0;
 //---------------KeyBoard -------------------------
 #pragma region KeyBoard
 
@@ -480,9 +485,12 @@ void LoadResources()
 {
 	if (currentScene == 1)
 		scene1->LoadResources(objects);
-	else scene2->LoadResources(objects);
-
-
+	else if (currentScene == 2)
+		scene2->LoadResources(objects);
+	else if (currentScene == 3)
+		sceneC->LoadResources(objects);
+	else if (currentScene == 9)
+		sceneC2->LoadResources(objects);
 }
 
 void Update(DWORD dt)
@@ -493,15 +501,39 @@ void Update(DWORD dt)
 		scene1->Clear();
 		scene1->objects.clear();
 		objects.clear();
-		currentScene = 2;
-		//scene2->CreateGrid(objects);
-		scene2->LoadResources(objects);
-		scene = scene2;
-	}
 
+		currentScene = 3;
+		sceneC->LoadResources(objects);
+		scene = sceneC;
+		checkChange = 1;
+	}
+	if (checkChange == 1)
+	{
+		if (sceneC->aladin->GetX() <= 0)
+		{
+			currentScene = 2;
+			scene2->LoadResources(objects);
+			scene = scene2;
+			checkChange = 0;
+		}
+	}
+	if (currentScene == 2)
+	{
+		if (scene2->jafar->HP <= 0)
+		{
+			currentScene = 9;
+			sceneC2->LoadResources(objects);
+			scene = sceneC2;
+		}
+	}
 	if (currentScene == 1)
 		scene1->Update(dt);
-	else scene2->Update(dt);
+	else if (currentScene == 2)
+		scene2->Update(dt);
+	else if (currentScene == 3)
+		sceneC->Update(dt);
+	else if (currentScene == 9)
+		sceneC2->Update(dt);
 }
 
 /*
@@ -511,7 +543,12 @@ void Render()
 {
 	if (currentScene == 1)
 		scene1->Render();
-	else scene2->Render();
+	else if (currentScene == 2)
+		scene2->Render();
+	else if (currentScene == 3)
+		sceneC->Render();
+	else if (currentScene == 9)
+		sceneC2->Render();
 }
 
 HWND CreateGameWindow(HINSTANCE hInstance, int nCmdShow, int ScreenWidth, int ScreenHeight)
@@ -616,10 +653,13 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	//grid = new Grid(MAP_LIMIT_RIGHT, MAP_LIMIT_BOT, 32 * 10);
 	scene1 = new Scene1(objects, dx_graphics, camera, game);
 	scene2 = new Scene2(objects, dx_graphics, camera, game);
+	sceneC = new SceneChange(objects, dx_graphics, camera, game);
+	sceneC2 = new SceneChange(objects, dx_graphics, camera, game);
 
 	scene = scene1;
 
-	CreateGrid(objects);
+	if (currentScene == 1 || currentScene == 2)
+		CreateGrid(objects);
 	LoadResources();
 
 	keyHandler = new CSampleKeyHander();

@@ -34,7 +34,9 @@ void Bone::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 
 		if (e->t > 0 && e->t <= 1.0f)
 		{
-			e->obj->HP -= 2;
+			CAladin *a = dynamic_cast<CAladin*>(e->obj);
+			a->HP -= 1;
+			a->StartUntouchable();
 			DebugOut(L"HP ---\n");
 		}
 		else

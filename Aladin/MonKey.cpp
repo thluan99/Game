@@ -4,11 +4,19 @@
 
 MonKey::MonKey()
 {
+	vy = 0;
 }
 
 void MonKey::Render()
 {
-	animations[0]->Render(x, y);
+	animations[1]->Render(x, y);
+}
+
+void MonKey::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
+{
+	vy = 0;
+	vx = -0.1f;
+	x += dx;
 }
 
 void MonKey::LoadResources(int ID)
@@ -66,6 +74,7 @@ void MonKey::LoadResources(int ID)
 
 void MonKey::GetBoundingBox(float & l, float & t, float & r, float & b)
 {
+	l = t = b = r = 0;
 }
 
 void MonKey::ReLoad()
