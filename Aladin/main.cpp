@@ -44,6 +44,7 @@
 #include "Scene.h"
 #include "Scene1.h"
 #include "Scene2.h"
+#include "Scene_Death.h"
 #include "UI.h"
 
 CGame *game;
@@ -57,6 +58,7 @@ vector<LPGAMEOBJECT> objects;
 
 Scene1 * scene1;
 Scene2 * scene2;
+Scene_Death* scene_death;
 Scene *scene;
 
 int currentScene = 1;
@@ -467,7 +469,10 @@ void CreateGrid(vector <CGameObject *> &objects)
 {
 	if (currentScene == 1)
 		scene1->CreateGrid(objects);
-	else scene2->CreateGrid(objects);
+	else if (currentScene == 2)
+		scene2->CreateGrid(objects);
+	else if (currentScene == 5)
+		scene_death->CreateGrid(objects);
 }
 
 void Resources()
@@ -480,8 +485,10 @@ void LoadResources()
 {
 	if (currentScene == 1)
 		scene1->LoadResources(objects);
-	else scene2->LoadResources(objects);
-
+	else if (currentScene == 2)
+		scene2->LoadResources(objects);
+	else if (currentScene == 5)
+		scene_death->LoadResources(objects);
 
 }
 
@@ -498,10 +505,21 @@ void Update(DWORD dt)
 		scene2->LoadResources(objects);
 		scene = scene2;
 	}
+	
+	if (scene->aladin->lifes <= 0 && scene->aladin->HP <= 0)
+	{
+		currentScene = 5;
+		scene_death->LoadResources(objects);
+		scene = scene_death;
+	}
 
 	if (currentScene == 1)
 		scene1->Update(dt);
-	else scene2->Update(dt);
+	else if (currentScene == 2)
+		scene2->Update(dt);
+	else if (currentScene == 5)
+		scene_death->Update(dt);
+
 }
 
 /*
@@ -511,7 +529,11 @@ void Render()
 {
 	if (currentScene == 1)
 		scene1->Render();
-	else scene2->Render();
+
+	else if (currentScene == 2)
+		scene2->Render();
+	else if (currentScene == 5)
+		scene_death->Render();
 }
 
 HWND CreateGameWindow(HINSTANCE hInstance, int nCmdShow, int ScreenWidth, int ScreenHeight)
@@ -616,6 +638,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	//grid = new Grid(MAP_LIMIT_RIGHT, MAP_LIMIT_BOT, 32 * 10);
 	scene1 = new Scene1(objects, dx_graphics, camera, game);
 	scene2 = new Scene2(objects, dx_graphics, camera, game);
+	scene_death = new Scene_Death(objects, dx_graphics, camera, game);
 
 	scene = scene1;
 

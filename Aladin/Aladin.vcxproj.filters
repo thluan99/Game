@@ -109,6 +109,9 @@
       <Filter>Scene</Filter>
     </ClCompile>
     <ClCompile Include="MonKey.cpp" />
+    <ClCompile Include="Scene_Death.cpp">
+      <Filter>Scene</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Brick.h">
@@ -220,6 +223,9 @@
       <Filter>Scene</Filter>
     </ClInclude>
     <ClInclude Include="MonKey.h" />
+    <ClInclude Include="Scene_Death.h">
+      <Filter>Scene</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Map">
