@@ -392,11 +392,18 @@ void CSampleKeyHander::KeyState(BYTE* states)
 		if (game->IsKeyDown(DIK_RIGHT))
 		{
 			scene->aladin->SetDirection(1);
+			if (scene->aladin->GetState() == ALADIN_STATE_TREO_NHAY || scene->aladin->GetState() == ALADIN_STATE_TREO_NHAY_ROI)
+				scene->aladin->vx = ALADIN_WALKING_SPEED;
+			else
 			scene->aladin->SetState(ALADIN_STATE_DI);
+
 		}
 		else if (game->IsKeyDown(DIK_LEFT))
 		{
 			scene->aladin->SetDirection(-1);
+			if (scene->aladin->GetState() == ALADIN_STATE_TREO_NHAY || scene->aladin->GetState() == ALADIN_STATE_TREO_NHAY_ROI)
+				scene->aladin->vx = ALADIN_WALKING_SPEED;
+			else
 			scene->aladin->SetState(ALADIN_STATE_DI);
 		}
 		else if (game->IsKeyDown(DIK_UP))

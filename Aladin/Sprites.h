@@ -14,15 +14,18 @@ protected:
 	int top;
 	int right;
 	int bottom;
+	int gapx;
 
 	LPDIRECT3DTEXTURE9 texture;
 public: 
 	CSprite() {}
 	CSprite(int id, int left, int top, int right, int bottom, LPDIRECT3DTEXTURE9 tex);
+	CSprite(int id, int left, int top, int right, int bottom,int gapx, LPDIRECT3DTEXTURE9 tex);
 	void Draw(float x, float y, int alpha = 255);
 
 	int GetHeight() { return bottom - top; }
 	int GetWidth() { return right - left; }
+	int GetGapx() { return gapx; }
 };
 
 typedef CSprite * LPSPRITE;
@@ -38,6 +41,7 @@ class CSprites
 
 public:
 	void Add(int id, int left, int top, int right, int bottom, LPDIRECT3DTEXTURE9 tex);
+	void Add(int id, int left, int top, int right, int bottom,int gapx, LPDIRECT3DTEXTURE9 tex);
 	LPSPRITE Get(int id);
 	LPSPRITE &operator[](int id) {return sprites[id];}
 
@@ -74,6 +78,7 @@ public:
 	void RenderUI(float x, float y, int alpha = 255);
 	int RenderJustOne(float x, float y, int alpha = 255);
 	void RenderAladin(float x, float y, int direct, int alpha = 255);
+	void RenderAladinGap(int&, float x, float y, int direct, int alpha = 255);
 	void RenderAladinSpecial(float x, float y, int direct, int status, int alpha = 255);
 	void RenderAladinF1(float x, float y, int alpha = 255);
 	void RenderAladinF_1(float x, float y, int alpha = 255);

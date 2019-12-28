@@ -34,7 +34,8 @@ void Bone::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 
 		if (e->t > 0 && e->t <= 1.0f)
 		{
-			e->obj->HP -= 2;
+			if (e->obj->GetState() != ALADIN_STATE_REBORN)
+				e->obj->HP -= 10;
 			DebugOut(L"HP ---\n");
 		}
 		else
